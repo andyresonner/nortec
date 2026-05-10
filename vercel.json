@@ -1,0 +1,20 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "rewrites": [
+    { "source": "/jobs", "destination": "/pages/jobs.html" },
+    { "source": "/tracker", "destination": "/pages/tracker.html" },
+    { "source": "/archive", "destination": "/pages/archive.html" },
+    { "source": "/sponsors", "destination": "/pages/sponsors.html" },
+    { "source": "/issue/001", "destination": "/pages/issue-001.html" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "DENY" }
+      ]
+    }
+  ]
+}

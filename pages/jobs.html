@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Remote Jobs for LatAm Tech — Nortec</title>
+<meta name="description" content="Verified remote AI + tech jobs open to Latin America. Curated weekly with Nortec Score.">
+<link rel="stylesheet" href="/css/global.css">
+<style>
+.jobs-page { padding-top: calc(var(--nav-h) + 32px); }
+.jobs-header {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  padding: 2.5rem 0;
+}
+.jobs-h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--north-star);
+  line-height: 0.95;
+  margin-bottom: 0.5rem;
+}
+.jobs-h1 em { font-style: normal; color: var(--teal); }
+.jobs-sub {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text2);
+  letter-spacing: 0.06em;
+  margin-bottom: 1.5rem;
+}
+.filter-bar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+}
+.filter-btn {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border: 1px solid var(--border2);
+  background: transparent;
+  color: var(--text3);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.filter-btn:hover, .filter-btn.active {
+  border-color: var(--teal);
+  color: var(--teal);
+  background: var(--teal-dim);
+}
+.jobs-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 0;
+  min-height: 60vh;
+}
+.jobs-sidebar {
+  border-right: 1px solid var(--border);
+  padding: 2rem 1.5rem;
+  background: var(--bg2);
+}
+.sidebar-section { margin-bottom: 2rem; }
+.sidebar-title {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--orient-red);
+  margin-bottom: 0.75rem;
+}
+.sidebar-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 0;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text2);
+  border-bottom: 1px solid var(--border);
+  transition: color 0.15s;
+}
+.sidebar-option:hover { color: var(--teal); }
+.sidebar-option input[type=checkbox] { accent-color: var(--teal); }
+.jobs-main { padding: 2rem; }
+.jobs-list { display: flex; flex-direction: column; gap: 1px; background: var(--border); }
+.job-list-row {
+  background: var(--surface);
+  padding: 1.25rem;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1rem;
+  cursor: pointer;
+  transition: background 0.15s;
+  border-left: 3px solid transparent;
+}
+.job-list-row:hover { background: var(--surface2); border-left-color: var(--teal); }
+.job-list-row.score-5 { border-left-color: var(--teal); }
+.job-list-row.score-4 { border-left-color: rgba(75,201,192,0.5); }
+@media (max-width: 900px) {
+  .jobs-layout { grid-template-columns: 1fr; }
+  .jobs-sidebar { border-right: none; border-bottom: 1px solid var(--border); }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-logo" href="/">NORTEC<div class="nav-wordmark">NORTHBOUND<br>TALENT.</div></a>
+  <ul class="nav-links">
+    <li><a href="/jobs" class="active">Jobs</a></li>
+    <li><a href="/tracker">Tracker</a></li>
+    <li><a href="/archive">Archive</a></li>
+    <li><a href="/sponsors">Sponsors</a></li>
+    <li><a href="/pages/issue-001.html">Issue #001</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a class="btn-ghost" href="/sponsors">For Employers</a>
+    <a class="btn-primary" href="/#subscribe">Subscribe</a>
+  </div>
+</nav>
+
+<div style="padding-top:var(--nav-h);">
+  <div class="ticker-wrap">
+    <div class="ticker-track">
+      <span class="ticker-item">Remote jobs open to LatAm <span class="ticker-sep">◆</span></span>
+      <span class="ticker-item">Verified · Scored · Curated <span class="ticker-sep">◆</span></span>
+      <span class="ticker-item">Engineering · CS · QA · Data · Design <span class="ticker-sep">◆</span></span>
+      <span class="ticker-item">Updated weekly <span class="ticker-sep">◆</span></span>
+      <span class="ticker-item">Remote jobs open to LatAm <span class="ticker-sep">◆</span></span>
+      <span class="ticker-item">Verified · Scored · Curated <span class="ticker-sep">◆</span></span>
+      <span class="ticker-item">Engineering · CS · QA · Data · Design <span class="ticker-sep">◆</span></span>
+      <span class="ticker-item">Updated weekly <span class="ticker-sep">◆</span></span>
+    </div>
+  </div>
+</div>
+
+<div class="jobs-header">
+  <div class="container">
+    <div class="section-marker"><span class="arrow">→</span> Issue #001 · May 2026</div>
+    <h1 class="jobs-h1">REMOTE JOBS<br>FOR <em>LATAM TECH.</em></h1>
+    <p class="jobs-sub">Verified roles. Nortec Score. Apply angles. Updated weekly.</p>
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="filterJobs('all',this)">All roles</button>
+      <button class="filter-btn" onclick="filterJobs('Engineering',this)">Engineering</button>
+      <button class="filter-btn" onclick="filterJobs('Customer Success',this)">Customer Success</button>
+      <button class="filter-btn" onclick="filterJobs('QA',this)">QA</button>
+      <button class="filter-btn" onclick="filterJobs('ai',this)">AI-focused</button>
+      <button class="filter-btn" onclick="filterJobs('salary',this)">Salary listed</button>
+    </div>
+  </div>
+</div>
+
+<div class="container" style="padding-top:0;padding-bottom:0;">
+  <div class="jobs-layout">
+    <!-- Sidebar -->
+    <div class="jobs-sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-title">Function</div>
+        <label class="sidebar-option"><input type="checkbox" checked> Engineering</label>
+        <label class="sidebar-option"><input type="checkbox" checked> Customer Success</label>
+        <label class="sidebar-option"><input type="checkbox" checked> QA / Testing</label>
+        <label class="sidebar-option"><input type="checkbox" checked> Data / AI</label>
+        <label class="sidebar-option"><input type="checkbox"> Design</label>
+        <label class="sidebar-option"><input type="checkbox"> Product</label>
+        <label class="sidebar-option"><input type="checkbox"> Sales / RevOps</label>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-title">Nortec Score</div>
+        <label class="sidebar-option"><input type="checkbox" checked> ▲ Apply now (5/5)</label>
+        <label class="sidebar-option"><input type="checkbox" checked> ▲ Strong fit (4/5)</label>
+        <label class="sidebar-option"><input type="checkbox" checked> ◆ Worth checking (3/5)</label>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-title">Contract type</div>
+        <label class="sidebar-option"><input type="checkbox" checked> Full-time</label>
+        <label class="sidebar-option"><input type="checkbox" checked> Contract</label>
+        <label class="sidebar-option"><input type="checkbox"> Part-time</label>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-title">Salary</div>
+        <label class="sidebar-option"><input type="checkbox"> Salary listed only</label>
+        <label class="sidebar-option"><input type="checkbox"> $50K+ USD</label>
+        <label class="sidebar-option"><input type="checkbox"> $80K+ USD</label>
+        <label class="sidebar-option"><input type="checkbox"> $100K+ USD</label>
+      </div>
+      <div style="margin-top:2rem;padding:1rem;background:var(--surface);border:1px solid var(--border);">
+        <div class="sidebar-title" style="color:var(--orient-red);margin-bottom:0.5rem;">Post a role</div>
+        <p style="font-family:var(--font-mono);font-size:10px;color:var(--text3);line-height:1.7;margin-bottom:10px;">Reach LatAm tech talent actively looking for global remote work.</p>
+        <a href="/sponsors" class="btn-primary" style="display:block;text-align:center;font-size:10px;padding:8px;">Post a job →</a>
+      </div>
+    </div>
+
+    <!-- Main list -->
+    <div class="jobs-main">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+        <span style="font-family:var(--font-mono);font-size:10px;color:var(--text3);letter-spacing:0.06em;"><span id="job-count">5</span> roles — Issue #001</span>
+        <span style="font-family:var(--font-mono);font-size:9px;color:var(--teal);letter-spacing:0.08em;">Sorted by Nortec Score ↓</span>
+      </div>
+      <div class="jobs-list" id="jobs-list">
+        <!-- populated by JS -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<section style="padding:3rem 0;background:var(--bg2);border-top:1px solid var(--border);">
+  <div class="container" style="text-align:center;">
+    <div class="section-marker" style="justify-content:center;"><span class="arrow">→</span> Never miss a role</div>
+    <h2 style="font-family:var(--font-display);font-size:2.5rem;font-weight:700;text-transform:uppercase;color:var(--north-star);margin-bottom:1rem;">
+      Get the weekly brief — free
+    </h2>
+    <p style="font-family:var(--font-mono);font-size:11px;color:var(--text2);margin-bottom:2rem;">New roles, salary signals, and career tips every week. Bilingual.</p>
+    <form class="email-form" style="max-width:440px;margin:0 auto;" onsubmit="handleSub(event)" data-source="jobs-page">
+      <input type="email" placeholder="tu@email.com" required>
+      <button type="submit">Subscribe free →</button>
+    </form>
+  </div>
+</section>
+
+<script type="module">
+import { submitEmail } from '/js/subscribe.js';
+import { JOBS } from '/js/jobs.js';
+import { scorePips, scoreLabel } from '/js/components.js';
+
+window.handleSub = async function(e) {
+  e.preventDefault();
+  const form = e.target, input = form.querySelector('input'), btn = form.querySelector('button');
+  btn.disabled = true; btn.textContent = 'Sending...';
+  const r = await submitEmail(input.value, form.dataset.source || 'jobs');
+  if (r.ok) { btn.textContent = '✓ In!'; btn.style.background = 'var(--teal)'; input.value = ''; }
+  else { btn.disabled = false; btn.textContent = 'Try again'; }
+};
+
+let currentFilter = 'all';
+let sortedJobs = [...JOBS].sort((a,b) => b.score - a.score);
+
+function renderJobs(jobs) {
+  const list = document.getElementById('jobs-list');
+  const count = document.getElementById('job-count');
+  count.textContent = jobs.length;
+  list.innerHTML = jobs.map(j => `
+    <div class="job-list-row score-${j.score}" onclick="window.open('${j.link}','_blank')">
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+          <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);">${j.company}</div>
+          <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3);">· ${j.location} · ${j.type}</div>
+          ${j.aiRelevance ? '<span style="font-family:var(--font-mono);font-size:8px;background:rgba(15,163,154,0.1);border:1px solid rgba(15,163,154,0.3);color:var(--teal);padding:1px 6px;letter-spacing:0.06em;">AI</span>' : ''}
+        </div>
+        <div style="font-family:var(--font-display);font-size:1.15rem;font-weight:600;color:var(--north-star);margin-bottom:8px;line-height:1.2;">${j.title}</div>
+        <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px;">
+          ${j.tags.map(t=>`<span class="job-tag">${t}</span>`).join('')}
+        </div>
+        <div style="font-family:var(--font-mono);font-size:10px;color:var(--text2);line-height:1.7;border-left:2px solid var(--border2);padding-left:10px;margin-bottom:8px;">
+          <strong style="color:var(--orient-red);">Why:</strong> ${j.why}<br>
+          <strong style="color:var(--orient-red);">Apply angle:</strong> ${j.applyAngle}
+        </div>
+      </div>
+      <div style="text-align:right;flex-shrink:0;min-width:140px;">
+        ${scoreLabel(j.score)}
+        <div style="font-family:var(--font-display);font-size:1.2rem;font-weight:600;color:var(--teal-bright);margin:8px 0 4px;">${j.salary}</div>
+        <div style="display:flex;gap:3px;justify-content:flex-end;margin-bottom:8px;">${scorePips(j.score)}</div>
+        <a style="font-family:var(--font-mono);font-size:10px;color:var(--orient-red);letter-spacing:0.06em;text-decoration:none;" href="${j.link}" target="_blank">Apply → ${j.source}</a>
+      </div>
+    </div>
+  `).join('');
+}
+
+window.filterJobs = function(filter, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  let filtered = sortedJobs;
+  if (filter === 'ai') filtered = sortedJobs.filter(j => j.aiRelevance);
+  else if (filter === 'salary') filtered = sortedJobs.filter(j => j.salaryNum);
+  else if (filter !== 'all') filtered = sortedJobs.filter(j => j.function === filter);
+  renderJobs(filtered);
+};
+
+renderJobs(sortedJobs);
+</script>
+</body>
+</html>

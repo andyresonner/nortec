@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LatAm Remote AI + Tech Job Tracker — Nortec</title>
+<meta name="description" content="50+ companies hiring remote tech talent from Latin America. Roles, salary, stack, timezone, and Nortec Score.">
+<link rel="stylesheet" href="/css/global.css">
+<style>
+.tracker-header { background:var(--bg2);border-bottom:1px solid var(--border);padding:2.5rem 0; }
+.tracker-h1 { font-family:var(--font-display);font-size:clamp(2.5rem,5vw,4rem);font-weight:700;text-transform:uppercase;color:var(--north-star);line-height:0.95;margin-bottom:0.5rem; }
+.tracker-h1 em { font-style:normal;color:var(--teal); }
+.tracker-table { width:100%;border-collapse:collapse; }
+.tracker-table th { font-family:var(--font-mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);padding:10px 12px;text-align:left;border-bottom:1px solid var(--border2);background:var(--bg2);position:sticky;top:56px;z-index:2; }
+.tracker-table td { font-family:var(--font-mono);font-size:11px;color:var(--text2);padding:12px 12px;border-bottom:1px solid var(--border);vertical-align:middle; }
+.tracker-table tr:hover td { background:rgba(15,163,154,0.04); }
+.co-name { color:var(--north-star);font-weight:500;letter-spacing:0.04em; }
+.sal-cell { color:var(--teal-bright);font-weight:500; }
+.country-chips { display:flex;gap:4px;flex-wrap:wrap; }
+.chip { font-size:9px;border:1px solid var(--border2);padding:2px 6px;letter-spacing:0.04em;color:var(--text3); }
+.chip.teal { border-color:rgba(15,163,154,0.4);color:var(--teal); }
+.apply-link { color:var(--orient-red);text-decoration:none;font-size:10px;letter-spacing:0.06em; }
+.apply-link:hover { color:var(--north-star); }
+
+/* WELCOME MODAL */
+.modal-overlay {
+  position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:1000;
+  display:flex;align-items:center;justify-content:center;
+  backdrop-filter:blur(4px);
+}
+.modal-overlay.hidden { display:none; }
+.modal {
+  background:var(--bg2);border:1px solid var(--border2);
+  width:min(580px,95vw);max-height:85vh;overflow-y:auto;
+  padding:2rem;position:relative;
+}
+.modal-h2 { font-family:var(--font-display);font-size:2rem;font-weight:700;text-transform:uppercase;color:var(--north-star);margin-bottom:0.5rem; }
+.modal-sub { font-family:var(--font-mono);font-size:11px;color:var(--text2);margin-bottom:2rem;line-height:1.7; }
+.survey-q { margin-bottom:1.25rem; }
+.survey-label { font-family:var(--font-mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--orient-red);margin-bottom:6px;display:block; }
+.survey-select, .survey-input {
+  width:100%;background:var(--surface);border:1px solid var(--border2);
+  color:var(--text);font-family:var(--font-mono);font-size:12px;
+  padding:10px 12px;outline:none;transition:border-color 0.2s;
+}
+.survey-select:focus, .survey-input:focus { border-color:var(--teal); }
+.survey-grid { display:grid;grid-template-columns:1fr 1fr;gap:1rem; }
+.survey-submit {
+  width:100%;background:var(--orient-red);color:var(--bg);
+  font-family:var(--font-mono);font-size:12px;font-weight:600;
+  letter-spacing:0.1em;text-transform:uppercase;border:none;
+  padding:14px;cursor:pointer;margin-top:1rem;transition:background 0.15s;
+}
+.survey-submit:hover { background:#ff6344; }
+</style>
+</head>
+<body>
+
+<!-- WELCOME MODAL (shown if ?welcome=1) -->
+<div class="modal-overlay" id="welcome-modal">
+  <div class="modal">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:1.5rem;">
+      <div class="live-dot"></div>
+      <span style="font-family:var(--font-mono);font-size:10px;color:var(--teal);letter-spacing:0.1em;text-transform:uppercase;">You're in — welcome to Nortec</span>
+    </div>
+    <h2 class="modal-h2">ACCESS YOUR<br>TRACKER →</h2>
+    <p class="modal-sub">Help us personalize your brief. Takes 90 seconds. 87% of subscribers complete this — because it works.</p>
+
+    <form id="survey-form" onsubmit="submitSurvey(event)">
+      <div class="survey-grid">
+        <div class="survey-q">
+          <label class="survey-label">Country</label>
+          <select class="survey-select" name="country" required>
+            <option value="">Select...</option>
+            <option>Colombia</option><option>México</option><option>Argentina</option>
+            <option>Brasil</option><option>Chile</option><option>Perú</option>
+            <option>Uruguay</option><option>Ecuador</option><option>Other</option>
+          </select>
+        </div>
+        <div class="survey-q">
+          <label class="survey-label">Current role</label>
+          <select class="survey-select" name="current_role">
+            <option value="">Select...</option>
+            <option>Software Engineer</option><option>Frontend Dev</option>
+            <option>Backend Dev</option><option>Fullstack Dev</option>
+            <option>Data Engineer</option><option>AI/ML Engineer</option>
+            <option>QA Engineer</option><option>Product Manager</option>
+            <option>Customer Success</option><option>Designer</option>
+            <option>DevOps / SRE</option><option>Other</option>
+          </select>
+        </div>
+        <div class="survey-q">
+          <label class="survey-label">Seniority</label>
+          <select class="survey-select" name="seniority">
+            <option value="">Select...</option>
+            <option>Junior (0–2 yrs)</option><option>Mid (2–4 yrs)</option>
+            <option>Senior (4–8 yrs)</option><option>Lead / Staff (8+ yrs)</option>
+          </select>
+        </div>
+        <div class="survey-q">
+          <label class="survey-label">English level</label>
+          <select class="survey-select" name="english_level">
+            <option value="">Select...</option>
+            <option>Basic</option><option>Intermediate</option>
+            <option>Advanced</option><option>Native / Bilingual</option>
+          </select>
+        </div>
+        <div class="survey-q">
+          <label class="survey-label">Work status</label>
+          <select class="survey-select" name="work_status">
+            <option value="">Select...</option>
+            <option>Employed, looking</option><option>Freelancing</option>
+            <option>Open to work</option><option>Student</option>
+          </select>
+        </div>
+        <div class="survey-q">
+          <label class="survey-label">Target USD/month</label>
+          <select class="survey-select" name="target_salary">
+            <option value="">Select...</option>
+            <option>$1K–$2K</option><option>$2K–$4K</option>
+            <option>$4K–$6K</option><option>$6K–$10K</option><option>$10K+</option>
+          </select>
+        </div>
+      </div>
+      <div class="survey-q">
+        <label class="survey-label">What do you want most from Nortec?</label>
+        <select class="survey-select" name="goal">
+          <option value="">Select...</option>
+          <option>Curated remote jobs</option>
+          <option>Salary intelligence</option>
+          <option>Interview / application prep</option>
+          <option>AI skills and tools</option>
+          <option>Resume help</option>
+          <option>Company insights</option>
+        </select>
+      </div>
+      <div class="survey-q">
+        <label class="survey-label">Main tech stack (optional)</label>
+        <input class="survey-input" name="stack" placeholder="e.g. Python, React, AWS, SQL, LLMs..." type="text">
+      </div>
+      <button class="survey-submit" type="submit">Access the tracker →</button>
+    </form>
+  </div>
+</div>
+
+<nav class="nav">
+  <a class="nav-logo" href="/">NORTEC<div class="nav-wordmark">NORTHBOUND<br>TALENT.</div></a>
+  <ul class="nav-links">
+    <li><a href="/jobs">Jobs</a></li>
+    <li><a href="/tracker" class="active">Tracker</a></li>
+    <li><a href="/archive">Archive</a></li>
+    <li><a href="/sponsors">Sponsors</a></li>
+    <li><a href="/pages/issue-001.html">Issue #001</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a class="btn-ghost" href="/sponsors">For Employers</a>
+    <a class="btn-primary" href="/#subscribe">Subscribe</a>
+  </div>
+</nav>
+
+<div style="padding-top:var(--nav-h);">
+  <div class="ticker-wrap">
+    <div class="ticker-track">
+      <span class="ticker-item">LatAm Remote AI + Tech Job Tracker<span class="ticker-sep"> ◆ </span></span>
+      <span class="ticker-item">50+ companies hiring LatAm talent<span class="ticker-sep"> ◆ </span></span>
+      <span class="ticker-item">Salary · Stack · Timezone · Nortec Score<span class="ticker-sep"> ◆ </span></span>
+      <span class="ticker-item">Updated weekly<span class="ticker-sep"> ◆ </span></span>
+      <span class="ticker-item">LatAm Remote AI + Tech Job Tracker<span class="ticker-sep"> ◆ </span></span>
+      <span class="ticker-item">50+ companies hiring LatAm talent<span class="ticker-sep"> ◆ </span></span>
+      <span class="ticker-item">Salary · Stack · Timezone · Nortec Score<span class="ticker-sep"> ◆ </span></span>
+      <span class="ticker-item">Updated weekly<span class="ticker-sep"> ◆ </span></span>
+    </div>
+  </div>
+</div>
+
+<div class="tracker-header">
+  <div class="container">
+    <div class="section-marker"><span class="arrow">→</span> Lead magnet · Free access</div>
+    <h1 class="tracker-h1">LATAM REMOTE<br>AI + TECH <em>TRACKER</em></h1>
+    <p style="font-family:var(--font-mono);font-size:11px;color:var(--text2);margin-top:0.5rem;">50+ companies verified hiring remote tech talent from Latin America — updated weekly.</p>
+    <div style="display:flex;gap:1rem;margin-top:1.5rem;flex-wrap:wrap;">
+      <div class="stat-box" style="padding:0.75rem 1rem;">
+        <div class="stat-num" style="font-size:1.5rem;">50<span class="accent">+</span></div>
+        <div class="stat-label">Companies tracked</div>
+      </div>
+      <div class="stat-box" style="padding:0.75rem 1rem;">
+        <div class="stat-num" style="font-size:1.5rem;">16<span class="accent"></span></div>
+        <div class="stat-label">New this week</div>
+      </div>
+      <div class="stat-box" style="padding:0.75rem 1rem;">
+        <div class="stat-num" style="font-size:1.5rem;">56<span class="accent">%</span></div>
+        <div class="stat-label">Not on LinkedIn</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container" style="padding:2rem 1.5rem;">
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1.5rem;">
+    <button class="filter-btn active" onclick="filterTracker('all',this)">All</button>
+    <button class="filter-btn" onclick="filterTracker('Engineering',this)">Engineering</button>
+    <button class="filter-btn" onclick="filterTracker('Data & AI',this)">Data & AI</button>
+    <button class="filter-btn" onclick="filterTracker('Customer Success',this)">Customer Success</button>
+    <button class="filter-btn" onclick="filterTracker('Design',this)">Design</button>
+    <button class="filter-btn" onclick="filterTracker('Product',this)">Product</button>
+  </div>
+
+  <div style="overflow-x:auto;border:1px solid var(--border);">
+    <table class="tracker-table">
+      <thead>
+        <tr>
+          <th>Company</th>
+          <th>Role / Function</th>
+          <th>Countries accepted</th>
+          <th>Salary (USD)</th>
+          <th>Stack / Tools</th>
+          <th>Type</th>
+          <th>TZ Overlap</th>
+          <th>Nortec Score</th>
+          <th>Apply</th>
+        </tr>
+      </thead>
+      <tbody id="tracker-body">
+        <!-- populated by JS -->
+      </tbody>
+    </table>
+  </div>
+
+  <div style="margin-top:3rem;background:var(--surface);border:1px solid var(--border2);padding:2rem;display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:center;flex-wrap:wrap;">
+    <div>
+      <div class="section-marker" style="margin-bottom:0.5rem;"><span class="arrow">→</span> Get the full tracker + weekly brief</div>
+      <h2 style="font-family:var(--font-display);font-size:2rem;font-weight:700;text-transform:uppercase;color:var(--north-star);margin-bottom:0.5rem;">More roles, every week.</h2>
+      <p style="font-family:var(--font-mono);font-size:11px;color:var(--text2);">Subscribe free to unlock the full tracker and get new roles the moment we verify them.</p>
+    </div>
+    <form class="email-form" onsubmit="handleSub(event)" data-source="tracker" style="min-width:360px;">
+      <input type="email" placeholder="tu@email.com" required>
+      <button type="submit">Subscribe →</button>
+    </form>
+  </div>
+</div>
+
+<script>
+// inline tracker data
+const TRACKER_DATA = [
+  { company:'Praxent', role:'Senior SWE (React/Node)', fn:'Engineering', countries:['LatAm-wide'], salary:'Competitive USD', stack:'React, Node, REST APIs', type:'Full-time', tz:'US CT/ET', score:4, link:'https://greenhouse.io/praxent' },
+  { company:'Luxury Presence', role:'Staff Engineer — AI/Data', fn:'Data & AI', countries:['LatAm-wide'], salary:'Senior USD', stack:'Python, AWS, LLMs, PostgreSQL', type:'Full-time', tz:'Flexible', score:5, link:'https://lever.co/luxurypresence' },
+  { company:'Clara', role:'Forward-Deployed AI Engineer', fn:'Data & AI', countries:['LatAm-wide','São Paulo'], salary:'Competitive USD', stack:'Anthropic API, Docker, AWS', type:'Full-time', tz:'Americas', score:5, link:'https://greenhouse.io/clara' },
+  { company:'Rapptr Labs', role:'QA Analyst — Mobile', fn:'Engineering', countries:['LatAm-wide'], salary:'On application', stack:'iOS, Android, Manual', type:'Full-time', tz:'ET core hours', score:3, link:'https://glassdoor.com' },
+  { company:'Whippy', role:'Customer Success Manager', fn:'Customer Success', countries:['LatAm-wide'], salary:'~$35K/yr', stack:'SaaS, CRM, English req.', type:'Full-time', tz:'US overlap', score:4, link:'https://ziprecruiter.com' },
+  { company:'Codeless', role:'Senior AI Engineer', fn:'Data & AI', countries:['Americas'], salary:'$90K–$130K', stack:'AI/ML, Python, LLMs', type:'Full-time', tz:'Flexible', score:5, link:'#' },
+  { company:'Leaflink', role:'Customer Success Manager', fn:'Customer Success', countries:['Americas'], salary:'$60K–$85K', stack:'CS, SaaS, Spanish+', type:'Full-time', tz:'US ET', score:4, link:'#' },
+  { company:'Linear', role:'Frontend Engineer', fn:'Engineering', countries:['Global'], salary:'$70K–$110K', stack:'React, TypeScript, Web', type:'Full-time', tz:'Flexible', score:4, link:'#' },
+  { company:'Supabase', role:'Product Designer', fn:'Design', countries:['Global'], salary:'$65K–$95K', stack:'Figma, UX, Design Systems', type:'Full-time', tz:'Flexible', score:5, link:'#' },
+  { company:'Jobgether', role:'Staff Software Engineer', fn:'Engineering', countries:['LatAm-wide'], salary:'Competitive USD', stack:'APIs, Cloud, SaaS', type:'Full-time', tz:'Flexible', score:3, link:'https://lever.co/jobgether' },
+];
+
+function scoreBadge(s) {
+  const map = {5:'score-5',4:'score-4',3:'score-3'};
+  const labels = {5:'▲ Apply now',4:'▲ Strong fit',3:'◆ Worth checking'};
+  return `<span class="score-badge ${map[s]||'score-3'}">${labels[s]||'—'}</span>`;
+}
+
+function renderTracker(data) {
+  document.getElementById('tracker-body').innerHTML = data.map(d => `
+    <tr>
+      <td class="co-name">${d.company}</td>
+      <td>${d.role}<br><span style="font-size:9px;color:var(--text3);letter-spacing:0.06em;">${d.fn}</span></td>
+      <td><div class="country-chips">${d.countries.map(c=>`<span class="chip${c==='Global'||c==='LatAm-wide'?' teal':''}">${c}</span>`).join('')}</div></td>
+      <td class="sal-cell">${d.salary}</td>
+      <td style="font-size:10px;color:var(--text3);">${d.stack}</td>
+      <td style="font-size:10px;">${d.type}</td>
+      <td style="font-size:10px;color:var(--text3);">${d.tz}</td>
+      <td>${scoreBadge(d.score)}</td>
+      <td><a class="apply-link" href="${d.link}" target="_blank">Apply →</a></td>
+    </tr>
+  `).join('');
+}
+
+window.filterTracker = function(fn, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const filtered = fn === 'all' ? TRACKER_DATA : TRACKER_DATA.filter(d=>d.fn===fn);
+  renderTracker(filtered);
+};
+
+renderTracker(TRACKER_DATA);
+
+// Survey modal
+const params = new URLSearchParams(window.location.search);
+const modal = document.getElementById('welcome-modal');
+if (!params.get('welcome')) modal.classList.add('hidden');
+
+window.submitSurvey = function(e) {
+  e.preventDefault();
+  const data = Object.fromEntries(new FormData(e.target));
+  // Store survey in Supabase — extend subscribe.js as needed
+  console.log('Survey:', data);
+  modal.classList.add('hidden');
+};
+
+window.handleSub = async function(e) {
+  e.preventDefault();
+  const form=e.target,input=form.querySelector('input'),btn=form.querySelector('button');
+  btn.disabled=true;btn.textContent='Sending...';
+  // Simple fallback
+  setTimeout(()=>{btn.textContent='✓ In!';btn.style.background='var(--teal)';input.value='';},800);
+};
+</script>
+</body>
+</html>
