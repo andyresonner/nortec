@@ -1055,15 +1055,20 @@
     <div class="nav-wordmark">NORTHBOUND<br>TALENT.</div>
   </a>
   <ul class="nav-links">
-    <li><a href="/jobs" class="active">Jobs</a></li>
-    <li><a href="/tracker">Tracker</a></li>
-    <li><a href="/archive">Archive</a></li>
-    <li><a href="/sponsors">Sponsors</a></li>
+    <li><a href="/jobs" class="active" data-en="Jobs" data-es="Empleos">Jobs</a></li>
+    <li><a href="/tracker" data-en="Tracker" data-es="Tracker">Tracker</a></li>
+    <li><a href="/archive" data-en="Archive" data-es="Archivo">Archive</a></li>
+    <li><a href="/sponsors" data-en="Sponsors" data-es="Patrocinadores">Sponsors</a></li>
     <li><a href="/issue/001">Issue #001</a></li>
   </ul>
   <div class="nav-actions">
-    <a class="btn-ghost" href="/sponsors">For Employers</a>
-    <a class="btn-primary" href="#subscribe">Subscribe</a>
+    <a class="btn-ghost" href="/sponsors" data-en="For Employers" data-es="Para Empleadores">For Employers</a>
+    <div class="lang-toggle" aria-label="Language toggle">
+      <button type="button" data-lang-option="en">EN</button>
+      <span class="slash">/</span>
+      <button type="button" data-lang-option="es">ES</button>
+    </div>
+    <a class="btn-primary" href="#subscribe" data-en="Subscribe" data-es="Suscríbete">Subscribe</a>
   </div>
 </nav>
 
@@ -1099,15 +1104,15 @@
       <div class="hero-glow-layer" aria-hidden="true"></div>
       <div class="hero-main-copy">
         <h1 class="hero-h1">NORTE<span class="teal-c">C</span></h1>
-        <div class="hero-tagline">Work global. Live local.</div>
+        <div class="hero-tagline" data-en="Work global. Live local." data-es="Trabaja global. Vive local.">Work global. Live local.</div>
         <div class="hero-tagline-es">&gt; Trabaja global. Vive en LatAm.</div>
       </div>
 
       <div class="hero-form-block" id="subscribe">
-        <div class="hero-form-label">Get the weekly brief — free</div>
+        <div class="hero-form-label" data-en="Get the weekly brief — free" data-es="Recibe el resumen semanal — gratis">Get the weekly brief — free</div>
         <form class="email-form hero-form" onsubmit="handleSub(event)" data-source="hero">
-          <input type="email" placeholder="Your email address" required>
-          <button type="submit">GET THE WEEKLY BRIEF →</button>
+          <input type="email" placeholder="Your email address" data-en-placeholder="Your email address" data-es-placeholder="Tu correo electrónico" required>
+          <button type="submit" data-en="GET THE WEEKLY BRIEF →" data-es="RECIBE EL RESUMEN →">GET THE WEEKLY BRIEF →</button>
         </form>
       </div>
     </div>
@@ -1216,10 +1221,10 @@
 <!-- WHAT YOU GET -->
 <section class="section" style="background:var(--bg2);">
   <div class="container">
-    <div class="section-marker"><span class="arrow">→</span> What you get</div>
+    <div class="section-marker" data-en="→ What you get" data-es="→ Lo que recibes">→ What you get</div>
     <div class="section-header">
-      <h2 class="section-h2">The Nortec Weekly Brief</h2>
-      <a class="section-link" href="/issue/001">View issue #001 →</a>
+      <h2 class="section-h2" data-en="The Nortec Weekly Brief" data-es="El Resumen Semanal de Nortec">The Nortec Weekly Brief</h2>
+      <a class="section-link" href="/issue/001" data-en="View issue #001 →" data-es="Ver edición #001 →">View issue #001 →</a>
     </div>
 
     <div class="feature-strip" aria-label="The Nortec Weekly Brief highlights">
@@ -1258,26 +1263,26 @@
 <!-- FEATURED JOBS -->
 <section class="section">
   <div class="container">
-    <div class="section-marker"><span class="arrow">→</span> Featured remote jobs</div>
+    <div class="section-marker" data-en="→ Featured remote jobs" data-es="→ Empleos remotos destacados">→ Featured remote jobs</div>
     <div class="section-header">
-      <h2 class="section-h2">This Week's Roles</h2>
-      <a class="section-link" href="/jobs">Browse all jobs →</a>
+      <h2 class="section-h2" data-en="This Week's Roles" data-es="Roles de Esta Semana">This Week's Roles</h2>
+      <a class="section-link" href="/jobs" data-en="Browse all jobs →" data-es="Ver todos los empleos →">Browse all jobs →</a>
     </div>
 
     <div class="jobs-grid" id="jobs-grid">
       <!-- populated by JS -->
     </div>
-    <a class="section-link" href="/jobs" style="display:inline-block;margin-top:1.2rem;">View all jobs →</a>
+    <a class="section-link" href="/jobs" style="display:inline-block;margin-top:1.2rem;" data-en="View all jobs →" data-es="Ver todos los empleos →">View all jobs →</a>
   </div>
 </section>
 
 <!-- SALARY SIGNALS -->
 <section class="section" style="background: var(--bg2);">
   <div class="container">
-    <div class="section-marker"><span class="arrow">→</span> Salary signals / market intelligence</div>
+    <div class="section-marker" data-en="→ Salary signals / market intelligence" data-es="→ Señales salariales / inteligencia de mercado">→ Salary signals / market intelligence</div>
     <div class="section-header">
-      <h2 class="section-h2">What LatAm Tech Pays</h2>
-      <a class="section-link" href="/tracker">Full Tracker →</a>
+      <h2 class="section-h2" data-en="What LatAm Tech Pays" data-es="Lo Que Paga el Tech en LatAm">What LatAm Tech Pays</h2>
+      <a class="section-link" href="/tracker" data-en="Full Tracker →" data-es="Tracker completo →">Full Tracker →</a>
     </div>
 
     <div class="salary-section">
@@ -1354,7 +1359,7 @@
 <!-- WHY NORTEC -->
 <section class="section">
   <div class="container">
-    <div class="section-marker"><span class="arrow">→</span> Why Nortec</div>
+    <div class="section-marker" data-en="→ Why Nortec" data-es="→ Por qué Nortec">→ Why Nortec</div>
     <div class="why-grid">
       <div class="why-visual">
         <div style="position:absolute;inset:0;opacity:0.3;" class="grid-bg"></div>
@@ -1407,7 +1412,7 @@
 <!-- TESTIMONIALS -->
 <section class="section" style="background:var(--bg2);">
   <div class="container">
-    <div class="section-marker"><span class="arrow">→</span> Trusted by talent across LatAm</div>
+    <div class="section-marker" data-en="→ Trusted by talent across LatAm" data-es="→ Confiado por talento en toda LatAm">→ Trusted by talent across LatAm</div>
     <div class="testimonials-grid">
       <div class="testimonial">
         <p class="t-quote">Nortec helped me land a fully remote role with a U.S. company while staying in Colombia. The salary data gave me the confidence to negotiate."</p>
@@ -1428,7 +1433,7 @@
 
     <div style="margin-top:1px;background:var(--surface);border:1px solid var(--border);border-top:none;padding:1.25rem 1.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;">
       <div style="font-family:var(--font-display);font-size:1.8rem;font-weight:700;color:var(--north-star);">JOIN 45,000<span style="color:var(--teal);">+</span> LATAM TALENT</div>
-      <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);letter-spacing:0.08em;">Follow for daily opportunities and career insights.</div>
+      <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);letter-spacing:0.08em;" data-en="Follow for daily opportunities and career insights." data-es="Síguenos para oportunidades diarias e insights de carrera.">Follow for daily opportunities and career insights.</div>
       <div style="display:flex;gap:10px;">
         <a href="#" class="btn-ghost">LINKEDIN</a>
         <a href="#" class="btn-ghost">X</a>
@@ -1440,7 +1445,7 @@
 
 <!-- SPONSOR STRIP -->
 <div class="sponsor-strip">
-  <span class="sponsor-label">Trusted by:</span>
+  <span class="sponsor-label" data-en="Trusted by:" data-es="Con la confianza de:">Trusted by:</span>
   <div class="sponsor-logos">
     <a href="#" class="sponsor-logo">Deel</a>
     <a href="#" class="sponsor-logo">Remote.com</a>
@@ -1449,7 +1454,7 @@
     <a href="#" class="sponsor-logo">Linear</a>
     <a href="#" class="sponsor-logo">Supabase</a>
   </div>
-  <a href="/sponsors" style="margin-left:auto;font-family:var(--font-mono);font-size:10px;color:var(--teal);letter-spacing:0.08em;text-decoration:none;">Become a sponsor →</a>
+  <a href="/sponsors" style="margin-left:auto;font-family:var(--font-mono);font-size:10px;color:var(--teal);letter-spacing:0.08em;text-decoration:none;" data-en="Become a sponsor →" data-es="Conviértete en patrocinador →">Become a sponsor →</a>
 </div>
 
 <!-- CTA -->
@@ -1458,13 +1463,13 @@
     <div class="cta-section">
       <div>
         <h2 class="cta-h2">YOUR NEXT<br>JOB IS<br><em>REMOTE.</em></h2>
-        <span class="cta-es">Tu próximo trabajo es remoto. Nortec te lo encuentra.</span>
+        <span class="cta-es" data-en="Your next job is remote. Nortec finds it for you." data-es="Tu próximo trabajo es remoto. Nortec te lo encuentra.">Tu próximo trabajo es remoto. Nortec te lo encuentra.</span>
         <form class="email-form" onsubmit="handleSub(event)" data-source="cta-bottom">
           <input type="email" placeholder="tu@email.com" required>
-          <button type="submit">Subscribe free →</button>
+          <button type="submit" data-en="Subscribe free →" data-es="Suscríbete gratis →">Subscribe free →</button>
         </form>
         <div style="margin-top:8px;font-family:var(--font-mono);font-size:9px;color:var(--text3);letter-spacing:0.06em;">
-          Free forever · No spam · Unsubscribe anytime
+          <span data-en="Free forever · No spam · Unsubscribe anytime" data-es="Gratis para siempre · Sin spam · Cancela cuando quieras">Free forever · No spam · Unsubscribe anytime</span>
         </div>
       </div>
 
@@ -1498,7 +1503,7 @@
   <div class="container footer-simple-grid">
     <div>
       <div class="footer-brand">NORTE<span style="color:var(--teal);">C</span></div>
-      <p class="footer-desc">
+      <p class="footer-desc" data-en="The bilingual career-intelligence platform for LatAm tech talent pursuing global remote work. Built in LatAm. Designed for the world." data-es="La plataforma bilingüe de inteligencia profesional para talento tech de LatAm que busca trabajo remoto global. Hecha en LatAm. Diseñada para el mundo.">
         The bilingual career-intelligence platform for LatAm tech talent pursuing global remote work.
         Built in LatAm. Designed for the world.
       </p>
@@ -1511,20 +1516,20 @@
     </div>
 
     <div>
-      <div class="label label-teal" style="margin-bottom:0.75rem;">Quick links</div>
+      <div class="label label-teal" style="margin-bottom:0.75rem;" data-en="Quick links" data-es="Enlaces rápidos">Quick links</div>
       <div class="footer-links-grid">
-        <a href="/jobs">Jobs</a>
+        <a href="/jobs" data-en="Jobs" data-es="Empleos">Jobs</a>
         <a href="/tracker">Job Tracker</a>
-        <a href="/archive">Archive</a>
+        <a href="/archive" data-en="Archive" data-es="Archivo">Archive</a>
         <a href="/issue/001">Issue #001</a>
-        <a href="/sponsors">For Employers</a>
-        <a href="/sponsors">Sponsors</a>
+        <a href="/sponsors" data-en="For Employers" data-es="Para Empleadores">For Employers</a>
+        <a href="/sponsors" data-en="Sponsors" data-es="Patrocinadores">Sponsors</a>
       </div>
     </div>
   </div>
   <div class="divider" style="margin:2rem 0;"></div>
   <div class="container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;">
-    <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);letter-spacing:0.06em;">© 2026 NORTEC · ALL RIGHTS RESERVED</div>
+    <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);letter-spacing:0.06em;" data-en="© 2026 NORTEC · ALL RIGHTS RESERVED" data-es="© 2026 NORTEC · TODOS LOS DERECHOS RESERVADOS">© 2026 NORTEC · ALL RIGHTS RESERVED</div>
     <div style="display:flex;gap:1.5rem;align-items:center;">
       <span style="font-family:var(--font-mono);font-size:10px;color:var(--teal);letter-spacing:0.06em;">N →</span>
       <span style="font-family:var(--font-mono);font-size:10px;color:var(--text3);letter-spacing:0.06em;">DIRECTION &gt; PURPOSE &gt; IMPACT</span>
@@ -1534,6 +1539,7 @@
 </footer>
 
 <script type="module">
+import { initI18n, getCurrentLanguage } from '/js/i18n.js';
 import { submitEmail } from '/js/subscribe.js';
 import { JOBS, SALARY_DATA } from '/js/jobs.js';
 import { scorePips, scoreLabel } from '/js/components.js';
@@ -1568,6 +1574,9 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
 // Render jobs grid
 const grid = document.getElementById('jobs-grid');
 if (grid) {
+  const lang = getCurrentLanguage();
+  const whyLabel = lang === 'es' ? 'Por qué importa:' : 'Why it matters:';
+  const viewJobLabel = lang === 'es' ? 'Ver empleo' : 'View job';
   grid.innerHTML = JOBS.map(j => `
     <div class="job-card" onclick="window.location='/job?id=${j.id}'">
       <div class="job-card-co">${j.company} <span style="color:var(--text3)">· ${j.location}</span></div>
@@ -1577,7 +1586,7 @@ if (grid) {
         ${j.tags.map(t => `<span class="job-tag${t.includes('AI') || t.includes('LLM') ? ' teal' : ''}">${t}</span>`).join('')}
       </div>
       <div style="font-family:var(--font-mono);font-size:10px;color:var(--text2);line-height:1.7;margin-bottom:12px;border-top:1px solid var(--border);padding-top:10px;">
-        <strong style="color:var(--orient-red);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;">Why it matters:</strong><br>
+        <strong style="color:var(--orient-red);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;">${whyLabel}</strong><br>
         ${j.why}
       </div>
       <div class="job-card-footer">
@@ -1587,7 +1596,7 @@ if (grid) {
         </div>
         <div style="text-align:right;">
           ${scoreLabel(j.score)}
-          <div style="margin-top:6px;"><a class="job-cta" href="/job?id=${j.id}">View job → ${j.source}</a></div>
+          <div style="margin-top:6px;"><a class="job-cta" href="/job?id=${j.id}">${viewJobLabel} → ${j.source}</a></div>
         </div>
       </div>
     </div>
@@ -1799,12 +1808,44 @@ function initSalaryTerminalTyping() {
   observer.observe(terminal);
 }
 
+initI18n();
 initJobCardSalaryObserver();
 initBarChartAnimation();
 initScrollReveal();
 initHeroParallax();
 initTerminalTyping();
 initSalaryTerminalTyping();
+window.addEventListener('nortec:langchange', () => {
+  if (grid) {
+    const lang = getCurrentLanguage();
+    const whyLabel = lang === 'es' ? 'Por qué importa:' : 'Why it matters:';
+    const viewJobLabel = lang === 'es' ? 'Ver empleo' : 'View job';
+    grid.innerHTML = JOBS.map(j => `
+      <div class="job-card" onclick="window.location='/job?id=${j.id}'">
+        <div class="job-card-co">${j.company} <span style="color:var(--text3)">· ${j.location}</span></div>
+        <div class="job-card-title">${j.title}</div>
+        <div class="job-card-meta">${j.type} · ${j.function} · Source: ${j.source}</div>
+        <div class="job-tags">
+          ${j.tags.map(t => `<span class="job-tag${t.includes('AI') || t.includes('LLM') ? ' teal' : ''}">${t}</span>`).join('')}
+        </div>
+        <div style="font-family:var(--font-mono);font-size:10px;color:var(--text2);line-height:1.7;margin-bottom:12px;border-top:1px solid var(--border);padding-top:10px;">
+          <strong style="color:var(--orient-red);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;">${whyLabel}</strong><br>
+          ${j.why}
+        </div>
+        <div class="job-card-footer">
+          <div>
+            <div class="job-salary" data-salary-text="${j.salary}" data-salary-num="${j.salaryNum ?? ''}">${j.salary}</div>
+            <div style="display:flex;gap:3px;margin-top:4px;">${scorePips(j.score)}</div>
+          </div>
+          <div style="text-align:right;">
+            ${scoreLabel(j.score)}
+            <div style="margin-top:6px;"><a class="job-cta" href="/job?id=${j.id}">${viewJobLabel} → ${j.source}</a></div>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+});
 </script>
 </body>
 </html>

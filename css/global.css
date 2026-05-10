@@ -191,6 +191,33 @@ body::before {
 }
 .btn-primary:hover { background: #ff6344; }
 
+.lang-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--border2);
+  padding: 6px 10px;
+}
+.lang-toggle button {
+  border: none;
+  background: transparent;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text3);
+  cursor: pointer;
+  padding: 0;
+}
+.lang-toggle .slash {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text3);
+}
+.lang-toggle button.active {
+  color: var(--teal);
+}
+
 /* ── TICKER ── */
 .ticker-wrap {
   background: var(--orient-red);
@@ -603,4 +630,7 @@ body::before {
 @media (max-width: 600px) {
   .nav-wordmark { display: none; }
   .btn-ghost { display: none; }
+  .lang-toggle { padding: 5px 8px; gap: 5px; }
+  .lang-toggle button,
+  .lang-toggle .slash { font-size: 10px; }
 }

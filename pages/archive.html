@@ -10,57 +10,62 @@
 <nav class="nav">
   <a class="nav-logo" href="/"><span>NORTE<span class="teal">C</span></span><div class="nav-wordmark">NORTHBOUND<br>TALENT.</div></a>
   <ul class="nav-links">
-    <li><a href="/jobs">Jobs</a></li>
-    <li><a href="/tracker">Tracker</a></li>
-    <li><a href="/archive" class="active">Archive</a></li>
-    <li><a href="/sponsors">Sponsors</a></li>
+    <li><a href="/jobs" data-en="Jobs" data-es="Empleos">Jobs</a></li>
+    <li><a href="/tracker" data-en="Tracker" data-es="Tracker">Tracker</a></li>
+    <li><a href="/archive" class="active" data-en="Archive" data-es="Archivo">Archive</a></li>
+    <li><a href="/sponsors" data-en="Sponsors" data-es="Patrocinadores">Sponsors</a></li>
     <li><a href="/issue/001">Issue #001</a></li>
   </ul>
   <div class="nav-actions">
-    <a class="btn-ghost" href="/sponsors">For Employers</a>
-    <a class="btn-primary" href="/#subscribe">Subscribe</a>
+    <a class="btn-ghost" href="/sponsors" data-en="For Employers" data-es="Para Empleadores">For Employers</a>
+    <div class="lang-toggle" aria-label="Language toggle">
+      <button type="button" data-lang-option="en">EN</button>
+      <span class="slash">/</span>
+      <button type="button" data-lang-option="es">ES</button>
+    </div>
+    <a class="btn-primary" href="/#subscribe" data-en="Subscribe" data-es="Suscríbete">Subscribe</a>
   </div>
 </nav>
 
 <div style="padding-top:var(--nav-h);">
   <div class="ticker-wrap">
     <div class="ticker-track">
-      <span class="ticker-item">Archive · All issues<span class="ticker-sep"> ◆ </span></span>
-      <span class="ticker-item">Northbound Talent.<span class="ticker-sep"> ◆ </span></span>
-      <span class="ticker-item">Archive · All issues<span class="ticker-sep"> ◆ </span></span>
-      <span class="ticker-item">Northbound Talent.<span class="ticker-sep"> ◆ </span></span>
+      <span class="ticker-item" data-en="Archive · All issues ◆" data-es="Archivo · Todas las ediciones ◆">Archive · All issues<span class="ticker-sep"> ◆ </span></span>
+      <span class="ticker-item" data-en="Northbound Talent. ◆" data-es="Talento Rumbo al Norte. ◆">Northbound Talent.<span class="ticker-sep"> ◆ </span></span>
+      <span class="ticker-item" data-en="Archive · All issues ◆" data-es="Archivo · Todas las ediciones ◆">Archive · All issues<span class="ticker-sep"> ◆ </span></span>
+      <span class="ticker-item" data-en="Northbound Talent. ◆" data-es="Talento Rumbo al Norte. ◆">Northbound Talent.<span class="ticker-sep"> ◆ </span></span>
     </div>
   </div>
 </div>
 
 <section style="background:var(--bg2);border-bottom:1px solid var(--border);padding:2.5rem 0;">
   <div class="container">
-    <div class="section-marker"><span class="arrow">→</span> All issues</div>
-    <h1 style="font-family:var(--font-display);font-size:clamp(2.5rem,5vw,4rem);font-weight:700;text-transform:uppercase;color:var(--north-star);line-height:0.92;">THE ARCHIVE</h1>
-    <p style="font-family:var(--font-mono);font-size:11px;color:var(--text2);margin-top:0.75rem;">Every issue of Nortec — public, searchable, and free.</p>
+    <div class="section-marker" data-en="→ All issues" data-es="→ Todas las ediciones">→ All issues</div>
+    <h1 style="font-family:var(--font-display);font-size:clamp(2.5rem,5vw,4rem);font-weight:700;text-transform:uppercase;color:var(--north-star);line-height:0.92;" data-en="THE ARCHIVE" data-es="EL ARCHIVO">THE ARCHIVE</h1>
+    <p style="font-family:var(--font-mono);font-size:11px;color:var(--text2);margin-top:0.75rem;" data-en="Every issue of Nortec — public, searchable, and free." data-es="Cada edición de Nortec — pública, buscable y gratis.">Every issue of Nortec — public, searchable, and free.</p>
   </div>
 </section>
 
 <div class="container" style="padding:3rem 1.5rem;">
   <div style="border:1px solid var(--border);">
     <div style="display:grid;grid-template-columns:100px 1fr auto;gap:0;border-bottom:1px solid var(--border2);background:var(--bg2);padding:10px 1.5rem;">
-      <div class="label">Issue</div>
-      <div class="label">Subject</div>
-      <div class="label">Date</div>
+      <div class="label" data-en="Issue" data-es="Edición">Issue</div>
+      <div class="label" data-en="Subject" data-es="Asunto">Subject</div>
+      <div class="label" data-en="Date" data-es="Fecha">Date</div>
     </div>
     <div style="display:grid;grid-template-columns:100px 1fr auto;border-bottom:1px solid var(--border);padding:1.25rem 1.5rem;cursor:pointer;transition:background 0.15s;" onmouseover="this.style.background='var(--surface)'" onmouseout="this.style.background='transparent'" onclick="window.location='/issue/001'">
       <div style="font-family:var(--font-mono);font-size:11px;color:var(--teal);">#001</div>
       <div>
-        <div style="font-family:var(--font-display);font-size:1.1rem;font-weight:600;color:var(--north-star);margin-bottom:4px;">Remote AI/tech roles hiring from LatAm</div>
+        <div style="font-family:var(--font-display);font-size:1.1rem;font-weight:600;color:var(--north-star);margin-bottom:4px;" data-en="Remote AI/tech roles hiring from LatAm" data-es="Roles remotos de AI/tech contratando en LatAm">Remote AI/tech roles hiring from LatAm</div>
         <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);">The Drop · Salary Signal · Company Radar · Application Playbook · Skill Move</div>
       </div>
       <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);white-space:nowrap;">May 9, 2026</div>
     </div>
     <div style="padding:3rem;text-align:center;">
-      <div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);letter-spacing:0.06em;margin-bottom:1rem;">More issues dropping weekly. Subscribe to get them first.</div>
+      <div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);letter-spacing:0.06em;margin-bottom:1rem;" data-en="More issues dropping weekly. Subscribe to get them first." data-es="Nuevas ediciones cada semana. Suscríbete para recibirlas primero.">More issues dropping weekly. Subscribe to get them first.</div>
       <form class="email-form" style="max-width:380px;margin:0 auto;" onsubmit="handleSub(event)" data-source="archive">
         <input type="email" placeholder="tu@email.com" required>
-        <button type="submit">Subscribe →</button>
+        <button type="submit" data-en="Subscribe →" data-es="Suscríbete →">Subscribe →</button>
       </form>
     </div>
   </div>
@@ -74,6 +79,10 @@ window.handleSub = function(e) {
   btn.style.background = 'var(--teal)';
   e.target.querySelector('input').value = '';
 };
+</script>
+<script type="module">
+import { initI18n } from '/js/i18n.js';
+initI18n();
 </script>
 </body>
 </html>
