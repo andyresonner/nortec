@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nortec Job Detail</title>
+<meta name="description" content="Nortec job detail for LatAm remote tech opportunities.">
+<link rel="stylesheet" href="/css/global.css">
+<style>
+.job-page { padding-top: calc(var(--nav-h) + 32px); }
+.job-shell {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem;
+}
+.job-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: 1px solid rgba(15,163,154,0.35);
+  padding: 2rem;
+}
+.job-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  text-transform: uppercase;
+  color: var(--north-star);
+  line-height: 0.95;
+  margin-bottom: 0.9rem;
+}
+.job-company {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 1rem;
+}
+.job-meta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text2);
+  line-height: 1.9;
+  margin-bottom: 1rem;
+}
+.job-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+}
+.job-empty {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text2);
+  line-height: 1.9;
+}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a class="nav-logo" href="/"><span>NORTE<span class="teal">C</span></span><div class="nav-wordmark">NORTHBOUND<br>TALENT.</div></a>
+  <ul class="nav-links">
+    <li><a href="/jobs" class="active">Jobs</a></li>
+    <li><a href="/tracker">Tracker</a></li>
+    <li><a href="/archive">Archive</a></li>
+    <li><a href="/sponsors">Sponsors</a></li>
+    <li><a href="/issue/001">Issue #001</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a class="btn-ghost" href="/sponsors">For Employers</a>
+    <a class="btn-primary" href="/#subscribe">Subscribe</a>
+  </div>
+</nav>
+
+<div class="job-page">
+  <div class="ticker-wrap">
+    <div class="ticker-track">
+      <span class="ticker-item">Nortec Job Detail <span class="ticker-sep">◆</span></span>
+      <span class="ticker-item">LatAm-verified remote opportunities <span class="ticker-sep">◆</span></span>
+      <span class="ticker-item">Nortec Score + Apply Angle <span class="ticker-sep">◆</span></span>
+      <span class="ticker-item">Nortec Job Detail <span class="ticker-sep">◆</span></span>
+      <span class="ticker-item">LatAm-verified remote opportunities <span class="ticker-sep">◆</span></span>
+      <span class="ticker-item">Nortec Score + Apply Angle <span class="ticker-sep">◆</span></span>
+    </div>
+  </div>
+
+  <main class="job-shell">
+    <div class="section-marker"><span class="arrow">→</span> Role detail</div>
+    <article class="job-panel" id="job-panel"></article>
+  </main>
+</div>
+
+<script type="module">
+import { JOBS } from '/js/jobs.js';
+import { scorePips, scoreLabel } from '/js/components.js';
+
+const panel = document.getElementById('job-panel');
+const params = new URLSearchParams(window.location.search);
+const id = params.get('id') || 'j001';
+const job = JOBS.find((item) => item.id === id);
+
+if (!job) {
+  document.title = 'Job not found — Nortec';
+  panel.innerHTML = `
+    <h1 class="job-title">Job not found</h1>
+    <p class="job-empty">We could not find that role. Go back to the jobs list and pick another listing.</p>
+    <div class="job-actions">
+      <a class="btn-primary" href="/jobs">Back to jobs →</a>
+      <a class="btn-ghost" href="/issue/001">Open issue #001 →</a>
+    </div>
+  `;
+} else {
+  document.title = `${job.title} — ${job.company} | Nortec`;
+  panel.innerHTML = `
+    <div class="job-company">${job.company} · ${job.location}</div>
+    <h1 class="job-title">${job.title}</h1>
+    <div class="job-meta">${job.type} · ${job.function} · Source: ${job.source}</div>
+    <div class="job-tags" style="margin-bottom:1rem;">
+      ${job.tags.map((tag) => `<span class="job-tag">${tag}</span>`).join('')}
+    </div>
+    <div class="job-meta" style="border-top:1px solid var(--border);padding-top:1rem;">
+      <strong style="color:var(--orient-red);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;">Why it matters:</strong><br>
+      ${job.why}
+    </div>
+    <div class="job-meta">
+      <strong style="color:var(--orient-red);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;">Apply angle:</strong><br>
+      ${job.applyAngle}
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;border-top:1px solid var(--border);padding-top:1rem;">
+      <div>
+        <div class="job-salary">${job.salary}</div>
+        <div style="display:flex;gap:4px;margin-top:5px;">${scorePips(job.score)}</div>
+      </div>
+      <div style="text-align:right;">
+        ${scoreLabel(job.score)}
+      </div>
+    </div>
+    <div class="job-actions">
+      <a class="btn-primary" href="${job.link}" target="_blank" rel="noopener noreferrer">Apply at ${job.source} →</a>
+      <a class="btn-ghost" href="/jobs">Back to jobs</a>
+    </div>
+  `;
+}
+</script>
+</body>
+</html>

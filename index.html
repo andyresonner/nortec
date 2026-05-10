@@ -818,7 +818,7 @@
 .jobs-grid .job-card {
   border: 1px solid var(--border);
   border-top-color: rgba(15,163,154,0.28);
-  cursor: default;
+  cursor: pointer;
 }
 @keyframes ping-sonar {
   0% { opacity: 0.65; transform: translate(-50%, -50%) scale(1); }
@@ -1569,7 +1569,7 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
 const grid = document.getElementById('jobs-grid');
 if (grid) {
   grid.innerHTML = JOBS.map(j => `
-    <div class="job-card">
+    <div class="job-card" onclick="window.location='/job?id=${j.id}'">
       <div class="job-card-co">${j.company} <span style="color:var(--text3)">· ${j.location}</span></div>
       <div class="job-card-title">${j.title}</div>
       <div class="job-card-meta">${j.type} · ${j.function} · Source: ${j.source}</div>
@@ -1587,7 +1587,7 @@ if (grid) {
         </div>
         <div style="text-align:right;">
           ${scoreLabel(j.score)}
-          <div style="margin-top:6px;"><a class="job-cta" href="${j.link}" target="_blank">Apply → ${j.source}</a></div>
+          <div style="margin-top:6px;"><a class="job-cta" href="/job?id=${j.id}">View job → ${j.source}</a></div>
         </div>
       </div>
     </div>
