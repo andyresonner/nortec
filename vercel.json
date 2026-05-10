@@ -3,6 +3,7 @@
   "trailingSlash": false,
   "rewrites": [
     { "source": "/jobs", "destination": "/pages/jobs.html" },
+    { "source": "/job", "destination": "/pages/job.html" },
     { "source": "/tracker", "destination": "/pages/tracker.html" },
     { "source": "/archive", "destination": "/pages/archive.html" },
     { "source": "/sponsors", "destination": "/pages/sponsors.html" },

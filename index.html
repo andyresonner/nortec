@@ -1487,7 +1487,7 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
 const grid = document.getElementById('jobs-grid');
 if (grid) {
   grid.innerHTML = JOBS.map(j => `
-    <div class="job-card" onclick="window.open('${j.link}','_blank')">
+    <div class="job-card" onclick="window.location.href='/job?id=${j.id}'">
       <div class="job-card-co">${j.company} <span style="color:var(--text3)">· ${j.location}</span></div>
       <div class="job-card-title">${j.title}</div>
       <div class="job-card-meta">${j.type} · ${j.function} · Source: ${j.source}</div>
@@ -1505,7 +1505,7 @@ if (grid) {
         </div>
         <div style="text-align:right;">
           ${scoreLabel(j.score)}
-          <div style="margin-top:6px;"><a class="job-cta" href="${j.link}" target="_blank">Apply → ${j.source}</a></div>
+          <div style="margin-top:6px;"><a class="job-cta" href="/job?id=${j.id}">View details →</a></div>
         </div>
       </div>
     </div>

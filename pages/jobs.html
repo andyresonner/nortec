@@ -246,7 +246,7 @@ function renderJobs(jobs) {
   const count = document.getElementById('job-count');
   count.textContent = jobs.length;
   list.innerHTML = jobs.map(j => `
-    <div class="job-list-row score-${j.score}" onclick="window.open('${j.link}','_blank')">
+    <div class="job-list-row score-${j.score}" onclick="window.location.href='/job?id=${j.id}'">
       <div>
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
           <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);">${j.company}</div>
@@ -266,7 +266,7 @@ function renderJobs(jobs) {
         ${scoreLabel(j.score)}
         <div style="font-family:var(--font-display);font-size:1.2rem;font-weight:600;color:var(--teal-bright);margin:8px 0 4px;">${j.salary}</div>
         <div style="display:flex;gap:3px;justify-content:flex-end;margin-bottom:8px;">${scorePips(j.score)}</div>
-        <a style="font-family:var(--font-mono);font-size:10px;color:var(--orient-red);letter-spacing:0.06em;text-decoration:none;" href="${j.link}" target="_blank">Apply → ${j.source}</a>
+        <a style="font-family:var(--font-mono);font-size:10px;color:var(--orient-red);letter-spacing:0.06em;text-decoration:none;" href="/job?id=${j.id}">View details →</a>
       </div>
     </div>
   `).join('');

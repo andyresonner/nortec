@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Job Detail — Nortec</title>
+<meta name="description" content="Nortec job detail: full role context, apply angle, score, and source link.">
+<link rel="stylesheet" href="/css/global.css">
+<style>
+.job-page-wrap { padding-top: var(--nav-h); }
+.job-header {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  padding: 2.4rem 0 2rem;
+}
+.job-kicker {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--orient-red);
+  margin-bottom: 1rem;
+}
+.job-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.1rem, 5vw, 3.8rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 0.95;
+  color: var(--north-star);
+  margin-bottom: 0.8rem;
+}
+.job-company {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--teal);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.job-detail-layout {
+  padding: 2rem 0 3rem;
+}
+.job-detail-card {
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+.job-top-meta {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--border);
+}
+.meta-box {
+  background: var(--bg2);
+  padding: 0.95rem 1rem;
+}
+.meta-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 4px;
+}
+.meta-value {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--north-star);
+  letter-spacing: 0.04em;
+}
+.job-content {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 1px;
+  background: var(--border);
+}
+.job-main-copy {
+  background: var(--surface);
+  padding: 1.6rem;
+}
+.job-side {
+  background: var(--bg2);
+  padding: 1.6rem;
+}
+.copy-block + .copy-block {
+  margin-top: 1.4rem;
+}
+.copy-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--orient-red);
+  margin-bottom: 0.6rem;
+}
+.copy-text {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text2);
+  line-height: 1.85;
+}
+.stack-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.stack-tag {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  border: 1px solid var(--border2);
+  color: var(--text2);
+}
+.stack-tag.ai {
+  border-color: rgba(15,163,154,0.45);
+  color: var(--teal);
+}
+.score-block {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+.score-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+.score-pips {
+  display: flex;
+  gap: 4px;
+}
+.apply-btn {
+  width: 100%;
+  border: none;
+  background: var(--orient-red);
+  color: var(--bg);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 14px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: background 0.18s;
+}
+.apply-btn:hover { background: #ff6344; }
+.back-link {
+  margin-top: 1.1rem;
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--teal);
+  text-decoration: none;
+}
+.back-link:hover { color: var(--north-star); }
+.not-found {
+  border: 1px solid var(--border2);
+  background: var(--surface);
+  padding: 1.5rem;
+}
+@media (max-width: 900px) {
+  .job-top-meta { grid-template-columns: 1fr 1fr; }
+  .job-content { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-logo" href="/">NORTEC<div class="nav-wordmark">NORTHBOUND<br>TALENT.</div></a>
+  <ul class="nav-links">
+    <li><a href="/jobs" class="active">Jobs</a></li>
+    <li><a href="/tracker">Tracker</a></li>
+    <li><a href="/archive">Archive</a></li>
+    <li><a href="/sponsors">Sponsors</a></li>
+    <li><a href="/issue/001">Issue #001</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a class="btn-ghost" href="/sponsors">For Employers</a>
+    <a class="btn-primary" href="/#subscribe">Subscribe</a>
+  </div>
+</nav>
+
+<div class="job-page-wrap">
+  <div class="ticker-wrap">
+    <div class="ticker-track">
+      <span class="ticker-item">Nortec Job Detail<span class="ticker-sep"> ◆ </span></span>
+      <span class="ticker-item">Verified remote opportunities for LatAm<span class="ticker-sep"> ◆ </span></span>
+      <span class="ticker-item">Why it matters + apply angle included<span class="ticker-sep"> ◆ </span></span>
+      <span class="ticker-item">Nortec score on every role<span class="ticker-sep"> ◆ </span></span>
+      <span class="ticker-item">Nortec Job Detail<span class="ticker-sep"> ◆ </span></span>
+      <span class="ticker-item">Verified remote opportunities for LatAm<span class="ticker-sep"> ◆ </span></span>
+      <span class="ticker-item">Why it matters + apply angle included<span class="ticker-sep"> ◆ </span></span>
+      <span class="ticker-item">Nortec score on every role<span class="ticker-sep"> ◆ </span></span>
+    </div>
+  </div>
+
+  <header class="job-header">
+    <div class="container" id="job-header-content"></div>
+  </header>
+
+  <main class="container job-detail-layout" id="job-detail-root"></main>
+</div>
+
+<script type="module">
+import { JOBS } from '/js/jobs.js';
+import { scorePips, scoreLabel } from '/js/components.js';
+
+const params = new URLSearchParams(window.location.search);
+const jobId = params.get('id');
+const job = JOBS.find((entry) => entry.id === jobId);
+
+const headerEl = document.getElementById('job-header-content');
+const root = document.getElementById('job-detail-root');
+
+if (!job) {
+  headerEl.innerHTML = `
+    <div class="job-kicker">Job not found</div>
+    <h1 class="job-title">This role is unavailable</h1>
+    <div class="job-company">The listing might have expired or the id is invalid.</div>
+  `;
+
+  root.innerHTML = `
+    <section class="not-found">
+      <p class="copy-text" style="margin-bottom:12px;">Try browsing the latest verified listings to find an active opportunity.</p>
+      <a class="back-link" href="/jobs">← Back to jobs</a>
+    </section>
+  `;
+} else {
+  headerEl.innerHTML = `
+    <div class="job-kicker">Nortec job brief · ${job.id.toUpperCase()}</div>
+    <h1 class="job-title">${job.title}</h1>
+    <div class="job-company">${job.company}</div>
+  `;
+
+  root.innerHTML = `
+    <section class="job-detail-card">
+      <div class="job-top-meta">
+        <div class="meta-box">
+          <div class="meta-label">Company</div>
+          <div class="meta-value">${job.company}</div>
+        </div>
+        <div class="meta-box">
+          <div class="meta-label">Location</div>
+          <div class="meta-value">${job.location}</div>
+        </div>
+        <div class="meta-box">
+          <div class="meta-label">Type</div>
+          <div class="meta-value">${job.type}</div>
+        </div>
+        <div class="meta-box">
+          <div class="meta-label">Salary</div>
+          <div class="meta-value">${job.salary}</div>
+        </div>
+      </div>
+
+      <div class="job-content">
+        <div class="job-main-copy">
+          <div class="copy-block">
+            <div class="copy-label">Why it matters</div>
+            <p class="copy-text">${job.why}</p>
+          </div>
+          <div class="copy-block">
+            <div class="copy-label">Apply angle</div>
+            <p class="copy-text">${job.applyAngle}</p>
+          </div>
+        </div>
+
+        <aside class="job-side">
+          <div class="score-block">
+            <div class="meta-label">Nortec Score</div>
+            <div class="score-row">
+              ${scoreLabel(job.score)}
+              <div class="score-pips">${scorePips(job.score)}</div>
+            </div>
+          </div>
+
+          <div class="copy-block" style="margin-bottom:1rem;">
+            <div class="meta-label">Stack</div>
+            <div class="stack-wrap">
+              ${job.tags.map((tag) => `<span class="stack-tag${tag.includes('AI') || tag.includes('LLM') ? ' ai' : ''}">${tag}</span>`).join('')}
+            </div>
+          </div>
+
+          <a class="apply-btn" href="${job.link}" target="_blank" rel="noopener noreferrer">
+            Apply at ${job.source} →
+          </a>
+          <a class="back-link" href="/jobs">← Back to jobs</a>
+        </aside>
+      </div>
+    </section>
+  `;
+}
+</script>
+</body>
+</html>
