@@ -59,6 +59,12 @@ export function getCurrentLanguage() {
   return resolveLanguage();
 }
 
+export function refreshI18n() {
+  const lang = resolveLanguage();
+  setTextForLanguage(lang);
+  syncToggles(lang);
+}
+
 export function initI18n() {
   wireToggles();
   applyLanguage(resolveLanguage());

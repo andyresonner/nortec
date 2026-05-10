@@ -696,11 +696,12 @@
 
 /* ── REWORK OVERRIDES ── */
 .hero {
-  min-height: calc(100vh - 56px);
+  min-height: calc(100vh - var(--nav-h));
+  margin-top: var(--nav-h);
   background: radial-gradient(circle at 26% 34%, rgba(15,163,154,0.16), rgba(12,22,20,0.02) 36%, transparent 60%), var(--bg);
 }
 .hero-body {
-  min-height: calc(100vh - 56px);
+  min-height: calc(100vh - var(--nav-h));
   grid-template-columns: minmax(0, 1fr) minmax(380px, 44vw);
 }
 .hero-left {
@@ -1052,7 +1053,7 @@
 <nav class="nav">
   <a class="nav-logo" href="/">
     <span>NORTE<span class="teal">C</span></span>
-    <div class="nav-wordmark">NORTHBOUND<br>TALENT.</div>
+    <div class="nav-wordmark" data-en="NORTHBOUND<br>TALENT." data-es="TALENTO<br>RUMBO AL NORTE." data-i18n-html="true">NORTHBOUND<br>TALENT.</div>
   </a>
   <ul class="nav-links">
     <li><a href="/jobs" class="active" data-en="Jobs" data-es="Empleos">Jobs</a></li>
@@ -1071,31 +1072,6 @@
     <a class="btn-primary" href="#subscribe" data-en="Subscribe" data-es="Suscríbete">Subscribe</a>
   </div>
 </nav>
-
-<!-- TICKER -->
-<div class="pt-nav">
-  <div class="ticker-wrap">
-    <div class="ticker-track">
-      <span class="ticker-item">Remote AI + Tech Jobs · LatAm<span class="ticker-sep"> ◆ </span></span>
-      <span class="ticker-item">Salary Signals · Señales de salario<span class="ticker-sep"> ◆ </span></span>
-      <span class="ticker-item">Work global. Live local.<span class="ticker-sep"> ◆ </span></span>
-      <span class="ticker-item">Devs · Engineers · CS · Data · QA<span class="ticker-sep"> ◆ </span></span>
-      <span class="ticker-item">Colombia · México · Argentina · Brasil · Chile<span class="ticker-sep"> ◆ </span></span>
-      <span class="ticker-item">Trabaja global. Vive en LatAm.<span class="ticker-sep"> ◆ </span></span>
-      <span class="ticker-item">Bilingual · EN / ES · Weekly · Free<span class="ticker-sep"> ◆ </span></span>
-      <span class="ticker-item">Northbound Talent.<span class="ticker-sep"> ◆ </span></span>
-      <!-- duplicate for loop -->
-      <span class="ticker-item">Remote AI + Tech Jobs · LatAm<span class="ticker-sep"> ◆ </span></span>
-      <span class="ticker-item">Salary Signals · Señales de salario<span class="ticker-sep"> ◆ </span></span>
-      <span class="ticker-item">Work global. Live local.<span class="ticker-sep"> ◆ </span></span>
-      <span class="ticker-item">Devs · Engineers · CS · Data · QA<span class="ticker-sep"> ◆ </span></span>
-      <span class="ticker-item">Colombia · México · Argentina · Brasil · Chile<span class="ticker-sep"> ◆ </span></span>
-      <span class="ticker-item">Trabaja global. Vive en LatAm.<span class="ticker-sep"> ◆ </span></span>
-      <span class="ticker-item">Bilingual · EN / ES · Weekly · Free<span class="ticker-sep"> ◆ </span></span>
-      <span class="ticker-item">Northbound Talent.<span class="ticker-sep"> ◆ </span></span>
-    </div>
-  </div>
-</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -1231,29 +1207,29 @@
       <article class="feature-chip">
         <div class="feature-icon">💼</div>
         <div>
-          <div class="feature-title">Real Remote Jobs</div>
-          <div class="feature-desc">Hand-picked roles from companies actively hiring LatAm talent. Each with a Nortec Score and apply angle.</div>
+          <div class="feature-title" data-en="Real Remote Jobs" data-es="Empleos Remotos Reales">Real Remote Jobs</div>
+          <div class="feature-desc" data-en="Hand-picked roles from companies actively hiring LatAm talent. Each with a Nortec Score and apply angle." data-es="Roles seleccionados de empresas que contratan activamente talento LatAm. Cada uno con Puntaje Nortec y estrategia de aplicación.">Hand-picked roles from companies actively hiring LatAm talent. Each with a Nortec Score and apply angle.</div>
         </div>
       </article>
       <article class="feature-chip">
         <div class="feature-icon">📊</div>
         <div>
-          <div class="feature-title">Salary Signals</div>
-          <div class="feature-desc">Real compensation data to benchmark your worth and negotiate better. Listed, inferred, and self-reported.</div>
+          <div class="feature-title" data-en="Salary Signals" data-es="Señales Salariales">Salary Signals</div>
+          <div class="feature-desc" data-en="Real compensation data to benchmark your worth and negotiate better. Listed, inferred, and self-reported." data-es="Datos reales de compensación para medir tu valor y negociar mejor. Publicados, inferidos y autorreportados.">Real compensation data to benchmark your worth and negotiate better. Listed, inferred, and self-reported.</div>
         </div>
       </article>
       <article class="feature-chip">
         <div class="feature-icon">📋</div>
         <div>
-          <div class="feature-title">Application Playbooks</div>
-          <div class="feature-desc">Résumé, portfolio, and interview guides built for global standards. Role teardowns for LatAm candidates.</div>
+          <div class="feature-title" data-en="Application Playbooks" data-es="Playbooks de Aplicación">Application Playbooks</div>
+          <div class="feature-desc" data-en="Résumé, portfolio, and interview guides built for global standards. Role teardowns for LatAm candidates." data-es="Guías de CV, portafolio e entrevistas diseñadas para estándares globales. Desglose de roles para candidatos LatAm.">Résumé, portfolio, and interview guides built for global standards. Role teardowns for LatAm candidates.</div>
         </div>
       </article>
       <article class="feature-chip">
         <div class="feature-icon">🔭</div>
         <div>
-          <div class="feature-title">Company Radar</div>
-          <div class="feature-desc">Discover remote-friendly companies that value LatAm talent — before the job post goes live.</div>
+          <div class="feature-title" data-en="Company Radar" data-es="Radar de Empresas">Company Radar</div>
+          <div class="feature-desc" data-en="Discover remote-friendly companies that value LatAm talent — before the job post goes live." data-es="Descubre empresas remotas que valoran talento LatAm — antes de que publiquen la vacante.">Discover remote-friendly companies that value LatAm talent — before the job post goes live.</div>
         </div>
       </article>
     </div>
@@ -1289,7 +1265,7 @@
       <div class="salary-grid">
         <!-- Chart 1: By role -->
         <div>
-          <div class="salary-chart-title">Average total comp (USD) — by role</div>
+          <div class="salary-chart-title" data-en="Average total comp (USD) — by role" data-es="Compensación total promedio (USD) — por rol">Average total comp (USD) — by role</div>
           <div class="bar-chart" id="salary-chart">
             <!-- populated by JS -->
           </div>
@@ -1297,30 +1273,30 @@
 
         <!-- Chart 2: by country map (ASCII/CSS) -->
         <div>
-          <div class="salary-chart-title">Compensation by country — all roles</div>
+          <div class="salary-chart-title" data-en="Compensation by country — all roles" data-es="Compensación por país — todos los roles">Compensation by country — all roles</div>
           <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px;">
             <div class="bar-row">
-              <div class="bar-label">🇧🇷 Brazil</div>
+              <div class="bar-label" data-en="🇧🇷 Brazil" data-es="🇧🇷 Brasil">🇧🇷 Brazil</div>
               <div class="bar-track"><div class="bar-fill" data-width="78%" style="width:0"></div></div>
               <div class="bar-val">$78K</div>
             </div>
             <div class="bar-row">
-              <div class="bar-label">🇦🇷 Argentina</div>
+              <div class="bar-label" data-en="🇦🇷 Argentina" data-es="🇦🇷 Argentina">🇦🇷 Argentina</div>
               <div class="bar-track"><div class="bar-fill" data-width="65%" style="width:0"></div></div>
               <div class="bar-val">$65K</div>
             </div>
             <div class="bar-row">
-              <div class="bar-label">🇨🇴 Colombia</div>
+              <div class="bar-label" data-en="🇨🇴 Colombia" data-es="🇨🇴 Colombia">🇨🇴 Colombia</div>
               <div class="bar-track"><div class="bar-fill" data-width="61%" style="width:0"></div></div>
               <div class="bar-val">$61K</div>
             </div>
             <div class="bar-row">
-              <div class="bar-label">🇲🇽 México</div>
+              <div class="bar-label" data-en="🇲🇽 Mexico" data-es="🇲🇽 México">🇲🇽 México</div>
               <div class="bar-track"><div class="bar-fill" data-width="70%" style="width:0"></div></div>
               <div class="bar-val">$70K</div>
             </div>
             <div class="bar-row">
-              <div class="bar-label">🇨🇱 Chile</div>
+              <div class="bar-label" data-en="🇨🇱 Chile" data-es="🇨🇱 Chile">🇨🇱 Chile</div>
               <div class="bar-track"><div class="bar-fill" data-width="68%" style="width:0"></div></div>
               <div class="bar-val">$68K</div>
             </div>
@@ -1329,7 +1305,7 @@
 
         <!-- Chart 3: Trend + terminal -->
         <div>
-          <div class="salary-chart-title">Salary trend (YoY) — all roles</div>
+          <div class="salary-chart-title" data-en="Salary trend (YoY) — all roles" data-es="Tendencia salarial (YoY) — todos los roles">Salary trend (YoY) — all roles</div>
           <svg width="100%" height="80" viewBox="0 0 300 80" preserveAspectRatio="none">
             <path d="M0,60 L50,52 L100,45 L150,38 L200,28 L250,18 L300,10"
               stroke="#0FA39A" stroke-width="2" fill="none"/>
@@ -1339,16 +1315,16 @@
             <text x="250" y="38" font-family="IBM Plex Mono" font-size="8" fill="#FF4B28" opacity="0.6">2024</text>
           </svg>
           <div class="terminal salary-terminal" id="salary-signal-terminal" style="margin-top:1rem;">
-            <div class="salary-live-badge">LIVE</div>
+            <div class="salary-live-badge" data-en="LIVE" data-es="EN VIVO">LIVE</div>
             <div class="terminal-bar">
               <div class="t-dot r"></div><div class="t-dot y"></div><div class="t-dot g"></div>
             </div>
             <div class="t-line salary-type-line" data-salary-line><span class="prompt">&gt; </span><span class="cmd">nortec --northbound</span></div>
-            <div class="t-line salary-type-line check-line" data-salary-line><span class="ok">[✓]</span> Global mindset</div>
-            <div class="t-line salary-type-line check-line" data-salary-line><span class="ok">[✓]</span> Local impact</div>
-            <div class="t-line salary-type-line check-line" data-salary-line><span class="ok">[✓]</span> Human connection</div>
-            <div class="t-line salary-type-line check-line" data-salary-line><span class="ok">[✓]</span> Limitless future</div>
-            <div class="t-line salary-type-line" data-salary-line>status: <span class="salary-status">northbound</span> <span class="t-cursor"></span></div>
+            <div class="t-line salary-type-line check-line" data-salary-line><span class="ok">[✓]</span> <span data-en="Global mindset" data-es="Mentalidad global">Global mindset</span></div>
+            <div class="t-line salary-type-line check-line" data-salary-line><span class="ok">[✓]</span> <span data-en="Local impact" data-es="Impacto local">Local impact</span></div>
+            <div class="t-line salary-type-line check-line" data-salary-line><span class="ok">[✓]</span> <span data-en="Human connection" data-es="Conexión humana">Human connection</span></div>
+            <div class="t-line salary-type-line check-line" data-salary-line><span class="ok">[✓]</span> <span data-en="Limitless future" data-es="Futuro sin límites">Limitless future</span></div>
+            <div class="t-line salary-type-line" data-salary-line><span data-en="status:" data-es="estado:">status:</span> <span class="salary-status" data-en="northbound" data-es="rumbo al norte">northbound</span> <span class="t-cursor"></span></div>
           </div>
         </div>
       </div>
@@ -1398,11 +1374,11 @@
         </div>
 
         <div class="checklist">
-          <div class="checklist-item">LatAm-first, globally minded</div>
-          <div class="checklist-item">Bilingual content & community</div>
-          <div class="checklist-item">Actionable data, not noise</div>
-          <div class="checklist-item">Built by LatAm, for LatAm</div>
-          <div class="checklist-item">Nortec Score on every role</div>
+          <div class="checklist-item" data-en="LatAm-first, globally minded" data-es="LatAm primero, visión global">LatAm-first, globally minded</div>
+          <div class="checklist-item" data-en="Bilingual content & community" data-es="Contenido y comunidad bilingüe">Bilingual content & community</div>
+          <div class="checklist-item" data-en="Actionable data, not noise" data-es="Datos accionables, no ruido">Actionable data, not noise</div>
+          <div class="checklist-item" data-en="Built by LatAm, for LatAm" data-es="Hecho por LatAm, para LatAm">Built by LatAm, for LatAm</div>
+          <div class="checklist-item" data-en="Nortec Score on every role" data-es="Puntaje Nortec en cada rol">Nortec Score on every role</div>
         </div>
       </div>
     </div>
@@ -1415,19 +1391,19 @@
     <div class="section-marker" data-en="→ Trusted by talent across LatAm" data-es="→ Confiado por talento en toda LatAm">→ Trusted by talent across LatAm</div>
     <div class="testimonials-grid">
       <div class="testimonial">
-        <p class="t-quote">Nortec helped me land a fully remote role with a U.S. company while staying in Colombia. The salary data gave me the confidence to negotiate."</p>
-        <div class="t-author">— Andrés M.</div>
-        <div class="t-role">Software Engineer · Bogotá</div>
+        <p class="t-quote" data-en="Nortec helped me land a fully remote role with a U.S. company while staying in Colombia. The salary data gave me the confidence to negotiate.&quot;" data-es="Nortec me ayudó a conseguir un rol 100% remoto con una empresa de EE.UU. mientras seguía en Colombia. Los datos salariales me dieron confianza para negociar.&quot;">Nortec helped me land a fully remote role with a U.S. company while staying in Colombia. The salary data gave me the confidence to negotiate."</p>
+        <div class="t-author" data-en="— Andrés M." data-es="— Andrés M.">— Andrés M.</div>
+        <div class="t-role" data-en="Software Engineer · Bogotá" data-es="Ingeniero de Software · Bogotá">Software Engineer · Bogotá</div>
       </div>
       <div class="testimonial">
-        <p class="t-quote">The weekly brief is the only email I actually look forward to. Clear, bilingual, and packed with real opportunities."</p>
-        <div class="t-author">— Valeria R.</div>
-        <div class="t-role">Product Designer · México DF</div>
+        <p class="t-quote" data-en="The weekly brief is the only email I actually look forward to. Clear, bilingual, and packed with real opportunities.&quot;" data-es="El resumen semanal es el único correo que realmente espero. Claro, bilingüe y lleno de oportunidades reales.&quot;">The weekly brief is the only email I actually look forward to. Clear, bilingual, and packed with real opportunities."</p>
+        <div class="t-author" data-en="— Valeria R." data-es="— Valeria R.">— Valeria R.</div>
+        <div class="t-role" data-en="Product Designer · México DF" data-es="Diseñadora de Producto · CDMX">Product Designer · México DF</div>
       </div>
       <div class="testimonial">
-        <p class="t-quote">Finally, a platform that understands LatAm talent. The playbooks and company radar are game-changers."</p>
-        <div class="t-author">— Diego P.</div>
-        <div class="t-role">Customer Success Manager · Buenos Aires</div>
+        <p class="t-quote" data-en="Finally, a platform that understands LatAm talent. The playbooks and company radar are game-changers.&quot;" data-es="Por fin, una plataforma que entiende al talento de LatAm. Los playbooks y el radar de empresas cambian el juego.&quot;">Finally, a platform that understands LatAm talent. The playbooks and company radar are game-changers."</p>
+        <div class="t-author" data-en="— Diego P." data-es="— Diego P.">— Diego P.</div>
+        <div class="t-role" data-en="Customer Success Manager · Buenos Aires" data-es="Gerente de Éxito del Cliente · Buenos Aires">Customer Success Manager · Buenos Aires</div>
       </div>
     </div>
 
@@ -1462,7 +1438,7 @@
   <div class="container">
     <div class="cta-section">
       <div>
-        <h2 class="cta-h2">YOUR NEXT<br>JOB IS<br><em>REMOTE.</em></h2>
+        <h2 class="cta-h2" data-en="YOUR NEXT<br>JOB IS<br><em>REMOTE.</em>" data-es="TU PRÓXIMO<br>TRABAJO ES<br><em>REMOTO.</em>" data-i18n-html="true">YOUR NEXT<br>JOB IS<br><em>REMOTE.</em></h2>
         <span class="cta-es" data-en="Your next job is remote. Nortec finds it for you." data-es="Tu próximo trabajo es remoto. Nortec te lo encuentra.">Tu próximo trabajo es remoto. Nortec te lo encuentra.</span>
         <form class="email-form" onsubmit="handleSub(event)" data-source="cta-bottom">
           <input type="email" placeholder="tu@email.com" required>
@@ -1539,7 +1515,7 @@
 </footer>
 
 <script type="module">
-import { initI18n, getCurrentLanguage } from '/js/i18n.js';
+import { initI18n, refreshI18n } from '/js/i18n.js';
 import { submitEmail } from '/js/subscribe.js';
 import { JOBS, SALARY_DATA } from '/js/jobs.js';
 import { scorePips, scoreLabel } from '/js/components.js';
@@ -1573,10 +1549,8 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
 
 // Render jobs grid
 const grid = document.getElementById('jobs-grid');
-if (grid) {
-  const lang = getCurrentLanguage();
-  const whyLabel = lang === 'es' ? 'Por qué importa:' : 'Why it matters:';
-  const viewJobLabel = lang === 'es' ? 'Ver empleo' : 'View job';
+function renderJobsGrid() {
+  if (!grid) return;
   grid.innerHTML = JOBS.map(j => `
     <div class="job-card" onclick="window.location='/job?id=${j.id}'">
       <div class="job-card-co">${j.company} <span style="color:var(--text3)">· ${j.location}</span></div>
@@ -1586,7 +1560,7 @@ if (grid) {
         ${j.tags.map(t => `<span class="job-tag${t.includes('AI') || t.includes('LLM') ? ' teal' : ''}">${t}</span>`).join('')}
       </div>
       <div style="font-family:var(--font-mono);font-size:10px;color:var(--text2);line-height:1.7;margin-bottom:12px;border-top:1px solid var(--border);padding-top:10px;">
-        <strong style="color:var(--orient-red);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;">${whyLabel}</strong><br>
+        <strong style="color:var(--orient-red);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;" data-en="Why it matters:" data-es="Por qué importa:">Why it matters:</strong><br>
         ${j.why}
       </div>
       <div class="job-card-footer">
@@ -1596,12 +1570,14 @@ if (grid) {
         </div>
         <div style="text-align:right;">
           ${scoreLabel(j.score)}
-          <div style="margin-top:6px;"><a class="job-cta" href="/job?id=${j.id}">${viewJobLabel} → ${j.source}</a></div>
+          <div style="margin-top:6px;"><a class="job-cta" href="/job?id=${j.id}" data-en="View job → ${j.source}" data-es="Ver empleo → ${j.source}">View job → ${j.source}</a></div>
         </div>
       </div>
     </div>
   `).join('');
+  refreshI18n();
 }
+renderJobsGrid();
 
 // Render salary chart
 const chart = document.getElementById('salary-chart');
@@ -1816,35 +1792,7 @@ initHeroParallax();
 initTerminalTyping();
 initSalaryTerminalTyping();
 window.addEventListener('nortec:langchange', () => {
-  if (grid) {
-    const lang = getCurrentLanguage();
-    const whyLabel = lang === 'es' ? 'Por qué importa:' : 'Why it matters:';
-    const viewJobLabel = lang === 'es' ? 'Ver empleo' : 'View job';
-    grid.innerHTML = JOBS.map(j => `
-      <div class="job-card" onclick="window.location='/job?id=${j.id}'">
-        <div class="job-card-co">${j.company} <span style="color:var(--text3)">· ${j.location}</span></div>
-        <div class="job-card-title">${j.title}</div>
-        <div class="job-card-meta">${j.type} · ${j.function} · Source: ${j.source}</div>
-        <div class="job-tags">
-          ${j.tags.map(t => `<span class="job-tag${t.includes('AI') || t.includes('LLM') ? ' teal' : ''}">${t}</span>`).join('')}
-        </div>
-        <div style="font-family:var(--font-mono);font-size:10px;color:var(--text2);line-height:1.7;margin-bottom:12px;border-top:1px solid var(--border);padding-top:10px;">
-          <strong style="color:var(--orient-red);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;">${whyLabel}</strong><br>
-          ${j.why}
-        </div>
-        <div class="job-card-footer">
-          <div>
-            <div class="job-salary" data-salary-text="${j.salary}" data-salary-num="${j.salaryNum ?? ''}">${j.salary}</div>
-            <div style="display:flex;gap:3px;margin-top:4px;">${scorePips(j.score)}</div>
-          </div>
-          <div style="text-align:right;">
-            ${scoreLabel(j.score)}
-            <div style="margin-top:6px;"><a class="job-cta" href="/job?id=${j.id}">${viewJobLabel} → ${j.source}</a></div>
-          </div>
-        </div>
-      </div>
-    `).join('');
-  }
+  renderJobsGrid();
 });
 </script>
 </body>

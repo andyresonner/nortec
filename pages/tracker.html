@@ -144,7 +144,7 @@
 </div>
 
 <nav class="nav">
-  <a class="nav-logo" href="/"><span>NORTE<span class="teal">C</span></span><div class="nav-wordmark">NORTHBOUND<br>TALENT.</div></a>
+  <a class="nav-logo" href="/"><span>NORTE<span class="teal">C</span></span><div class="nav-wordmark" data-en="NORTHBOUND<br>TALENT." data-es="TALENTO<br>RUMBO AL NORTE." data-i18n-html="true">NORTHBOUND<br>TALENT.</div></a>
   <ul class="nav-links">
     <li><a href="/jobs" data-en="Jobs" data-es="Empleos">Jobs</a></li>
     <li><a href="/tracker" class="active" data-en="Tracker" data-es="Tracker">Tracker</a></li>
@@ -163,20 +163,7 @@
   </div>
 </nav>
 
-<div style="padding-top:var(--nav-h);">
-  <div class="ticker-wrap">
-    <div class="ticker-track">
-      <span class="ticker-item" data-en="LatAm Remote AI + Tech Job Tracker ◆" data-es="Tracker Remoto AI + Tech para LatAm ◆">LatAm Remote AI + Tech Job Tracker<span class="ticker-sep"> ◆ </span></span>
-      <span class="ticker-item" data-en="50+ companies hiring LatAm talent ◆" data-es="50+ empresas contratando talento LatAm ◆">50+ companies hiring LatAm talent<span class="ticker-sep"> ◆ </span></span>
-      <span class="ticker-item" data-en="Salary · Stack · Timezone ◆" data-es="Salario · Stack · Zona horaria ◆">Salary · Stack · Timezone<span class="ticker-sep"> ◆ </span></span>
-      <span class="ticker-item" data-en="Updated weekly ◆" data-es="Actualizado semanalmente ◆">Updated weekly<span class="ticker-sep"> ◆ </span></span>
-      <span class="ticker-item" data-en="LatAm Remote AI + Tech Job Tracker ◆" data-es="Tracker Remoto AI + Tech para LatAm ◆">LatAm Remote AI + Tech Job Tracker<span class="ticker-sep"> ◆ </span></span>
-      <span class="ticker-item" data-en="50+ companies hiring LatAm talent ◆" data-es="50+ empresas contratando talento LatAm ◆">50+ companies hiring LatAm talent<span class="ticker-sep"> ◆ </span></span>
-      <span class="ticker-item" data-en="Salary · Stack · Timezone ◆" data-es="Salario · Stack · Zona horaria ◆">Salary · Stack · Timezone<span class="ticker-sep"> ◆ </span></span>
-      <span class="ticker-item" data-en="Updated weekly ◆" data-es="Actualizado semanalmente ◆">Updated weekly<span class="ticker-sep"> ◆ </span></span>
-    </div>
-  </div>
-</div>
+<div style="padding-top:var(--nav-h);"></div>
 
 <div class="tracker-header">
   <div class="container">
@@ -244,7 +231,7 @@
 </div>
 
 <script type="module">
-import { initI18n, getCurrentLanguage } from '/js/i18n.js';
+import { initI18n, refreshI18n } from '/js/i18n.js';
 
 // inline tracker data
 const TRACKER_DATA = [
@@ -261,8 +248,6 @@ const TRACKER_DATA = [
 ];
 
 function renderTracker(data) {
-  const lang = getCurrentLanguage();
-  const applyLabel = lang === 'es' ? 'Aplicar →' : 'Apply →';
   document.getElementById('tracker-body').innerHTML = data.map(d => `
     <tr>
       <td class="co-name">${d.company}</td>
@@ -272,12 +257,15 @@ function renderTracker(data) {
       <td style="font-size:10px;color:var(--text3);">${d.stack}</td>
       <td style="font-size:10px;">${d.type}</td>
       <td style="font-size:10px;color:var(--text3);">${d.tz}</td>
-      <td><a class="apply-link" href="${d.link}" target="_blank">${applyLabel}</a></td>
+      <td><a class="apply-link" href="${d.link}" target="_blank" data-en="Apply →" data-es="Aplicar →">Apply →</a></td>
     </tr>
   `).join('');
+  refreshI18n();
 }
 
+let currentTrackerFilter = 'all';
 window.filterTracker = function(fn, btn) {
+  currentTrackerFilter = fn;
   document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
   const filtered = fn === 'all' ? TRACKER_DATA : TRACKER_DATA.filter(d=>d.fn===fn);
@@ -286,7 +274,12 @@ window.filterTracker = function(fn, btn) {
 
 initI18n();
 renderTracker(TRACKER_DATA);
-window.addEventListener('nortec:langchange', () => renderTracker(TRACKER_DATA));
+window.addEventListener('nortec:langchange', () => {
+  const filtered = currentTrackerFilter === 'all'
+    ? TRACKER_DATA
+    : TRACKER_DATA.filter((d) => d.fn === currentTrackerFilter);
+  renderTracker(filtered);
+});
 
 // Survey modal
 const params = new URLSearchParams(window.location.search);

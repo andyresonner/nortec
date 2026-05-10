@@ -7,7 +7,7 @@
 <meta name="description" content="Verified remote AI + tech jobs open to Latin America. Curated weekly with Nortec Score.">
 <link rel="stylesheet" href="/css/global.css">
 <style>
-.jobs-page { padding-top: calc(var(--nav-h) + 32px); }
+.jobs-page { padding-top: var(--nav-h); }
 .jobs-header {
   background: var(--bg2);
   border-bottom: 1px solid var(--border);
@@ -112,7 +112,7 @@
 <body>
 
 <nav class="nav">
-  <a class="nav-logo" href="/"><span>NORTE<span class="teal">C</span></span><div class="nav-wordmark">NORTHBOUND<br>TALENT.</div></a>
+  <a class="nav-logo" href="/"><span>NORTE<span class="teal">C</span></span><div class="nav-wordmark" data-en="NORTHBOUND<br>TALENT." data-es="TALENTO<br>RUMBO AL NORTE." data-i18n-html="true">NORTHBOUND<br>TALENT.</div></a>
   <ul class="nav-links">
     <li><a href="/jobs" class="active" data-en="Jobs" data-es="Empleos">Jobs</a></li>
     <li><a href="/tracker" data-en="Tracker" data-es="Tracker">Tracker</a></li>
@@ -131,20 +131,7 @@
   </div>
 </nav>
 
-<div style="padding-top:var(--nav-h);">
-  <div class="ticker-wrap">
-    <div class="ticker-track">
-      <span class="ticker-item">Remote jobs open to LatAm <span class="ticker-sep">◆</span></span>
-      <span class="ticker-item">Verified · Scored · Curated <span class="ticker-sep">◆</span></span>
-      <span class="ticker-item">Engineering · CS · QA · Data · Design <span class="ticker-sep">◆</span></span>
-      <span class="ticker-item">Updated weekly <span class="ticker-sep">◆</span></span>
-      <span class="ticker-item">Remote jobs open to LatAm <span class="ticker-sep">◆</span></span>
-      <span class="ticker-item">Verified · Scored · Curated <span class="ticker-sep">◆</span></span>
-      <span class="ticker-item">Engineering · CS · QA · Data · Design <span class="ticker-sep">◆</span></span>
-      <span class="ticker-item">Updated weekly <span class="ticker-sep">◆</span></span>
-    </div>
-  </div>
-</div>
+<div style="padding-top:var(--nav-h);"></div>
 
 <div class="jobs-header">
   <div class="container">
@@ -167,46 +154,46 @@
     <!-- Sidebar -->
     <div class="jobs-sidebar">
       <div class="sidebar-section">
-        <div class="sidebar-title">Function</div>
-        <label class="sidebar-option"><input type="checkbox" checked> Engineering</label>
-        <label class="sidebar-option"><input type="checkbox" checked> Customer Success</label>
-        <label class="sidebar-option"><input type="checkbox" checked> QA / Testing</label>
-        <label class="sidebar-option"><input type="checkbox" checked> Data / AI</label>
-        <label class="sidebar-option"><input type="checkbox"> Design</label>
-        <label class="sidebar-option"><input type="checkbox"> Product</label>
-        <label class="sidebar-option"><input type="checkbox"> Sales / RevOps</label>
+        <div class="sidebar-title" data-en="Function" data-es="Función">Function</div>
+        <label class="sidebar-option"><input type="checkbox" checked> <span data-en="Engineering" data-es="Ingeniería">Engineering</span></label>
+        <label class="sidebar-option"><input type="checkbox" checked> <span data-en="Customer Success" data-es="Éxito del Cliente">Customer Success</span></label>
+        <label class="sidebar-option"><input type="checkbox" checked> <span data-en="QA / Testing" data-es="QA / Testing">QA / Testing</span></label>
+        <label class="sidebar-option"><input type="checkbox" checked> <span data-en="Data / AI" data-es="Datos / IA">Data / AI</span></label>
+        <label class="sidebar-option"><input type="checkbox"> <span data-en="Design" data-es="Diseño">Design</span></label>
+        <label class="sidebar-option"><input type="checkbox"> <span data-en="Product" data-es="Producto">Product</span></label>
+        <label class="sidebar-option"><input type="checkbox"> <span data-en="Sales / RevOps" data-es="Ventas / RevOps">Sales / RevOps</span></label>
       </div>
       <div class="sidebar-section">
-        <div class="sidebar-title">Nortec Score</div>
-        <label class="sidebar-option"><input type="checkbox" checked> ▲ Apply now (5/5)</label>
-        <label class="sidebar-option"><input type="checkbox" checked> ▲ Strong fit (4/5)</label>
-        <label class="sidebar-option"><input type="checkbox" checked> ◆ Worth checking (3/5)</label>
+        <div class="sidebar-title" data-en="Nortec Score" data-es="Puntaje Nortec">Nortec Score</div>
+        <label class="sidebar-option"><input type="checkbox" checked> <span data-en="▲ Apply now (5/5)" data-es="▲ Aplica ahora (5/5)">▲ Apply now (5/5)</span></label>
+        <label class="sidebar-option"><input type="checkbox" checked> <span data-en="▲ Strong fit (4/5)" data-es="▲ Encaje fuerte (4/5)">▲ Strong fit (4/5)</span></label>
+        <label class="sidebar-option"><input type="checkbox" checked> <span data-en="◆ Worth checking (3/5)" data-es="◆ Vale la pena revisar (3/5)">◆ Worth checking (3/5)</span></label>
       </div>
       <div class="sidebar-section">
-        <div class="sidebar-title">Contract type</div>
-        <label class="sidebar-option"><input type="checkbox" checked> Full-time</label>
-        <label class="sidebar-option"><input type="checkbox" checked> Contract</label>
-        <label class="sidebar-option"><input type="checkbox"> Part-time</label>
+        <div class="sidebar-title" data-en="Contract type" data-es="Tipo de contrato">Contract type</div>
+        <label class="sidebar-option"><input type="checkbox" checked> <span data-en="Full-time" data-es="Tiempo completo">Full-time</span></label>
+        <label class="sidebar-option"><input type="checkbox" checked> <span data-en="Contract" data-es="Contrato">Contract</span></label>
+        <label class="sidebar-option"><input type="checkbox"> <span data-en="Part-time" data-es="Medio tiempo">Part-time</span></label>
       </div>
       <div class="sidebar-section">
-        <div class="sidebar-title">Salary</div>
-        <label class="sidebar-option"><input type="checkbox"> Salary listed only</label>
+        <div class="sidebar-title" data-en="Salary" data-es="Salario">Salary</div>
+        <label class="sidebar-option"><input type="checkbox"> <span data-en="Salary listed only" data-es="Solo salario publicado">Salary listed only</span></label>
         <label class="sidebar-option"><input type="checkbox"> $50K+ USD</label>
         <label class="sidebar-option"><input type="checkbox"> $80K+ USD</label>
         <label class="sidebar-option"><input type="checkbox"> $100K+ USD</label>
       </div>
       <div style="margin-top:2rem;padding:1rem;background:var(--surface);border:1px solid var(--border);">
-        <div class="sidebar-title" style="color:var(--orient-red);margin-bottom:0.5rem;">Post a role</div>
-        <p style="font-family:var(--font-mono);font-size:10px;color:var(--text3);line-height:1.7;margin-bottom:10px;">Reach LatAm tech talent actively looking for global remote work.</p>
-        <a href="/sponsors" class="btn-primary" style="display:block;text-align:center;font-size:10px;padding:8px;">Post a job →</a>
+        <div class="sidebar-title" style="color:var(--orient-red);margin-bottom:0.5rem;" data-en="Post a role" data-es="Publica un rol">Post a role</div>
+        <p style="font-family:var(--font-mono);font-size:10px;color:var(--text3);line-height:1.7;margin-bottom:10px;" data-en="Reach LatAm tech talent actively looking for global remote work." data-es="Llega al talento tech de LatAm que busca trabajo remoto global.">Reach LatAm tech talent actively looking for global remote work.</p>
+        <a href="/sponsors" class="btn-primary" style="display:block;text-align:center;font-size:10px;padding:8px;" data-en="Post a job →" data-es="Publica una vacante →">Post a job →</a>
       </div>
     </div>
 
     <!-- Main list -->
     <div class="jobs-main">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
-        <span style="font-family:var(--font-mono);font-size:10px;color:var(--text3);letter-spacing:0.06em;"><span id="job-count">5</span> roles — Issue #001</span>
-        <span style="font-family:var(--font-mono);font-size:9px;color:var(--teal);letter-spacing:0.08em;">Sorted by Nortec Score ↓</span>
+        <span style="font-family:var(--font-mono);font-size:10px;color:var(--text3);letter-spacing:0.06em;"><span id="job-count">5</span> <span data-en="roles — Issue #001" data-es="roles — Edición #001">roles — Issue #001</span></span>
+        <span style="font-family:var(--font-mono);font-size:9px;color:var(--teal);letter-spacing:0.08em;" data-en="Sorted by Nortec Score ↓" data-es="Ordenado por Puntaje Nortec ↓">Sorted by Nortec Score ↓</span>
       </div>
       <div class="jobs-list" id="jobs-list">
         <!-- populated by JS -->
@@ -230,7 +217,7 @@
 </section>
 
 <script type="module">
-import { initI18n, getCurrentLanguage } from '/js/i18n.js';
+import { initI18n, refreshI18n } from '/js/i18n.js';
 import { submitEmail } from '/js/subscribe.js';
 import { JOBS } from '/js/jobs.js';
 import { scorePips, scoreLabel } from '/js/components.js';
@@ -248,10 +235,6 @@ let currentFilter = 'all';
 let sortedJobs = [...JOBS].sort((a,b) => b.score - a.score);
 
 function renderJobs(jobs) {
-  const lang = getCurrentLanguage();
-  const whyLabel = lang === 'es' ? 'Por qué importa:' : 'Why:';
-  const applyAngleLabel = lang === 'es' ? 'Cómo aplicar:' : 'Apply angle:';
-  const viewJobLabel = lang === 'es' ? 'Ver empleo' : 'View job';
   const list = document.getElementById('jobs-list');
   const count = document.getElementById('job-count');
   count.textContent = jobs.length;
@@ -268,21 +251,23 @@ function renderJobs(jobs) {
           ${j.tags.map(t=>`<span class="job-tag">${t}</span>`).join('')}
         </div>
         <div style="font-family:var(--font-mono);font-size:10px;color:var(--text2);line-height:1.7;border-left:2px solid var(--border2);padding-left:10px;margin-bottom:8px;">
-          <strong style="color:var(--orient-red);">${whyLabel}</strong> ${j.why}<br>
-          <strong style="color:var(--orient-red);">${applyAngleLabel}</strong> ${j.applyAngle}
+          <strong style="color:var(--orient-red);" data-en="Why it matters:" data-es="Por qué importa:">Why it matters:</strong> ${j.why}<br>
+          <strong style="color:var(--orient-red);" data-en="Apply angle:" data-es="Cómo aplicar:">Apply angle:</strong> ${j.applyAngle}
         </div>
       </div>
       <div style="text-align:right;flex-shrink:0;min-width:140px;">
         ${scoreLabel(j.score)}
         <div style="font-family:var(--font-display);font-size:1.2rem;font-weight:600;color:var(--teal-bright);margin:8px 0 4px;">${j.salary}</div>
         <div style="display:flex;gap:3px;justify-content:flex-end;margin-bottom:8px;">${scorePips(j.score)}</div>
-        <a style="font-family:var(--font-mono);font-size:10px;color:var(--orient-red);letter-spacing:0.06em;text-decoration:none;" href="/job?id=${j.id}">${viewJobLabel} → ${j.source}</a>
+        <a style="font-family:var(--font-mono);font-size:10px;color:var(--orient-red);letter-spacing:0.06em;text-decoration:none;" href="/job?id=${j.id}" data-en="View job → ${j.source}" data-es="Ver empleo → ${j.source}">View job → ${j.source}</a>
       </div>
     </div>
   `).join('');
+  refreshI18n();
 }
 
 window.filterJobs = function(filter, btn) {
+  currentFilter = filter;
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   let filtered = sortedJobs;
@@ -294,7 +279,13 @@ window.filterJobs = function(filter, btn) {
 
 renderJobs(sortedJobs);
 initI18n();
-window.addEventListener('nortec:langchange', () => renderJobs(sortedJobs));
+window.addEventListener('nortec:langchange', () => {
+  let filtered = sortedJobs;
+  if (currentFilter === 'ai') filtered = sortedJobs.filter(j => j.aiRelevance);
+  else if (currentFilter === 'salary') filtered = sortedJobs.filter(j => j.salaryNum);
+  else if (currentFilter !== 'all') filtered = sortedJobs.filter(j => j.function === currentFilter);
+  renderJobs(filtered);
+});
 </script>
 </body>
 </html>
