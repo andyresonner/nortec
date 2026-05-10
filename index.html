@@ -818,6 +818,7 @@
 .jobs-grid .job-card {
   border: 1px solid var(--border);
   border-top-color: rgba(15,163,154,0.28);
+  cursor: default;
 }
 @keyframes ping-sonar {
   0% { opacity: 0.65; transform: translate(-50%, -50%) scale(1); }
@@ -946,6 +947,85 @@
   transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
+.salary-terminal {
+  position: relative;
+  border-color: rgba(15,163,154,0.6);
+  box-shadow: 0 0 20px rgba(15,163,154,0.25);
+  overflow: hidden;
+}
+.salary-terminal::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: linear-gradient(to bottom, rgba(15,163,154,0), rgba(15,163,154,0.18), rgba(15,163,154,0));
+  transform: translateY(-150%);
+  pointer-events: none;
+  animation: terminal-scan 3s linear infinite;
+}
+@keyframes terminal-scan {
+  0% { transform: translateY(-150%); }
+  100% { transform: translateY(320%); }
+}
+.salary-live-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #ffe7de;
+  background: rgba(255,75,40,0.2);
+  border: 1px solid rgba(255,75,40,0.7);
+  padding: 2px 7px;
+  animation: live-badge-pulse 1.5s ease-in-out infinite;
+}
+@keyframes live-badge-pulse {
+  0%, 100% { opacity: 0.8; box-shadow: 0 0 0 rgba(255,75,40,0); }
+  50% { opacity: 1; box-shadow: 0 0 12px rgba(255,75,40,0.4); }
+}
+.salary-type-line {
+  opacity: 0;
+  transform: translateY(6px);
+  color: var(--teal);
+  text-shadow: 0 0 9px rgba(15,163,154,0.2);
+}
+.salary-type-line.is-typed {
+  animation: salary-type-in 0.55s ease forwards;
+}
+@keyframes salary-type-in {
+  0% {
+    opacity: 0;
+    transform: translateY(6px);
+    color: var(--teal);
+    text-shadow: 0 0 14px rgba(15,163,154,0.35);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    color: var(--north-star);
+    text-shadow: 0 0 6px rgba(15,163,154,0.15);
+  }
+}
+.salary-type-line .ok {
+  transition: text-shadow 0.2s ease, color 0.2s ease;
+}
+.salary-type-line.is-flashed .ok {
+  color: var(--teal-bright);
+  text-shadow: 0 0 14px rgba(15,163,154,0.75);
+}
+.salary-status {
+  color: var(--teal);
+  animation: salary-status-pulse 3.5s ease-in-out infinite;
+}
+@keyframes salary-status-pulse {
+  0%, 100% { color: var(--teal); text-shadow: 0 0 6px rgba(15,163,154,0.35); }
+  50% { color: #f5f5f5; text-shadow: 0 0 12px rgba(242,233,213,0.5); }
+}
+
 /* ── RESPONSIVE ── */
 @media (max-width: 1000px) {
   .hero-body { grid-template-columns: 1fr; min-height: auto; }
@@ -971,7 +1051,7 @@
 <!-- NAV -->
 <nav class="nav">
   <a class="nav-logo" href="/">
-    NORTEC
+    <span>NORTE<span class="teal">C</span></span>
     <div class="nav-wordmark">NORTHBOUND<br>TALENT.</div>
   </a>
   <ul class="nav-links">
@@ -1018,7 +1098,7 @@
     <div class="hero-left hero-parallax-text">
       <div class="hero-glow-layer" aria-hidden="true"></div>
       <div class="hero-main-copy">
-        <h1 class="hero-h1">NORTEC<span class="teal-c" id="animated-c"></span></h1>
+        <h1 class="hero-h1">NORTE<span class="teal-c">C</span></h1>
         <div class="hero-tagline">Work global. Live local.</div>
         <div class="hero-tagline-es">&gt; Trabaja global. Vive en LatAm.</div>
       </div>
@@ -1081,11 +1161,11 @@
             </filter>
           </defs>
           <path filter="url(#mapGlow)"
-            d="M88,8 L115,14 L128,28 L130,50 L140,72 L138,95 L148,118
-               L145,145 L150,175 L140,210 L130,248 L118,282
-               L105,318 L90,345 L78,355 L66,340 L62,310
-               L68,278 L60,248 L52,210 L50,175 L55,148
-               L48,118 L52,92 L44,68 L50,44 L62,26 L75,14 Z"
+            d="M28,56 L42,40 L62,28 L84,26 L104,34 L116,48 L112,66 L96,76
+               L82,90 L84,108 L96,124 L112,148 L124,176 L126,206 L120,232
+               L112,256 L100,282 L94,306 L86,330 L76,350 L64,364 L54,356
+               L48,336 L44,312 L38,286 L30,260 L24,236 L26,214 L34,192
+               L44,170 L52,148 L50,126 L42,102 L34,80 Z"
             fill="url(#mapGrad)"
             stroke="#0FA39A"
             stroke-width="1.5"
@@ -1187,6 +1267,7 @@
     <div class="jobs-grid" id="jobs-grid">
       <!-- populated by JS -->
     </div>
+    <a class="section-link" href="/jobs" style="display:inline-block;margin-top:1.2rem;">View all jobs →</a>
   </div>
 </section>
 
@@ -1196,7 +1277,7 @@
     <div class="section-marker"><span class="arrow">→</span> Salary signals / market intelligence</div>
     <div class="section-header">
       <h2 class="section-h2">What LatAm Tech Pays</h2>
-      <a class="section-link" href="/tracker">Full tracker →</a>
+      <a class="section-link" href="/tracker">Full Tracker →</a>
     </div>
 
     <div class="salary-section">
@@ -1252,16 +1333,17 @@
             <text x="250" y="8" font-family="IBM Plex Mono" font-size="8" fill="#0FA39A">2026</text>
             <text x="250" y="38" font-family="IBM Plex Mono" font-size="8" fill="#FF4B28" opacity="0.6">2024</text>
           </svg>
-          <div class="terminal" style="margin-top:1rem;">
+          <div class="terminal salary-terminal" id="salary-signal-terminal" style="margin-top:1rem;">
+            <div class="salary-live-badge">LIVE</div>
             <div class="terminal-bar">
               <div class="t-dot r"></div><div class="t-dot y"></div><div class="t-dot g"></div>
             </div>
-            <div class="t-line"><span class="prompt">&gt; </span><span class="cmd">nortec --northbound</span></div>
-            <div class="t-line"><span class="ok">[✓]</span> Global mindset</div>
-            <div class="t-line"><span class="ok">[✓]</span> Local impact</div>
-            <div class="t-line"><span class="ok">[✓]</span> Human connection</div>
-            <div class="t-line"><span class="ok">[✓]</span> Limitless future</div>
-            <div class="t-line">status: <span class="val">northbound</span> <span class="t-cursor"></span></div>
+            <div class="t-line salary-type-line" data-salary-line><span class="prompt">&gt; </span><span class="cmd">nortec --northbound</span></div>
+            <div class="t-line salary-type-line check-line" data-salary-line><span class="ok">[✓]</span> Global mindset</div>
+            <div class="t-line salary-type-line check-line" data-salary-line><span class="ok">[✓]</span> Local impact</div>
+            <div class="t-line salary-type-line check-line" data-salary-line><span class="ok">[✓]</span> Human connection</div>
+            <div class="t-line salary-type-line check-line" data-salary-line><span class="ok">[✓]</span> Limitless future</div>
+            <div class="t-line salary-type-line" data-salary-line>status: <span class="salary-status">northbound</span> <span class="t-cursor"></span></div>
           </div>
         </div>
       </div>
@@ -1487,7 +1569,7 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
 const grid = document.getElementById('jobs-grid');
 if (grid) {
   grid.innerHTML = JOBS.map(j => `
-    <div class="job-card" onclick="window.open('${j.link}','_blank')">
+    <div class="job-card">
       <div class="job-card-co">${j.company} <span style="color:var(--text3)">· ${j.location}</span></div>
       <div class="job-card-title">${j.title}</div>
       <div class="job-card-meta">${j.type} · ${j.function} · Source: ${j.source}</div>
@@ -1685,11 +1767,36 @@ function initTerminalTyping() {
   observer.observe(block);
 }
 
-// Animate C in NORTEC logo
-const c = document.getElementById('animated-c');
-if (c) {
-  c.textContent = 'C';
-  c.style.cssText = 'color:var(--teal);display:inline-block;animation:fadeIn 0.8s 0.5s both;';
+function initSalaryTerminalTyping() {
+  const terminal = document.getElementById('salary-signal-terminal');
+  if (!terminal) return;
+  const lines = [...terminal.querySelectorAll('[data-salary-line]')];
+  if (lines.length === 0) return;
+
+  const reveal = () => {
+    lines.forEach((line, index) => {
+      setTimeout(() => {
+        line.classList.add('is-typed');
+        if (line.classList.contains('check-line')) {
+          line.classList.add('is-flashed');
+          setTimeout(() => line.classList.remove('is-flashed'), 520);
+        }
+      }, index * (prefersReducedMotion ? 0 : 320));
+    });
+  };
+
+  if (prefersReducedMotion) {
+    reveal();
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    if (!entries.some((entry) => entry.isIntersecting)) return;
+    reveal();
+    observer.disconnect();
+  }, { threshold: 0.4 });
+
+  observer.observe(terminal);
 }
 
 initJobCardSalaryObserver();
@@ -1697,6 +1804,7 @@ initBarChartAnimation();
 initScrollReveal();
 initHeroParallax();
 initTerminalTyping();
+initSalaryTerminalTyping();
 </script>
 </body>
 </html>

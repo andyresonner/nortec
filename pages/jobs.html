@@ -96,7 +96,7 @@
   display: grid;
   grid-template-columns: 1fr auto;
   gap: 1rem;
-  cursor: pointer;
+  cursor: default;
   transition: background 0.15s;
   border-left: 3px solid transparent;
 }
@@ -112,13 +112,13 @@
 <body>
 
 <nav class="nav">
-  <a class="nav-logo" href="/">NORTEC<div class="nav-wordmark">NORTHBOUND<br>TALENT.</div></a>
+  <a class="nav-logo" href="/"><span>NORTE<span class="teal">C</span></span><div class="nav-wordmark">NORTHBOUND<br>TALENT.</div></a>
   <ul class="nav-links">
     <li><a href="/jobs" class="active">Jobs</a></li>
     <li><a href="/tracker">Tracker</a></li>
     <li><a href="/archive">Archive</a></li>
     <li><a href="/sponsors">Sponsors</a></li>
-    <li><a href="/pages/issue-001.html">Issue #001</a></li>
+    <li><a href="/issue/001">Issue #001</a></li>
   </ul>
   <div class="nav-actions">
     <a class="btn-ghost" href="/sponsors">For Employers</a>
@@ -246,7 +246,7 @@ function renderJobs(jobs) {
   const count = document.getElementById('job-count');
   count.textContent = jobs.length;
   list.innerHTML = jobs.map(j => `
-    <div class="job-list-row score-${j.score}" onclick="window.open('${j.link}','_blank')">
+    <div class="job-list-row score-${j.score}">
       <div>
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
           <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);">${j.company}</div>
