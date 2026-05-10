@@ -50,7 +50,7 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: var(--font-mono);
-  line-height: 1.6;
+  line-height: 1.9;
   overflow-x: hidden;
   cursor: default;
 }
@@ -201,12 +201,12 @@ body::before {
 }
 .ticker-track {
   display: flex;
-  animation: ticker 30s linear infinite;
+  animation: ticker 38s linear infinite;
   white-space: nowrap;
 }
 .ticker-item {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 500;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -290,14 +290,33 @@ body::before {
 .job-card {
   background: var(--surface);
   border: 1px solid var(--border);
+  border-top-color: rgba(15,163,154,0.28);
   padding: 1.25rem;
-  transition: border-color 0.2s, background 0.2s;
+  transition: border-color 0.26s ease, border-top-color 0.26s ease, background 0.26s ease;
   cursor: pointer;
   position: relative;
+  overflow: hidden;
+}
+.job-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2px;
+  height: 100%;
+  background: var(--teal);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.32s ease;
 }
 .job-card:hover {
   border-color: var(--teal);
+  border-top-color: var(--teal);
   background: var(--surface2);
+}
+.job-card:hover::before,
+.job-card:focus-within::before {
+  transform: scaleY(1);
 }
 .job-card-co {
   font-family: var(--font-mono);

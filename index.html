@@ -368,7 +368,7 @@
 }
 
 /* ── SECTIONS ── */
-.section { padding: 4rem 0; }
+.section { padding: 5rem 0; }
 .section-sm { padding: 2.5rem 0; }
 .section-header {
   display: flex;
@@ -379,7 +379,7 @@
 }
 .section-h2 {
   font-family: var(--font-display);
-  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  font-size: clamp(3rem, 6vw, 5rem);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.03em;
@@ -694,22 +694,275 @@
 }
 .sponsor-logo:hover { color: var(--north-star); }
 
+/* ── REWORK OVERRIDES ── */
+.hero {
+  min-height: calc(100vh - 56px);
+  background: radial-gradient(circle at 26% 34%, rgba(15,163,154,0.16), rgba(12,22,20,0.02) 36%, transparent 60%), var(--bg);
+}
+.hero-body {
+  min-height: calc(100vh - 56px);
+  grid-template-columns: minmax(0, 1fr) minmax(380px, 44vw);
+}
+.hero-left {
+  padding: clamp(3.2rem, 8vw, 7rem) clamp(1.5rem, 4vw, 4rem);
+  justify-content: space-between;
+}
+.hero-left::before,
+.hero-left::after {
+  content: none;
+}
+.hero-main-copy {
+  position: relative;
+  z-index: 1;
+}
+.hero-glow-layer {
+  position: absolute;
+  inset: -20% -10% auto -20%;
+  height: 75%;
+  background: radial-gradient(circle at 35% 30%, rgba(15,163,154,0.32), rgba(15,163,154,0.07) 40%, transparent 70%);
+  pointer-events: none;
+}
+.hero-h1 { font-size: clamp(5.5rem, 12vw, 10rem); margin-bottom: 1rem; }
+.hero-tagline {
+  font-size: clamp(1.5rem, 3.2vw, 2.4rem);
+  margin-bottom: 0.8rem;
+}
+.hero-tagline-es {
+  font-size: clamp(0.82rem, 1.65vw, 1rem);
+  letter-spacing: 0.11em;
+}
+.hero-form-block {
+  position: relative;
+  z-index: 1;
+  max-width: 520px;
+}
+.hero-right {
+  border-left: 1px solid var(--border);
+  justify-content: center;
+}
+.hero-parallax-text,
+.hero-parallax-map {
+  will-change: transform;
+}
+.map-container { min-height: 100%; }
+.latam-map-svg {
+  width: min(65%, 340px);
+  opacity: 0.9;
+}
+.trajectory-path {
+  fill: none;
+  stroke-width: 1.2;
+  stroke-dasharray: 8 8;
+  stroke-dashoffset: 340;
+  animation: trajectory-draw 7.8s linear infinite;
+}
+.trajectory-red { stroke: rgba(255,75,40,0.62); }
+.trajectory-teal { stroke: rgba(15,163,154,0.62); }
+.trajectory-dot { opacity: 0.95; }
+.dot-red { fill: var(--orient-red); }
+.dot-teal { fill: var(--teal); }
+@keyframes trajectory-draw {
+  0% { stroke-dashoffset: 340; opacity: 0.3; }
+  40% { opacity: 0.8; }
+  100% { stroke-dashoffset: 0; opacity: 0.3; }
+}
+
+.country-ping {
+  width: 8px;
+  height: 8px;
+  transform: translate(-50%, -50%);
+  display: block;
+}
+.ping-core {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--orient-red);
+  box-shadow: 0 0 10px rgba(255,75,40,0.65);
+  position: relative;
+  z-index: 3;
+}
+.country-ping.is-teal .ping-core {
+  background: var(--teal);
+  box-shadow: 0 0 10px rgba(15,163,154,0.65);
+}
+.ping-ripple {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,75,40,0.6);
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 0;
+  animation: ping-sonar 2.6s ease-out infinite;
+}
+.country-ping.is-teal .ping-ripple { border-color: rgba(15,163,154,0.65); }
+.ping-ripple.delay-1 { animation-delay: 0.45s; }
+.ping-ripple.delay-2 { animation-delay: 0.9s; }
+.ping-label {
+  position: absolute;
+  left: 50%;
+  top: 12px;
+  transform: translateX(-50%);
+  margin-top: 0;
+  display: block;
+}
+.cp-mx { top: 24%; left: 31%; }
+.cp-co { top: 43%; left: 35%; }
+.cp-br { top: 53%; left: 72%; }
+.cp-ar { top: 73%; left: 41%; }
+.cp-cl { top: 66%; left: 31%; }
+
+.jobs-grid .job-card {
+  border: 1px solid var(--border);
+  border-top-color: rgba(15,163,154,0.28);
+}
+@keyframes ping-sonar {
+  0% { opacity: 0.65; transform: translate(-50%, -50%) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(4.2); }
+}
+
+.feature-strip {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(280px, 1fr);
+  gap: 1px;
+  border: 1px solid var(--border);
+  background: var(--border);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 4px;
+}
+.feature-chip {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 1.25rem 1.15rem;
+  background: var(--surface);
+  scroll-snap-align: start;
+}
+.feature-icon { font-size: 1.2rem; line-height: 1; margin-top: 2px; }
+.feature-title {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--north-star);
+}
+.feature-desc {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.9;
+  color: var(--text2);
+  margin-top: 3px;
+}
+
+.why-text { padding: clamp(2rem, 5vw, 3.4rem); }
+.why-body { max-width: 100%; }
+.why-stats-inline {
+  margin: 0 0 1.8rem;
+  display: grid;
+  gap: 1px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border: 1px solid var(--border);
+  background: var(--border);
+}
+.why-stat-item {
+  background: rgba(10,26,28,0.72);
+  padding: 0.85rem;
+}
+.why-stat-num {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  color: var(--north-star);
+  line-height: 1.1;
+}
+.why-stat-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-top: 5px;
+  line-height: 1.5;
+}
+
+.footer-simple {
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  padding: 3rem 1.5rem 2rem;
+}
+.footer-simple-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr);
+  gap: 2.2rem;
+}
+.footer-brand {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  letter-spacing: 0.1em;
+  color: var(--north-star);
+  margin-bottom: 1rem;
+}
+.footer-desc {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text3);
+  line-height: 1.9;
+  max-width: 420px;
+}
+.footer-links-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 14px;
+}
+.footer-links-grid a {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text3);
+  text-decoration: none;
+}
+.footer-links-grid a:hover { color: var(--teal); }
+
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(34px);
+  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+.reveal-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.typing-line {
+  opacity: 0;
+  transform: translateY(8px);
+}
+.typing-line.is-typed {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
 /* ── RESPONSIVE ── */
 @media (max-width: 1000px) {
-  .hero-body { grid-template-columns: 1fr; }
+  .hero-body { grid-template-columns: 1fr; min-height: auto; }
   .hero-right { display: none; }
-  .hero-stats { grid-template-columns: repeat(2, 1fr); }
   .salary-grid { grid-template-columns: 1fr; }
-  .wyg-grid { grid-template-columns: repeat(2, 1fr); }
+  .feature-strip { grid-auto-columns: minmax(260px, 1fr); }
   .why-grid { grid-template-columns: 1fr; }
   .why-visual { min-height: 200px; }
   .testimonials-grid { grid-template-columns: 1fr; }
   .cta-section { grid-template-columns: 1fr; gap: 2rem; padding: 2rem; }
+  .footer-simple-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 600px) {
-  .hero-stats { grid-template-columns: 1fr 1fr; }
-  .wyg-grid { grid-template-columns: 1fr; }
   .jobs-grid { grid-template-columns: 1fr; }
+  .section-header { flex-direction: column; align-items: flex-start; }
+  .why-stats-inline { grid-template-columns: 1fr; }
+  .footer-links-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
@@ -726,7 +979,7 @@
     <li><a href="/tracker">Tracker</a></li>
     <li><a href="/archive">Archive</a></li>
     <li><a href="/sponsors">Sponsors</a></li>
-    <li><a href="/pages/issue-001.html">Issue #001</a></li>
+    <li><a href="/issue/001">Issue #001</a></li>
   </ul>
   <div class="nav-actions">
     <a class="btn-ghost" href="/sponsors">For Employers</a>
@@ -761,31 +1014,13 @@
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-topband">
-    <span>BRAND KIT · 01 / IDENTITY</span>
-    <span class="coord">90°W ·· 30°W</span>
-    <span>FROM NORTECH TO NORTEC. SAME NORTH STAR. SHARPER DIRECTION.</span>
-    <div class="issue-live"><span class="live-dot"></span> ISSUE #001 · LIVE NOW</div>
-  </div>
-
   <div class="hero-body">
-    <!-- LEFT -->
-    <div class="hero-left">
-      <div>
-        <p class="hero-kicker">The LatAm career-intelligence platform</p>
-
-        <h1 class="hero-h1">
-          NORTEC<span class="teal-c" id="animated-c"></span>
-        </h1>
-
+    <div class="hero-left hero-parallax-text">
+      <div class="hero-glow-layer" aria-hidden="true"></div>
+      <div class="hero-main-copy">
+        <h1 class="hero-h1">NORTEC<span class="teal-c" id="animated-c"></span></h1>
         <div class="hero-tagline">Work global. Live local.</div>
         <div class="hero-tagline-es">&gt; Trabaja global. Vive en LatAm.</div>
-
-        <p class="hero-desc">
-          The bilingual home for Latin American tech talent.<br>
-          Curated remote jobs, salary intelligence, and career<br>
-          strategies to help you grow — without leaving what matters.
-        </p>
       </div>
 
       <div class="hero-form-block" id="subscribe">
@@ -794,51 +1029,46 @@
           <input type="email" placeholder="Your email address" required>
           <button type="submit">GET THE WEEKLY BRIEF →</button>
         </form>
-        <div class="hero-form-fine">
-          <span class="hero-fine-item">Free</span>
-          <span class="hero-fine-item">Bilingual</span>
-          <span class="hero-fine-item">No spam</span>
-          <span class="hero-fine-item">Unsubscribe anytime</span>
-        </div>
       </div>
     </div>
 
-    <!-- RIGHT — MAP PANEL -->
-    <div class="hero-right">
+    <div class="hero-right hero-parallax-map">
       <div class="grid-lines"></div>
-
-      <div class="map-label-top">
-        <span>90°W</span>
-        <span>N ↑ TRUE NORTH</span>
-        <span>30°W</span>
-      </div>
-
       <div class="map-container">
-        <!-- Trajectory lines SVG -->
         <svg class="trajectory-svg" viewBox="0 0 480 500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
-          <!-- Lines shooting north from key cities -->
-          <defs>
-            <marker id="arrow" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
-              <path d="M0,0 L0,6 L6,3 z" fill="#FF4B28" opacity="0.6"/>
-            </marker>
-          </defs>
-          <!-- Colombia → North -->
-          <path d="M 200 280 Q 220 150 320 40" stroke="#FF4B28" stroke-width="1" fill="none" opacity="0.5" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
-          <!-- Mexico → North -->
-          <path d="M 160 180 Q 200 100 340 20" stroke="#FF4B28" stroke-width="1" fill="none" opacity="0.4" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
-          <!-- Argentina → North -->
-          <path d="M 210 390 Q 240 250 350 60" stroke="#0FA39A" stroke-width="1" fill="none" opacity="0.4" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
-          <!-- Brazil → North -->
-          <path d="M 280 320 Q 310 200 370 50" stroke="#0FA39A" stroke-width="1" fill="none" opacity="0.35" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
-          <!-- Chile → North -->
-          <path d="M 185 400 Q 230 280 360 55" stroke="#FF4B28" stroke-width="1" fill="none" opacity="0.3" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
-          <!-- Lat lines -->
-          <line x1="0" y1="155" x2="480" y2="155" stroke="rgba(15,163,154,0.08)" stroke-width="1"/>
-          <line x1="0" y1="240" x2="480" y2="240" stroke="rgba(15,163,154,0.08)" stroke-width="1"/>
-          <line x1="0" y1="330" x2="480" y2="330" stroke="rgba(15,163,154,0.08)" stroke-width="1"/>
+          <path id="traj-mx" class="trajectory-path trajectory-red" d="M 160 180 Q 210 95 338 30"/>
+          <path id="traj-co" class="trajectory-path trajectory-red" d="M 195 280 Q 224 150 320 44"/>
+          <path id="traj-br" class="trajectory-path trajectory-teal" d="M 280 322 Q 316 200 370 54"/>
+          <path id="traj-ar" class="trajectory-path trajectory-teal" d="M 212 390 Q 250 255 352 64"/>
+          <path id="traj-cl" class="trajectory-path trajectory-red" d="M 186 402 Q 230 290 360 72"/>
+
+          <circle class="trajectory-dot dot-red" r="3">
+            <animateMotion dur="4.2s" repeatCount="indefinite" rotate="auto">
+              <mpath href="#traj-mx"></mpath>
+            </animateMotion>
+          </circle>
+          <circle class="trajectory-dot dot-red" r="2.5">
+            <animateMotion dur="4.8s" repeatCount="indefinite" rotate="auto" begin="0.6s">
+              <mpath href="#traj-co"></mpath>
+            </animateMotion>
+          </circle>
+          <circle class="trajectory-dot dot-teal" r="2.8">
+            <animateMotion dur="5.1s" repeatCount="indefinite" rotate="auto" begin="0.9s">
+              <mpath href="#traj-br"></mpath>
+            </animateMotion>
+          </circle>
+          <circle class="trajectory-dot dot-teal" r="2.8">
+            <animateMotion dur="4.9s" repeatCount="indefinite" rotate="auto" begin="1.2s">
+              <mpath href="#traj-ar"></mpath>
+            </animateMotion>
+          </circle>
+          <circle class="trajectory-dot dot-red" r="2.5">
+            <animateMotion dur="5.4s" repeatCount="indefinite" rotate="auto" begin="1.4s">
+              <mpath href="#traj-cl"></mpath>
+            </animateMotion>
+          </circle>
         </svg>
 
-        <!-- LatAm SVG shape -->
         <svg class="latam-map-svg" viewBox="0 0 180 380" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <linearGradient id="mapGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -850,7 +1080,6 @@
               <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
             </filter>
           </defs>
-          <!-- Stylised LatAm landmass -->
           <path filter="url(#mapGlow)"
             d="M88,8 L115,14 L128,28 L130,50 L140,72 L138,95 L148,118
                L145,145 L150,175 L140,210 L130,248 L118,282
@@ -862,120 +1091,43 @@
             stroke-width="1.5"
             stroke-opacity="0.8"
           />
-          <!-- Internal detail lines (rivers/borders) -->
-          <path d="M88,8 L90,50 L95,90 L92,130 L90,170" stroke="rgba(15,163,154,0.3)" stroke-width="0.5" fill="none"/>
-          <path d="M80,160 L130,155" stroke="rgba(15,163,154,0.2)" stroke-width="0.5" fill="none"/>
-          <path d="M72,240 L128,235" stroke="rgba(15,163,154,0.2)" stroke-width="0.5" fill="none"/>
-          <!-- Dots for cities -->
-          <circle cx="88" cy="120" r="3" fill="#FF4B28" opacity="0.8"/> <!-- Colombia -->
-          <circle cx="80" cy="80" r="2.5" fill="#FF4B28" opacity="0.7"/> <!-- Mexico-ish -->
-          <circle cx="120" cy="200" r="3" fill="#FF4B28" opacity="0.7"/> <!-- Brazil -->
-          <circle cx="85" cy="290" r="2.5" fill="#0FA39A" opacity="0.8"/> <!-- Argentina -->
-          <circle cx="78" cy="270" r="2" fill="#0FA39A" opacity="0.6"/> <!-- Chile -->
         </svg>
 
-        <!-- Floating stat cards -->
-        <div class="map-stat-card msc-1">
-          <div class="msc-label">Avg. USD salary</div>
-          <div class="msc-val">$87K</div>
-          <div class="msc-sub">Sr. Engineer · remote LatAm</div>
+        <div class="country-ping cp-mx">
+          <span class="ping-ripple"></span>
+          <span class="ping-ripple delay-1"></span>
+          <span class="ping-ripple delay-2"></span>
+          <span class="ping-core"></span>
+          <span class="ping-label">MEX</span>
         </div>
-        <div class="map-stat-card msc-2">
-          <div class="msc-label">Roles this week</div>
-          <div class="msc-val">5</div>
-          <div class="msc-sub">LatAm-verified</div>
+        <div class="country-ping cp-co">
+          <span class="ping-ripple"></span>
+          <span class="ping-ripple delay-1"></span>
+          <span class="ping-ripple delay-2"></span>
+          <span class="ping-core"></span>
+          <span class="ping-label">COL</span>
         </div>
-        <div class="map-stat-card msc-3">
-          <div class="msc-label">LatAm tech workers</div>
-          <div class="msc-val">400K+</div>
-          <div class="msc-sub">Earning USD remotely</div>
+        <div class="country-ping cp-br is-teal">
+          <span class="ping-ripple"></span>
+          <span class="ping-ripple delay-1"></span>
+          <span class="ping-ripple delay-2"></span>
+          <span class="ping-core"></span>
+          <span class="ping-label">BRA</span>
         </div>
-
-        <!-- Country pings -->
-        <div class="country-ping cp-mx"><div class="ping-dot d1"></div><span class="ping-label">MEX</span></div>
-        <div class="country-ping cp-co"><div class="ping-dot"></div><span class="ping-label">COL</span></div>
-        <div class="country-ping cp-br"><div class="ping-dot teal d2"></div><span class="ping-label">BRA</span></div>
-        <div class="country-ping cp-ar"><div class="ping-dot teal d3"></div><span class="ping-label">ARG</span></div>
-        <div class="country-ping cp-cl"><div class="ping-dot d2"></div><span class="ping-label">CHL</span></div>
-
-        <!-- Coordinate labels right side -->
-        <div class="map-coords">
-          <span class="map-coord-label">23.5°N</span>
-          <span class="map-coord-label">0° EQ</span>
-          <span class="map-coord-label">23.5°S</span>
+        <div class="country-ping cp-ar is-teal">
+          <span class="ping-ripple"></span>
+          <span class="ping-ripple delay-1"></span>
+          <span class="ping-ripple delay-2"></span>
+          <span class="ping-core"></span>
+          <span class="ping-label">ARG</span>
         </div>
-      </div>
-
-      <!-- Quick job list -->
-      <div class="hero-job-list">
-        <div class="hero-job-list-header">
-          <span class="label label-teal">Featured roles this week</span>
-          <span class="label">→ view all</span>
+        <div class="country-ping cp-cl">
+          <span class="ping-ripple"></span>
+          <span class="ping-ripple delay-1"></span>
+          <span class="ping-ripple delay-2"></span>
+          <span class="ping-core"></span>
+          <span class="ping-label">CHL</span>
         </div>
-        <div class="hjob-row" onclick="window.location='/jobs'">
-          <div class="hjob-icon">⌥</div>
-          <div class="hjob-info">
-            <div class="hjob-title">AI Engineer · Luxury Presence</div>
-            <div class="hjob-co">Remote · LatAm · Full-time</div>
-          </div>
-          <span class="hjob-tag">AI</span>
-        </div>
-        <div class="hjob-row" onclick="window.location='/jobs'">
-          <div class="hjob-icon" style="background:var(--teal)">⚡</div>
-          <div class="hjob-info">
-            <div class="hjob-title">Frontend Dev · Linear</div>
-            <div class="hjob-co">Remote · LatAm · $70–110K</div>
-          </div>
-          <span class="hjob-tag" style="color:var(--teal)">REMOTE</span>
-        </div>
-        <div class="hjob-row" onclick="window.location='/jobs'">
-          <div class="hjob-icon">◎</div>
-          <div class="hjob-info">
-            <div class="hjob-title">Customer Success · Whippy</div>
-            <div class="hjob-co">Remote · LatAm · ~$35K</div>
-          </div>
-          <span class="hjob-tag">CS</span>
-        </div>
-        <div class="hjob-row" onclick="window.location='/jobs'">
-          <div class="hjob-icon" style="background:var(--teal)">⊞</div>
-          <div class="hjob-info">
-            <div class="hjob-title">Product Designer · Supabase</div>
-            <div class="hjob-co">Remote · Global · $65–95K</div>
-          </div>
-          <span class="hjob-tag" style="color:var(--teal)">DESIGN</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- STATS BAR -->
-  <div class="hero-stats">
-    <div class="hero-stat-item">
-      <span class="hstat-icon">🌎</span>
-      <div>
-        <div class="hstat-num">1,500<span class="accent">+</span></div>
-        <div class="hstat-label">Remote roles<br>curated weekly</div>
-      </div>
-    </div>
-    <div class="hero-stat-item">
-      <span class="hstat-icon">📍</span>
-      <div>
-        <div class="hstat-num">100<span class="accent">%</span></div>
-        <div class="hstat-label">LatAm-focused<br>global opportunities</div>
-      </div>
-    </div>
-    <div class="hero-stat-item">
-      <span class="hstat-icon">⇄</span>
-      <div>
-        <div class="hstat-num">EN<span class="accent">/</span>ES</div>
-        <div class="hstat-label">Bilingual<br>by Latin Americans</div>
-      </div>
-    </div>
-    <div class="hero-stat-item">
-      <span class="hstat-icon">↑</span>
-      <div>
-        <div class="hstat-num">$<span class="accent">87K</span></div>
-        <div class="hstat-label">Salary signals<br>real data · real insight</div>
       </div>
     </div>
   </div>
@@ -987,34 +1139,38 @@
     <div class="section-marker"><span class="arrow">→</span> What you get</div>
     <div class="section-header">
       <h2 class="section-h2">The Nortec Weekly Brief</h2>
-      <a class="section-link" href="/pages/issue-001.html">View issue #001 →</a>
+      <a class="section-link" href="/issue/001">View issue #001 →</a>
     </div>
 
-    <div class="wyg-grid">
-      <div class="wyg-card">
-        <div class="wyg-num">01</div>
-        <div class="wyg-icon">💼</div>
-        <div class="wyg-title">Real Remote Jobs</div>
-        <div class="wyg-desc">Hand-picked roles from companies actively hiring LatAm talent. Each with a Nortec Score and apply angle.</div>
-      </div>
-      <div class="wyg-card">
-        <div class="wyg-num">02</div>
-        <div class="wyg-icon">📊</div>
-        <div class="wyg-title">Salary Signals</div>
-        <div class="wyg-desc">Real compensation data to benchmark your worth and negotiate better. Listed, inferred, and self-reported.</div>
-      </div>
-      <div class="wyg-card">
-        <div class="wyg-num">03</div>
-        <div class="wyg-icon">📋</div>
-        <div class="wyg-title">Application Playbooks</div>
-        <div class="wyg-desc">Résumé, portfolio, and interview guides built for global standards. Role teardowns for LatAm candidates.</div>
-      </div>
-      <div class="wyg-card">
-        <div class="wyg-num">04</div>
-        <div class="wyg-icon">🔭</div>
-        <div class="wyg-title">Company Radar</div>
-        <div class="wyg-desc">Discover remote-friendly companies that value LatAm talent — before the job post goes live.</div>
-      </div>
+    <div class="feature-strip" aria-label="The Nortec Weekly Brief highlights">
+      <article class="feature-chip">
+        <div class="feature-icon">💼</div>
+        <div>
+          <div class="feature-title">Real Remote Jobs</div>
+          <div class="feature-desc">Hand-picked roles from companies actively hiring LatAm talent. Each with a Nortec Score and apply angle.</div>
+        </div>
+      </article>
+      <article class="feature-chip">
+        <div class="feature-icon">📊</div>
+        <div>
+          <div class="feature-title">Salary Signals</div>
+          <div class="feature-desc">Real compensation data to benchmark your worth and negotiate better. Listed, inferred, and self-reported.</div>
+        </div>
+      </article>
+      <article class="feature-chip">
+        <div class="feature-icon">📋</div>
+        <div>
+          <div class="feature-title">Application Playbooks</div>
+          <div class="feature-desc">Résumé, portfolio, and interview guides built for global standards. Role teardowns for LatAm candidates.</div>
+        </div>
+      </article>
+      <article class="feature-chip">
+        <div class="feature-icon">🔭</div>
+        <div>
+          <div class="feature-title">Company Radar</div>
+          <div class="feature-desc">Discover remote-friendly companies that value LatAm talent — before the job post goes live.</div>
+        </div>
+      </article>
     </div>
   </div>
 </section>
@@ -1059,27 +1215,27 @@
           <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px;">
             <div class="bar-row">
               <div class="bar-label">🇧🇷 Brazil</div>
-              <div class="bar-track"><div class="bar-fill" style="width:78%"></div></div>
+              <div class="bar-track"><div class="bar-fill" data-width="78%" style="width:0"></div></div>
               <div class="bar-val">$78K</div>
             </div>
             <div class="bar-row">
               <div class="bar-label">🇦🇷 Argentina</div>
-              <div class="bar-track"><div class="bar-fill" style="width:65%"></div></div>
+              <div class="bar-track"><div class="bar-fill" data-width="65%" style="width:0"></div></div>
               <div class="bar-val">$65K</div>
             </div>
             <div class="bar-row">
               <div class="bar-label">🇨🇴 Colombia</div>
-              <div class="bar-track"><div class="bar-fill" style="width:61%"></div></div>
+              <div class="bar-track"><div class="bar-fill" data-width="61%" style="width:0"></div></div>
               <div class="bar-val">$61K</div>
             </div>
             <div class="bar-row">
               <div class="bar-label">🇲🇽 México</div>
-              <div class="bar-track"><div class="bar-fill" style="width:70%"></div></div>
+              <div class="bar-track"><div class="bar-fill" data-width="70%" style="width:0"></div></div>
               <div class="bar-val">$70K</div>
             </div>
             <div class="bar-row">
               <div class="bar-label">🇨🇱 Chile</div>
-              <div class="bar-track"><div class="bar-fill" style="width:68%"></div></div>
+              <div class="bar-track"><div class="bar-fill" data-width="68%" style="width:0"></div></div>
               <div class="bar-val">$68K</div>
             </div>
           </div>
@@ -1118,9 +1274,8 @@
   <div class="container">
     <div class="section-marker"><span class="arrow">→</span> Why Nortec</div>
     <div class="why-grid">
-      <!-- Radar visual -->
       <div class="why-visual">
-        <div style="position:absolute;inset:0;" class="grid-bg" style="opacity:0.3;"></div>
+        <div style="position:absolute;inset:0;opacity:0.3;" class="grid-bg"></div>
         <div style="position:relative;z-index:2;text-align:center;">
           <div class="radar-wrap" style="width:240px;height:240px;margin:0 auto;">
             <div class="radar-ring" style="width:60px;height:60px;border-color:rgba(15,163,154,0.5);"></div>
@@ -1128,7 +1283,6 @@
             <div class="radar-ring" style="width:180px;height:180px;"></div>
             <div class="radar-ring" style="width:240px;height:240px;"></div>
             <div class="radar-sweep"></div>
-            <!-- dots -->
             <div class="radar-dot" style="top:28%;left:38%;"></div>
             <div class="radar-dot" style="top:52%;left:62%;background:var(--teal);box-shadow:0 0 8px var(--teal);"></div>
             <div class="radar-dot" style="top:70%;left:44%;"></div>
@@ -1148,6 +1302,14 @@
           Nortec is different. Every role is verified for LatAm eligibility. Every issue is bilingual. Every AI tool we feature is practical — not trendy.<br><br>
           <em>Nortec existe porque el talento en LatAm merece un filtro que entienda dónde vive, no solo dónde aspira a trabajar.</em>
         </p>
+
+        <div class="why-stats-inline">
+          <div class="why-stat-item"><div class="why-stat-num">1,500+</div><div class="why-stat-label">Remote roles curated weekly</div></div>
+          <div class="why-stat-item"><div class="why-stat-num">100%</div><div class="why-stat-label">LatAm-focused global opportunities</div></div>
+          <div class="why-stat-item"><div class="why-stat-num">EN/ES</div><div class="why-stat-label">Bilingual by Latin Americans</div></div>
+          <div class="why-stat-item"><div class="why-stat-num">$87K</div><div class="why-stat-label">Salary signals with real insight</div></div>
+        </div>
+
         <div class="checklist">
           <div class="checklist-item">LatAm-first, globally minded</div>
           <div class="checklist-item">Bilingual content & community</div>
@@ -1234,15 +1396,15 @@
             <span style="font-family:var(--font-display);font-size:1.1rem;letter-spacing:0.1em;color:var(--north-star);">NORTE<span style="color:var(--teal);">C</span></span>
             <span style="float:right;font-size:9px;color:var(--text3);">Issue #001 · May 9, 2026</span>
           </div>
-          <div class="t-line" style="color:var(--orient-red);font-size:9px;letter-spacing:0.1em;margin-bottom:8px;">— THE DROP / ROLES QUE SÍ VALEN</div>
-          <div class="t-line"><span class="prompt">▲ </span><span class="cmd">Luxury Presence · Staff AI Engineer</span></div>
-          <div class="t-line"><span class="prompt">▲ </span><span class="cmd">Clara · Forward-Deployed AI Eng.</span></div>
-          <div class="t-line"><span class="ok">◆ </span>Praxent · Senior SWE React/Node</div>
-          <div class="t-line"><span class="ok">◆ </span>Whippy · Customer Success Mgr</div>
-          <div class="t-line" style="color:var(--orient-red);font-size:9px;letter-spacing:0.1em;margin:12px 0 6px;">— SALARY SIGNAL</div>
-          <div class="t-line">AI Engineer avg: <span class="val">$118K USD/yr</span></div>
-          <div class="t-line">Trending stack: <span class="val">Python · LLMs · AWS</span></div>
-          <div class="t-line" style="margin-top:10px;">status: <span class="val">northbound</span> <span class="t-cursor"></span></div>
+          <div class="t-line typing-line" data-typing-line style="color:var(--orient-red);font-size:9px;letter-spacing:0.1em;margin-bottom:8px;">— THE DROP / ROLES QUE SÍ VALEN</div>
+          <div class="t-line typing-line" data-typing-line><span class="prompt">▲ </span><span class="cmd">Luxury Presence · Staff AI Engineer</span></div>
+          <div class="t-line typing-line" data-typing-line><span class="prompt">▲ </span><span class="cmd">Clara · Forward-Deployed AI Eng.</span></div>
+          <div class="t-line typing-line" data-typing-line><span class="ok">◆ </span>Praxent · Senior SWE React/Node</div>
+          <div class="t-line typing-line" data-typing-line><span class="ok">◆ </span>Whippy · Customer Success Mgr</div>
+          <div class="t-line typing-line" data-typing-line style="color:var(--orient-red);font-size:9px;letter-spacing:0.1em;margin:12px 0 6px;">— SALARY SIGNAL</div>
+          <div class="t-line typing-line" data-typing-line>AI Engineer avg: <span class="val">$118K USD/yr</span></div>
+          <div class="t-line typing-line" data-typing-line>Trending stack: <span class="val">Python · LLMs · AWS</span></div>
+          <div class="t-line typing-line" data-typing-line style="margin-top:10px;">status: <span class="val">northbound</span> <span class="t-cursor"></span></div>
         </div>
       </div>
     </div>
@@ -1250,11 +1412,11 @@
 </section>
 
 <!-- FOOTER -->
-<footer style="background:var(--bg2);border-top:1px solid var(--border);padding:3rem 1.5rem 2rem;">
-  <div class="container" style="display:grid;grid-template-columns:2fr 1fr 1fr 1.2fr;gap:3rem;flex-wrap:wrap;">
+<footer class="footer-simple">
+  <div class="container footer-simple-grid">
     <div>
-      <div style="font-family:var(--font-display);font-size:1.6rem;letter-spacing:0.1em;color:var(--north-star);margin-bottom:1rem;">NORTE<span style="color:var(--teal);">C</span></div>
-      <p style="font-family:var(--font-mono);font-size:11px;color:var(--text3);line-height:1.8;max-width:280px;">
+      <div class="footer-brand">NORTE<span style="color:var(--teal);">C</span></div>
+      <p class="footer-desc">
         The bilingual career-intelligence platform for LatAm tech talent pursuing global remote work.
         Built in LatAm. Designed for the world.
       </p>
@@ -1265,31 +1427,17 @@
         <a href="#" class="btn-ghost" style="font-size:9px;padding:5px 10px;">YT</a>
       </div>
     </div>
+
     <div>
-      <div class="label label-teal" style="margin-bottom:0.75rem;">Explore</div>
-      <div style="display:flex;flex-direction:column;gap:8px;">
-        <a href="/jobs" style="font-family:var(--font-mono);font-size:11px;color:var(--text3);text-decoration:none;">Jobs</a>
-        <a href="/tracker" style="font-family:var(--font-mono);font-size:11px;color:var(--text3);text-decoration:none;">Job Tracker</a>
-        <a href="/archive" style="font-family:var(--font-mono);font-size:11px;color:var(--text3);text-decoration:none;">Archive</a>
-        <a href="/pages/issue-001.html" style="font-family:var(--font-mono);font-size:11px;color:var(--text3);text-decoration:none;">Issue #001</a>
+      <div class="label label-teal" style="margin-bottom:0.75rem;">Quick links</div>
+      <div class="footer-links-grid">
+        <a href="/jobs">Jobs</a>
+        <a href="/tracker">Job Tracker</a>
+        <a href="/archive">Archive</a>
+        <a href="/issue/001">Issue #001</a>
+        <a href="/sponsors">For Employers</a>
+        <a href="/sponsors">Sponsors</a>
       </div>
-    </div>
-    <div>
-      <div class="label label-teal" style="margin-bottom:0.75rem;">Company</div>
-      <div style="display:flex;flex-direction:column;gap:8px;">
-        <a href="#" style="font-family:var(--font-mono);font-size:11px;color:var(--text3);text-decoration:none;">About</a>
-        <a href="/sponsors" style="font-family:var(--font-mono);font-size:11px;color:var(--text3);text-decoration:none;">For Employers</a>
-        <a href="/sponsors" style="font-family:var(--font-mono);font-size:11px;color:var(--text3);text-decoration:none;">Sponsors</a>
-        <a href="#" style="font-family:var(--font-mono);font-size:11px;color:var(--text3);text-decoration:none;">Contact</a>
-      </div>
-    </div>
-    <div>
-      <div class="label label-teal" style="margin-bottom:0.75rem;">Stay in the loop</div>
-      <p style="font-family:var(--font-mono);font-size:10px;color:var(--text3);margin-bottom:10px;line-height:1.7;">Get the weekly brief with the best remote jobs and career insights.</p>
-      <form class="email-form" onsubmit="handleSub(event)" data-source="footer" style="flex-direction:column;gap:0;">
-        <input type="email" placeholder="tu@email.com" required style="border-bottom:1px solid var(--border2);">
-        <button type="submit" style="margin-top:0;padding:10px;">SUBSCRIBE FREE →</button>
-      </form>
     </div>
   </div>
   <div class="divider" style="margin:2rem 0;"></div>
@@ -1333,6 +1481,8 @@ window.handleSub = async function(e) {
   }
 };
 
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 // Render jobs grid
 const grid = document.getElementById('jobs-grid');
 if (grid) {
@@ -1350,7 +1500,7 @@ if (grid) {
       </div>
       <div class="job-card-footer">
         <div>
-          <div class="job-salary">${j.salary}</div>
+          <div class="job-salary" data-salary-text="${j.salary}" data-salary-num="${j.salaryNum ?? ''}">${j.salary}</div>
           <div style="display:flex;gap:3px;margin-top:4px;">${scorePips(j.score)}</div>
         </div>
         <div style="text-align:right;">
@@ -1369,10 +1519,170 @@ if (chart) {
   chart.innerHTML = SALARY_DATA.map(d => `
     <div class="bar-row">
       <div class="bar-label">${d.role}</div>
-      <div class="bar-track"><div class="bar-fill${d.mid > 100 ? '' : ''}" style="width:${(d.mid/maxSal*100).toFixed(0)}%"></div></div>
+      <div class="bar-track"><div class="bar-fill" data-width="${(d.mid/maxSal*100).toFixed(0)}%" style="width:0"></div></div>
       <div class="bar-val">$${d.mid}K</div>
     </div>
   `).join('');
+}
+
+function animateSalaryText(el) {
+  const finalText = el.dataset.salaryText || el.textContent.trim();
+  const numberMatch = finalText.match(/^(.*?)(\d[\d,]*)(.*)$/);
+  if (!numberMatch) return;
+
+  const prefix = numberMatch[1];
+  const suffix = numberMatch[3];
+  const providedTarget = Number(el.dataset.salaryNum);
+  const target = Number.isFinite(providedTarget) && providedTarget > 0
+    ? providedTarget
+    : Number(numberMatch[2].replace(/,/g, ''));
+
+  if (!Number.isFinite(target) || target <= 0) return;
+
+  const duration = 850;
+  const start = performance.now();
+
+  const tick = (now) => {
+    const progress = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    const current = Math.round(target * eased);
+    el.textContent = `${prefix}${current.toLocaleString('en-US')}${suffix}`;
+
+    if (progress < 1) {
+      requestAnimationFrame(tick);
+    } else {
+      el.textContent = finalText;
+    }
+  };
+
+  requestAnimationFrame(tick);
+}
+
+function initJobCardSalaryObserver() {
+  const cards = document.querySelectorAll('.job-card');
+  if (cards.length === 0) return;
+
+  const run = (card) => {
+    const salary = card.querySelector('.job-salary');
+    if (!salary || salary.dataset.counted === '1') return;
+    salary.dataset.counted = '1';
+    animateSalaryText(salary);
+  };
+
+  if (prefersReducedMotion) {
+    cards.forEach(run);
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      run(entry.target);
+      observer.unobserve(entry.target);
+    });
+  }, { threshold: 0.35 });
+
+  cards.forEach((card) => observer.observe(card));
+}
+
+function initBarChartAnimation() {
+  const salarySection = document.querySelector('.salary-section');
+  if (!salarySection) return;
+
+  const animate = () => {
+    const bars = salarySection.querySelectorAll('.bar-fill[data-width]');
+    bars.forEach((bar, index) => {
+      const target = bar.dataset.width;
+      setTimeout(() => {
+        bar.style.width = target;
+      }, index * (prefersReducedMotion ? 0 : 100));
+    });
+  };
+
+  if (prefersReducedMotion) {
+    animate();
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    const hit = entries.some((entry) => entry.isIntersecting);
+    if (!hit) return;
+    animate();
+    observer.disconnect();
+  }, { threshold: 0.3 });
+
+  observer.observe(salarySection);
+}
+
+function initScrollReveal() {
+  const targets = document.querySelectorAll('section:not(.hero), .sponsor-strip, footer');
+  if (targets.length === 0) return;
+
+  if (prefersReducedMotion) {
+    targets.forEach((el) => {
+      el.classList.add('reveal-on-scroll', 'is-visible');
+    });
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-visible');
+      observer.unobserve(entry.target);
+    });
+  }, { threshold: 0.16, rootMargin: '0px 0px -8% 0px' });
+
+  targets.forEach((el) => {
+    el.classList.add('reveal-on-scroll');
+    observer.observe(el);
+  });
+}
+
+function initHeroParallax() {
+  const hero = document.querySelector('.hero');
+  const textLayer = document.querySelector('.hero-parallax-text');
+  const mapLayer = document.querySelector('.hero-parallax-map');
+  if (!hero || !textLayer || !mapLayer || prefersReducedMotion) return;
+
+  const update = () => {
+    const rect = hero.getBoundingClientRect();
+    if (rect.bottom < 0 || rect.top > window.innerHeight) return;
+
+    const progress = Math.min(Math.max((window.innerHeight - rect.top) / (window.innerHeight + rect.height), 0), 1);
+    textLayer.style.transform = `translate3d(0, ${progress * 34}px, 0)`;
+    mapLayer.style.transform = `translate3d(0, ${progress * 18}px, 0)`;
+  };
+
+  update();
+  window.addEventListener('scroll', update, { passive: true });
+}
+
+function initTerminalTyping() {
+  const block = document.querySelector('.cta-terminal');
+  if (!block) return;
+  const lines = [...block.querySelectorAll('[data-typing-line]')];
+  if (lines.length === 0) return;
+
+  const reveal = () => {
+    lines.forEach((line, index) => {
+      setTimeout(() => line.classList.add('is-typed'), index * (prefersReducedMotion ? 0 : 400));
+    });
+  };
+
+  if (prefersReducedMotion) {
+    reveal();
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    const inView = entries.some((entry) => entry.isIntersecting);
+    if (!inView) return;
+    reveal();
+    observer.disconnect();
+  }, { threshold: 0.45 });
+
+  observer.observe(block);
 }
 
 // Animate C in NORTEC logo
@@ -1381,6 +1691,12 @@ if (c) {
   c.textContent = 'C';
   c.style.cssText = 'color:var(--teal);display:inline-block;animation:fadeIn 0.8s 0.5s both;';
 }
+
+initJobCardSalaryObserver();
+initBarChartAnimation();
+initScrollReveal();
+initHeroParallax();
+initTerminalTyping();
 </script>
 </body>
 </html>
