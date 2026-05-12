@@ -369,6 +369,91 @@ body::before {
   font-weight: 500;
   color: var(--teal-bright);
 }
+.salary-reveal {
+  min-width: 170px;
+}
+.salary-reveal-btn {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--north-star);
+  background: rgba(6,16,15,0.92);
+  border: 1px solid var(--teal);
+  padding: 7px 10px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+}
+.salary-reveal-btn:hover {
+  color: var(--teal);
+  background: rgba(15,163,154,0.1);
+}
+.salary-reveal-result {
+  opacity: 0;
+  transform: translateY(8px);
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity 0.28s ease, transform 0.28s ease, max-height 0.28s ease;
+}
+.salary-reveal.is-revealed .salary-reveal-btn {
+  display: none;
+}
+.salary-reveal.is-revealed .salary-reveal-result {
+  opacity: 1;
+  transform: translateY(0);
+  max-height: 80px;
+}
+.salary-reveal-source {
+  margin-top: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.05em;
+}
+.salary-reveal-source.is-listed {
+  color: var(--teal);
+}
+.salary-reveal-source.is-estimate {
+  color: var(--orient-red);
+}
+.salary-reveal-info {
+  position: relative;
+  width: 12px;
+  height: 12px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  font-size: 8px;
+  line-height: 10px;
+  text-align: center;
+  cursor: help;
+}
+.salary-reveal-tooltip {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 8px);
+  transform: translateX(-50%) translateY(2px);
+  width: 220px;
+  padding: 7px 8px;
+  border: 1px solid var(--border2);
+  background: var(--midnight);
+  color: var(--north-star);
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  z-index: 10;
+}
+.salary-reveal-info:hover .salary-reveal-tooltip,
+.salary-reveal-info:focus .salary-reveal-tooltip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
 .job-score {
   display: flex;
   gap: 3px;

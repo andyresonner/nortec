@@ -221,6 +221,7 @@ import { initI18n, refreshI18n, getCurrentLanguage } from '/js/i18n.js';
 import { submitEmail } from '/js/subscribe.js';
 import { JOBS } from '/js/jobs.js';
 import { scorePips, scoreLabel } from '/js/components.js';
+import { createSalaryRevealMarkup, initSalaryReveal } from '/js/salary-reveal.js';
 
 window.handleSub = async function(e) {
   e.preventDefault();
@@ -265,12 +266,13 @@ function renderJobs(jobs) {
       </div>
       <div style="text-align:right;flex-shrink:0;min-width:140px;">
         ${scoreLabel(j.score)}
-        <div style="font-family:var(--font-display);font-size:1.2rem;font-weight:600;color:var(--teal-bright);margin:8px 0 4px;">${j.salary}</div>
+        <div style="margin:8px 0 4px;display:flex;justify-content:flex-end;">${createSalaryRevealMarkup(j, lang)}</div>
         <div style="display:flex;gap:3px;justify-content:flex-end;margin-bottom:8px;">${scorePips(j.score)}</div>
         <a style="font-family:var(--font-mono);font-size:10px;color:var(--orient-red);letter-spacing:0.06em;text-decoration:none;" href="/job?id=${j.id}">${lang === 'es' ? 'Ver empleo' : 'View job'} → ${sourceLabel}: ${j.source}</a>
       </div>
     </div>
   `).join('');
+  initSalaryReveal(list);
   refreshI18n();
 }
 
@@ -280,7 +282,7 @@ window.filterJobs = function(filter, btn) {
   btn.classList.add('active');
   let filtered = sortedJobs;
   if (filter === 'ai') filtered = sortedJobs.filter(j => j.aiRelevance);
-  else if (filter === 'salary') filtered = sortedJobs.filter(j => j.salaryNum);
+  else if (filter === 'salary') filtered = sortedJobs.filter(j => j.salarySource === 'listed');
   else if (filter !== 'all') filtered = sortedJobs.filter(j => j.function === filter);
   renderJobs(filtered);
 };
@@ -290,7 +292,7 @@ initI18n();
 window.addEventListener('nortec:langchange', () => {
   let filtered = sortedJobs;
   if (currentFilter === 'ai') filtered = sortedJobs.filter(j => j.aiRelevance);
-  else if (currentFilter === 'salary') filtered = sortedJobs.filter(j => j.salaryNum);
+  else if (currentFilter === 'salary') filtered = sortedJobs.filter(j => j.salarySource === 'listed');
   else if (currentFilter !== 'all') filtered = sortedJobs.filter(j => j.function === currentFilter);
   renderJobs(filtered);
 });

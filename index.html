@@ -1514,6 +1514,7 @@ import { initI18n, refreshI18n, getCurrentLanguage } from '/js/i18n.js';
 import { submitEmail } from '/js/subscribe.js';
 import { JOBS, SALARY_DATA } from '/js/jobs.js';
 import { scorePips, scoreLabel } from '/js/components.js';
+import { createSalaryRevealMarkup, initSalaryReveal } from '/js/salary-reveal.js';
 
 window.handleSub = async function(e) {
   e.preventDefault();
@@ -1574,7 +1575,7 @@ function renderJobsGrid() {
       </div>
       <div class="job-card-footer">
         <div>
-          <div class="job-salary" data-salary-text="${j.salary}" data-salary-num="${j.salaryNum ?? ''}">${j.salary}</div>
+          ${createSalaryRevealMarkup(j, lang)}
           <div style="display:flex;gap:3px;margin-top:4px;">${scorePips(j.score)}</div>
         </div>
         <div style="text-align:right;">
@@ -1587,6 +1588,7 @@ function renderJobsGrid() {
   refreshI18n();
 }
 renderJobsGrid();
+initSalaryReveal(grid);
 
 // Render salary chart
 const chart = document.getElementById('salary-chart');
@@ -1599,66 +1601,6 @@ if (chart) {
       <div class="bar-val">$${d.mid}K</div>
     </div>
   `).join('');
-}
-
-function animateSalaryText(el) {
-  const finalText = el.dataset.salaryText || el.textContent.trim();
-  const numberMatch = finalText.match(/^(.*?)(\d[\d,]*)(.*)$/);
-  if (!numberMatch) return;
-
-  const prefix = numberMatch[1];
-  const suffix = numberMatch[3];
-  const providedTarget = Number(el.dataset.salaryNum);
-  const target = Number.isFinite(providedTarget) && providedTarget > 0
-    ? providedTarget
-    : Number(numberMatch[2].replace(/,/g, ''));
-
-  if (!Number.isFinite(target) || target <= 0) return;
-
-  const duration = 850;
-  const start = performance.now();
-
-  const tick = (now) => {
-    const progress = Math.min((now - start) / duration, 1);
-    const eased = 1 - Math.pow(1 - progress, 3);
-    const current = Math.round(target * eased);
-    el.textContent = `${prefix}${current.toLocaleString('en-US')}${suffix}`;
-
-    if (progress < 1) {
-      requestAnimationFrame(tick);
-    } else {
-      el.textContent = finalText;
-    }
-  };
-
-  requestAnimationFrame(tick);
-}
-
-function initJobCardSalaryObserver() {
-  const cards = document.querySelectorAll('.job-card');
-  if (cards.length === 0) return;
-
-  const run = (card) => {
-    const salary = card.querySelector('.job-salary');
-    if (!salary || salary.dataset.counted === '1') return;
-    salary.dataset.counted = '1';
-    animateSalaryText(salary);
-  };
-
-  if (prefersReducedMotion) {
-    cards.forEach(run);
-    return;
-  }
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (!entry.isIntersecting) return;
-      run(entry.target);
-      observer.unobserve(entry.target);
-    });
-  }, { threshold: 0.35 });
-
-  cards.forEach((card) => observer.observe(card));
 }
 
 function initBarChartAnimation() {
@@ -1794,7 +1736,6 @@ function initSalaryTerminalTyping() {
 }
 
 initI18n();
-initJobCardSalaryObserver();
 initBarChartAnimation();
 initScrollReveal();
 initHeroParallax();
