@@ -3,317 +3,1207 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nortec #001 — Remote AI/tech roles hiring from LatAm</title>
-<link rel="stylesheet" href="/css/global.css">
+<title>Nortec // Issue 001 — The First Drop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <style>
-.issue-wrap { max-width: 680px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
-.issue-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 2px solid var(--border2); }
-.issue-logo { font-family:var(--font-display);font-size:2rem;letter-spacing:0.12em;color:var(--north-star);margin-bottom:0.25rem; }
-.issue-logo .teal { color:var(--teal); }
-.issue-meta { font-family:var(--font-mono);font-size:10px;color:var(--text3);letter-spacing:0.08em;display:flex;gap:1rem;flex-wrap:wrap;margin-top:4px; }
-.issue-h1 { font-family:var(--font-display);font-size:clamp(2rem,5vw,3.5rem);font-weight:700;text-transform:uppercase;line-height:0.95;color:var(--north-star);margin:1.5rem 0 0.5rem; }
-.issue-intro { font-family:var(--font-mono);font-size:12px;color:var(--text2);line-height:1.9;margin-top:1rem; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* Section headers */
-.i-section { margin:3rem 0; }
-.i-section-label {
-  display:inline-block;
-  font-family:var(--font-mono);font-size:9px;letter-spacing:0.14em;
-  text-transform:uppercase;color:var(--bg);background:var(--orient-red);
-  padding:3px 12px;margin-bottom:1.25rem;
+:root {
+  --ink:        #0A1A1C;
+  --paper:      #F2E9D5;
+  --paper2:     #EDE3CC;
+  --teal:       #0FA39A;
+  --red:        #FF4B28;
+  --gray:       #5A5F57;
+  --border:     rgba(10,26,28,0.12);
+  --border2:    rgba(10,26,28,0.2);
+  --font-d:     'Oswald', sans-serif;
+  --font-m:     'IBM Plex Mono', monospace;
+  --font-s:     'Libre Baskerville', serif;
+  --w:          680px;
 }
-.i-section-title { font-family:var(--font-display);font-size:1.4rem;font-weight:700;text-transform:uppercase;color:var(--north-star);margin-bottom:0.75rem; }
 
-/* Drop / job row */
-.drop-job {
-  border:1px solid var(--border);
-  padding:1.25rem;
-  margin-bottom:1px;
-  transition:border-color 0.15s;
+body {
+  background: #2a2a2a;
+  font-family: var(--font-m);
+  display: flex;
+  justify-content: center;
+  padding: 2rem 1rem 4rem;
 }
-.drop-job:hover { border-color:var(--teal); }
-.dj-co { font-family:var(--font-mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);margin-bottom:4px; }
-.dj-title { font-family:var(--font-display);font-size:1.2rem;font-weight:600;color:var(--north-star);margin-bottom:6px;line-height:1.2; }
-.dj-meta { font-family:var(--font-mono);font-size:10px;color:var(--text3);letter-spacing:0.04em;margin-bottom:10px; }
-.dj-why { font-family:var(--font-mono);font-size:11px;color:var(--text2);line-height:1.8;margin-bottom:8px; }
-.dj-angle { font-family:var(--font-mono);font-size:11px;color:var(--text2);line-height:1.8;border-left:2px solid var(--orient-red);padding-left:10px;margin-bottom:10px; }
-.dj-footer { display:flex;align-items:center;justify-content:space-between; }
-.dj-sal { font-family:var(--font-display);font-size:1.1rem;font-weight:600;color:var(--teal-bright); }
-.dj-apply { font-family:var(--font-mono);font-size:10px;color:var(--orient-red);text-decoration:none;letter-spacing:0.06em; }
-.dj-apply:hover { color:var(--north-star); }
 
-/* Salary signal */
-.signal-box { background:var(--surface);border:1px solid var(--border2);border-left:3px solid var(--teal);padding:1.5rem; }
-.signal-title { font-family:var(--font-mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--teal);margin-bottom:1rem; }
-.signal-body { font-family:var(--font-mono);font-size:12px;color:var(--text2);line-height:1.9; }
-.signal-body strong { color:var(--north-star); }
-.signal-skills { display:flex;flex-wrap:wrap;gap:6px;margin-top:1rem; }
-.skill-chip { font-family:var(--font-mono);font-size:10px;border:1px solid var(--border2);padding:3px 10px;color:var(--text2);letter-spacing:0.04em; }
-.skill-chip.hot { border-color:var(--teal);color:var(--teal);background:var(--teal-dim); }
+.email-wrap {
+  width: 100%;
+  max-width: var(--w);
+  background: var(--paper);
+  position: relative;
+}
 
-/* Radar (companies) */
-.radar-company { display:flex;align-items:flex-start;gap:1rem;padding:1rem 0;border-bottom:1px solid var(--border); }
-.radar-company:last-child { border-bottom:none; }
-.rc-arrow { color:var(--orient-red);flex-shrink:0;font-size:0.8rem;margin-top:2px; }
-.rc-name { font-family:var(--font-display);font-size:1rem;font-weight:600;text-transform:uppercase;color:var(--north-star);margin-bottom:3px; }
-.rc-desc { font-family:var(--font-mono);font-size:11px;color:var(--text2);line-height:1.7; }
+/* Grain */
+.email-wrap::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+}
 
-/* Tip */
-.tip-box { background:var(--midnight);border:1px solid var(--border2);padding:1.5rem; }
+/* ── TOP BAR ── */
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  background: var(--ink);
+  border-bottom: 2px solid var(--teal);
+}
+.top-bar-left {
+  font-family: var(--font-m);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(242,233,213,0.6);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.top-bar-left .iss {
+  background: var(--teal);
+  color: var(--ink);
+  padding: 2px 8px;
+  font-weight: 600;
+}
+.top-bar-right {
+  font-family: var(--font-m);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: rgba(242,233,213,0.5);
+  display: flex;
+  gap: 16px;
+}
 
-/* Skill move */
-.skill-move { background:var(--surface);border:1px solid var(--border);padding:1.5rem; }
+/* ── HEADER ── */
+.header {
+  background: var(--ink);
+  padding: 1.5rem 1.5rem 1.25rem;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1rem;
+  align-items: start;
+}
+.header-left {}
+.brand-logo {
+  font-family: var(--font-d);
+  font-size: 4.5rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 0.9;
+  color: var(--paper);
+  margin-bottom: 4px;
+}
+.brand-logo .c { color: var(--teal); }
+.brand-sub {
+  font-family: var(--font-m);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(242,233,213,0.5);
+  margin-bottom: 8px;
+}
+.issue-tag {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.issue-num {
+  font-family: var(--font-m);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: var(--red);
+  text-transform: uppercase;
+  border: 1px solid var(--red);
+  padding: 2px 8px;
+}
+.issue-name {
+  font-family: var(--font-m);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: rgba(242,233,213,0.4);
+  text-transform: uppercase;
+}
 
-/* Footer of issue */
-.issue-footer { margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border2);text-align:center; }
+/* map in header */
+.header-map {
+  width: 100px;
+  opacity: 0.5;
+  filter: drop-shadow(0 0 12px rgba(15,163,154,0.5));
+}
+
+/* ── HERO STRIP ── */
+.hero-strip {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  border-top: 2px solid var(--teal);
+  border-bottom: 2px solid var(--border2);
+  min-height: 160px;
+}
+.hero-img {
+  background: linear-gradient(135deg, #1a2820, #0d1f1c);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hero-img-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(160deg, #162622 0%, #0a1a14 50%, #1a2010 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  opacity: 0.4;
+}
+.hero-text {
+  padding: 1.5rem;
+  background: var(--ink);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.hero-h {
+  font-family: var(--font-s);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--paper);
+  line-height: 1.2;
+  margin-bottom: 4px;
+}
+.hero-h-es {
+  font-family: var(--font-s);
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--teal);
+  margin-bottom: 1rem;
+}
+.hero-desc {
+  font-family: var(--font-m);
+  font-size: 10px;
+  color: rgba(242,233,213,0.6);
+  line-height: 1.8;
+}
+
+/* ── SECTION LABEL ── */
+.sec-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  background: var(--paper2);
+  border-bottom: 1px solid var(--border2);
+  border-top: 1px solid var(--border);
+}
+.sec-num {
+  font-family: var(--font-d);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--teal);
+  letter-spacing: 0.06em;
+  width: 20px;
+}
+.sec-title {
+  font-family: var(--font-m);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink);
+  font-weight: 500;
+}
+
+/* ── THIS WEEK SUMMARY ── */
+.week-summary {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-bottom: 1px solid var(--border2);
+}
+.ws-item {
+  padding: 1rem;
+  border-right: 1px solid var(--border);
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.ws-item:last-child { border-right: none; }
+.ws-icon {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.ws-num {
+  font-family: var(--font-d);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1;
+  margin-bottom: 2px;
+}
+.ws-num .accent { color: var(--teal); }
+.ws-label {
+  font-family: var(--font-m);
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gray);
+  line-height: 1.4;
+}
+
+/* ── THE DROP (job cards) ── */
+.drop-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  border-bottom: 1px solid var(--border2);
+}
+.drop-card {
+  background: var(--paper);
+  padding: 1rem;
+  position: relative;
+}
+.drop-card:nth-child(odd) { border-right: 1px solid var(--border); }
+.dc-num {
+  font-family: var(--font-m);
+  font-size: 8px;
+  color: var(--teal);
+  letter-spacing: 0.1em;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.dc-icon { font-size: 0.9rem; opacity: 0.6; }
+.dc-title {
+  font-family: var(--font-d);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ink);
+  text-transform: uppercase;
+  line-height: 1.1;
+  margin-bottom: 4px;
+}
+.dc-where {
+  font-family: var(--font-m);
+  font-size: 9px;
+  color: var(--gray);
+  letter-spacing: 0.04em;
+  margin-bottom: 8px;
+}
+.dc-salary {
+  font-family: var(--font-d);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--teal);
+  margin-bottom: 8px;
+}
+.dc-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 10px;
+}
+.dc-tag {
+  font-family: var(--font-m);
+  font-size: 8px;
+  border: 1px solid var(--border2);
+  padding: 2px 6px;
+  color: var(--gray);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.dc-cta {
+  font-family: var(--font-m);
+  font-size: 9px;
+  color: var(--red);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.dc-cta:hover { color: var(--ink); }
+
+/* ── HUMAN SPOTLIGHT ── */
+.spotlight-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border-bottom: 1px solid var(--border2);
+}
+.spotlight-card {
+  background: var(--ink);
+  padding: 1rem;
+  position: relative;
+  overflow: hidden;
+}
+.sc-img {
+  width: 100%;
+  aspect-ratio: 1;
+  margin-bottom: 0.75rem;
+  position: relative;
+  overflow: hidden;
+}
+.sc-img-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+}
+/* unique bg for each card */
+.sc-bg-1 { background: linear-gradient(160deg, #1a3028, #0d2218); }
+.sc-bg-2 { background: linear-gradient(160deg, #2a1820, #1a0a14); }
+.sc-bg-3 { background: linear-gradient(160deg, #1a2830, #0a1828); }
+.sc-bg-4 { background: linear-gradient(160deg, #281a10, #1a0a08); }
+.sc-name {
+  font-family: var(--font-d);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--paper);
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+.sc-role {
+  font-family: var(--font-m);
+  font-size: 8px;
+  color: var(--teal);
+  letter-spacing: 0.08em;
+  margin-bottom: 6px;
+}
+.sc-country {
+  font-family: var(--font-m);
+  font-size: 8px;
+  color: rgba(242,233,213,0.4);
+  letter-spacing: 0.06em;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.sc-quote {
+  font-family: var(--font-s);
+  font-size: 10px;
+  font-style: italic;
+  color: rgba(242,233,213,0.7);
+  line-height: 1.6;
+}
+
+/* ── SALARY SIGNALS ── */
+.salary-section {
+  display: grid;
+  grid-template-columns: 1fr 160px 140px;
+  gap: 0;
+  border-bottom: 1px solid var(--border2);
+  min-height: 200px;
+}
+.sal-chart {
+  padding: 1.25rem 1rem;
+  border-right: 1px solid var(--border);
+}
+.sal-map {
+  padding: 1.25rem 1rem;
+  border-right: 1px solid var(--border);
+  background: var(--paper2);
+}
+.sal-takeaways {
+  padding: 1.25rem 1rem;
+  background: var(--ink);
+}
+.sal-col-title {
+  font-family: var(--font-m);
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-bottom: 10px;
+}
+.sal-col-title.light { color: rgba(242,233,213,0.4); }
+
+.bar-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 5px;
+}
+.bar-label {
+  font-family: var(--font-m);
+  font-size: 8px;
+  color: var(--gray);
+  width: 90px;
+  flex-shrink: 0;
+  letter-spacing: 0.02em;
+}
+.bar-track {
+  flex: 1;
+  height: 5px;
+  background: var(--border2);
+  position: relative;
+}
+.bar-fill {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  background: var(--teal);
+}
+.bar-val {
+  font-family: var(--font-m);
+  font-size: 8px;
+  color: var(--teal);
+  width: 36px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.sal-map-svg {
+  width: 80px;
+  margin: 0 auto;
+  display: block;
+  opacity: 0.7;
+  margin-bottom: 8px;
+}
+.map-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.map-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-m);
+  font-size: 8px;
+  color: var(--gray);
+}
+.legend-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.dot-high { background: var(--teal); }
+.dot-med  { background: #8BC8C5; }
+.dot-low  { background: var(--border2); }
+
+.takeaway-item {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  align-items: flex-start;
+}
+.takeaway-icon { font-size: 1rem; flex-shrink: 0; }
+.takeaway-text {
+  font-family: var(--font-m);
+  font-size: 9px;
+  color: rgba(242,233,213,0.7);
+  line-height: 1.6;
+}
+
+.sal-insight-bar {
+  background: var(--ink);
+  border-top: 1px solid var(--border2);
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid var(--border2);
+}
+.insight-arrow { color: var(--teal); font-size: 0.9rem; flex-shrink: 0; }
+.insight-text {
+  font-family: var(--font-m);
+  font-size: 10px;
+  font-style: italic;
+  color: rgba(242,233,213,0.8);
+  line-height: 1.5;
+}
+
+/* ── COMPANY RADAR + APPLICATION PLAYBOOK ── */
+.bottom-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-bottom: 1px solid var(--border2);
+  min-height: 220px;
+}
+.company-radar {
+  padding: 1.25rem;
+  border-right: 1px solid var(--border2);
+}
+.app-playbook {
+  padding: 1.25rem;
+  background: var(--paper2);
+}
+.radar-label {
+  font-family: var(--font-m);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.radar-label::before { content: '◎'; font-size: 0.7rem; }
+.radar-company-name {
+  font-family: var(--font-d);
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.radar-why-label {
+  font-family: var(--font-m);
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 4px;
+}
+.radar-why-text {
+  font-family: var(--font-m);
+  font-size: 10px;
+  color: var(--gray);
+  line-height: 1.7;
+  margin-bottom: 10px;
+}
+.radar-meta {
+  display: flex;
+  gap: 1rem;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+.radar-meta-item {
+  font-family: var(--font-m);
+  font-size: 8px;
+  color: var(--gray);
+  letter-spacing: 0.04em;
+}
+.radar-meta-item strong { color: var(--ink); }
+.view-roles {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  font-family: var(--font-m);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--teal);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(15,163,154,0.3);
+  padding-bottom: 1px;
+}
+
+.playbook-h {
+  font-family: var(--font-s);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.3;
+  margin-bottom: 8px;
+}
+.playbook-body {
+  font-family: var(--font-m);
+  font-size: 10px;
+  color: var(--gray);
+  line-height: 1.75;
+  margin-bottom: 10px;
+}
+.playbook-checklist { display: flex; flex-direction: column; gap: 6px; }
+.playbook-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 8px;
+  background: var(--paper);
+  border: 1px solid var(--border);
+}
+.pi-icon { font-size: 0.8rem; flex-shrink: 0; margin-top: 1px; }
+.pi-body {}
+.pi-title {
+  font-family: var(--font-m);
+  font-size: 9px;
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: 0.04em;
+  margin-bottom: 2px;
+}
+.pi-desc {
+  font-family: var(--font-m);
+  font-size: 8px;
+  color: var(--gray);
+  line-height: 1.5;
+}
+.pi-check {
+  margin-left: auto;
+  color: var(--teal);
+  font-size: 0.7rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* ── WHY NORTEC ── */
+.why-section {
+  background: var(--ink);
+  padding: 2rem 1.5rem;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.why-h {
+  font-family: var(--font-d);
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--paper);
+  line-height: 0.95;
+  margin-bottom: 0.75rem;
+}
+.why-h .teal { color: var(--teal); }
+.why-sub {
+  font-family: var(--font-m);
+  font-size: 11px;
+  color: rgba(242,233,213,0.6);
+  line-height: 1.8;
+  max-width: 400px;
+  margin-bottom: 1.5rem;
+}
+.why-pillars {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.05);
+}
+.why-pillar {
+  background: rgba(255,255,255,0.03);
+  padding: 1rem;
+  text-align: center;
+}
+.wp-icon { font-size: 1.1rem; margin-bottom: 6px; }
+.wp-title {
+  font-family: var(--font-m);
+  font-size: 9px;
+  font-weight: 500;
+  color: var(--teal);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.wp-sub {
+  font-family: var(--font-m);
+  font-size: 8px;
+  color: rgba(242,233,213,0.35);
+  line-height: 1.5;
+}
+
+/* ── FOOTER CTA ── */
+.footer-cta {
+  background: var(--red);
+  padding: 2rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.fcta-h {
+  font-family: var(--font-d);
+  font-size: 2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--paper);
+  line-height: 0.95;
+}
+.fcta-sub {
+  font-family: var(--font-m);
+  font-size: 10px;
+  color: rgba(242,233,213,0.7);
+  margin-top: 4px;
+  letter-spacing: 0.06em;
+}
+.fcta-btn {
+  background: var(--paper);
+  color: var(--red);
+  font-family: var(--font-m);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: none;
+  padding: 12px 24px;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  display: inline-block;
+}
+.next-drop {
+  background: var(--ink);
+  padding: 6px 14px;
+  text-align: center;
+}
+.nd-label {
+  font-family: var(--font-m);
+  font-size: 8px;
+  color: rgba(242,233,213,0.4);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.nd-date {
+  font-family: var(--font-d);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--teal);
+  letter-spacing: 0.06em;
+}
+
+.site-footer {
+  background: var(--ink);
+  padding: 10px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.sf-logo {
+  font-family: var(--font-d);
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+  color: rgba(242,233,213,0.6);
+}
+.sf-logo .c { color: var(--teal); }
+.sf-note {
+  font-family: var(--font-m);
+  font-size: 8px;
+  color: rgba(242,233,213,0.3);
+  letter-spacing: 0.06em;
+}
 </style>
 </head>
 <body>
-<nav class="nav">
-  <a class="nav-logo" href="/"><span>NORTE<span class="teal">C</span></span><div class="nav-wordmark" data-en="NORTHBOUND<br>TALENT." data-es="TALENTO<br>RUMBO AL NORTE." data-i18n-html="true">NORTHBOUND<br>TALENT.</div></a>
-  <ul class="nav-links">
-    <li><a href="/jobs" data-en="Jobs" data-es="Empleos">Jobs</a></li>
-    <li><a href="/tracker" data-en="Tracker" data-es="Tracker">Tracker</a></li>
-    <li><a href="/archive" data-en="Archive" data-es="Archivo">Archive</a></li>
-    <li><a href="/sponsors" data-en="Sponsors" data-es="Patrocinadores">Sponsors</a></li>
-    <li><a href="/issue/001" class="active">Issue #001</a></li>
-  </ul>
-  <div class="nav-actions">
-    <a class="btn-ghost" href="/sponsors" data-en="For Employers" data-es="Para Empleadores">For Employers</a>
-    <div class="lang-toggle" aria-label="Language toggle">
-      <button type="button" data-lang-option="en">EN</button>
-      <span class="slash">/</span>
-      <button type="button" data-lang-option="es">ES</button>
+<div class="email-wrap">
+
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    <div class="top-bar-left">
+      <span>01</span>
+      <span class="iss">NORTEC // NEWSLETTER</span>
+      <span>›</span>
     </div>
-    <a class="btn-primary" href="/#subscribe" data-en="Subscribe" data-es="Suscríbete">Subscribe</a>
-  </div>
-</nav>
-
-<div style="padding-top:var(--nav-h);"></div>
-
-<div class="issue-wrap">
-
-  <!-- Header -->
-  <div class="issue-header">
-    <div class="issue-logo">NORTE<span class="teal">C</span></div>
-    <div class="issue-meta">
-      <span>Issue #001</span>
-      <span>·</span>
-      <span>May 9, 2026</span>
-      <span>·</span>
-      <span>EN / ES</span>
-      <span>·</span>
-      <span class="live-dot" style="width:5px;height:5px;"></span>
-      <span style="color:var(--teal);">Live now</span>
-    </div>
-    <h1 class="issue-h1" data-en="Remote AI/tech roles hiring from LatAm — this week." data-es="Roles remotos de AI/tech contratando en LatAm — esta semana.">Remote AI/tech<br>roles hiring from<br>LatAm — this week.</h1>
-    <div class="issue-intro">
-      Bienvenido to Issue #001 of Nortec. Every week, we find the remote tech roles actually open to Latin America — and explain which ones are worth your time.<br><br>
-      This is not a job dump. This is career intelligence. Five roles. One salary signal. One company radar. One play you can run this week.<br><br>
-      <em style="color:var(--teal);">Trabaja global. Vive en LatAm.</em>
+    <div class="top-bar-right">
+      <span>MAY 16, 2026</span>
+      <span style="color:var(--teal);">001</span>
     </div>
   </div>
 
-  <!-- Section 1: The Drop -->
-  <div class="i-section">
-    <div class="i-section-label" data-en="Section 01" data-es="Sección 01">Section 01</div>
-    <div class="i-section-title">The Drop / Roles que sí valen la pena</div>
-    <p style="font-family:var(--font-mono);font-size:11px;color:var(--text3);margin-bottom:1.5rem;letter-spacing:0.04em;">5 roles · All verified LatAm-eligible · Sorted by Nortec Score</p>
-
-    <div class="drop-job">
-      <div class="dj-co">Luxury Presence · Remote LatAm</div>
-      <div class="dj-title">Staff Software Engineer — Data Platform & AI</div>
-      <div class="dj-meta">Full-time · Engineering · Python / AWS / LLMs · Lever · <span style="color:var(--teal);">Nortec Score: 5/5 ▲</span></div>
-      <div class="dj-why"><strong style="color:var(--orient-red);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;">Why it matters:</strong><br>
-      Sits at the intersection of backend engineering, data infra, and applied AI. You'd own MLS data pipelines across 400+ feeds and build LLM-powered agents. Staff-level = career-defining for senior LatAm engineers.</div>
-      <div class="dj-angle"><strong style="color:var(--orient-red);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;">Apply angle:</strong><br>
-      Show production AI/ML experience (not just prompt engineering), data pipeline work at scale, observability experience. Lead with the specific AI features you shipped to real users.</div>
-      <div class="dj-footer">
-        <div class="dj-sal">Senior USD comp</div>
-        <a class="dj-apply" href="https://jobs.lever.co/luxurypresence/88e79420-0e50-413b-85c1-58ded03087cd" target="_blank">Apply at Lever →</a>
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-left">
+      <div class="brand-logo">NORTE<span class="c">C</span></div>
+      <div class="brand-sub">Northbound Talent</div>
+      <div class="issue-tag">
+        <span class="issue-num">Issue 001</span>
+        <span class="issue-name">· The First Drop</span>
       </div>
     </div>
+    <svg class="header-map" viewBox="0 0 180 380" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="mg" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#0FA39A;stop-opacity:0.8"/>
+          <stop offset="100%" style="stop-color:#0FA39A;stop-opacity:0.2"/>
+        </linearGradient>
+      </defs>
+      <path d="M88,8 L115,14 L128,28 L130,50 L140,72 L138,95 L148,118 L145,145 L150,175 L140,210 L130,248 L118,282 L105,318 L90,345 L78,355 L66,340 L62,310 L68,278 L60,248 L52,210 L50,175 L55,148 L48,118 L52,92 L44,68 L50,44 L62,26 L75,14 Z"
+        fill="url(#mg)" stroke="#0FA39A" stroke-width="1.5" stroke-opacity="0.6"/>
+      <line x1="90" y1="50" x2="160" y2="0" stroke="#FF4B28" stroke-width="1" stroke-dasharray="3 2" opacity="0.6"/>
+      <line x1="90" y1="120" x2="170" y2="30" stroke="#FF4B28" stroke-width="1" stroke-dasharray="3 2" opacity="0.5"/>
+      <line x1="120" y1="200" x2="175" y2="60" stroke="#0FA39A" stroke-width="1" stroke-dasharray="3 2" opacity="0.4"/>
+      <circle cx="88" cy="120" r="3" fill="#FF4B28"/>
+      <circle cx="80" cy="80" r="2" fill="#FF4B28" opacity="0.7"/>
+      <circle cx="120" cy="200" r="3" fill="#FF4B28"/>
+      <circle cx="85" cy="290" r="2" fill="#0FA39A"/>
+      <!-- N compass -->
+      <text x="155" y="12" font-family="IBM Plex Mono" font-size="10" fill="#0FA39A" font-weight="600">N</text>
+      <line x1="160" y1="14" x2="160" y2="25" stroke="#0FA39A" stroke-width="1"/>
+    </svg>
+  </div>
 
-    <div class="drop-job">
-      <div class="dj-co">Clara · Remote LatAm / São Paulo</div>
-      <div class="dj-title">Forward-Deployed AI Engineer</div>
-      <div class="dj-meta">Full-time · Engineering · Anthropic API / Docker / AWS · Greenhouse · <span style="color:var(--teal);">Nortec Score: 5/5 ▲</span></div>
-      <div class="dj-why"><strong style="color:var(--orient-red);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;">Why it matters:</strong><br>
-      Clara is LatAm-born fintech backed by Coatue, General Catalyst, and Goldman Sachs. The AI innovation team ships fast — you'll prototype, deploy, and maintain AI features that real users interact with. Not research. Production.</div>
-      <div class="dj-angle"><strong style="color:var(--orient-red);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;">Apply angle:</strong><br>
-      You need 2+ AI/ML features shipped to production. Show the Anthropic/OpenAI API integrations specifically. Clara wants builders who can go from prototype to prod in days, not weeks.</div>
-      <div class="dj-footer">
-        <div class="dj-sal">Competitive USD</div>
-        <a class="dj-apply" href="https://job-boards.greenhouse.io/clara/jobs/5095342007" target="_blank">Apply at Greenhouse →</a>
+  <!-- HERO STRIP -->
+  <div class="hero-strip">
+    <div class="hero-img">
+      <div class="hero-img-placeholder" style="background:linear-gradient(160deg,#162820,#0d1f1c,#1a1408);">
+        <!-- Placeholder: person with headphones at laptop -->
+        <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" style="opacity:0.4;">
+          <circle cx="60" cy="35" r="18" stroke="#0FA39A" stroke-width="1.5"/>
+          <path d="M30 90 Q30 65 60 65 Q90 65 90 90" stroke="#0FA39A" stroke-width="1.5" fill="none"/>
+          <rect x="20" y="85" width="80" height="25" rx="2" stroke="#0FA39A" stroke-width="1" fill="none"/>
+          <path d="M38 35 Q38 18 60 18 Q82 18 82 35" stroke="#F2E9D5" stroke-width="1.5" fill="none"/>
+          <rect x="32" y="33" width="6" height="10" rx="2" fill="#0FA39A"/>
+          <rect x="82" y="33" width="6" height="10" rx="2" fill="#0FA39A"/>
+        </svg>
       </div>
     </div>
+    <div class="hero-text">
+      <div class="hero-h">Work global. Live local.</div>
+      <div class="hero-h-es">Trabaja global. Vive en LatAm.</div>
+      <div class="hero-desc">The bilingual brief for Latin American tech talent: remote jobs, salary signals, and career playbooks for people building global careers without leaving what matters.</div>
+    </div>
+  </div>
 
-    <div class="drop-job">
-      <div class="dj-co">Praxent · Remote LatAm (International)</div>
-      <div class="dj-title">Senior Software Engineer — React & Node.js</div>
-      <div class="dj-meta">Full-time · Engineering · React / Node / Agile · Greenhouse · <span style="color:var(--atlas-gray);">Nortec Score: 4/5 ▲</span></div>
-      <div class="dj-why"><strong style="color:var(--orient-red);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;">Why it matters:</strong><br>
-      Praxent explicitly opens this to LatAm. Strong Agile culture, direct client exposure, mentorship path for senior engineers. Not a grind house — delivery-focused with quality standards.</div>
-      <div class="dj-angle"><strong style="color:var(--orient-red);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;">Apply angle:</strong><br>
-      Highlight sprint delivery experience, fullstack breadth (UI + APIs + cloud), and how you communicate technical complexity to clients. The client-facing element matters here.</div>
-      <div class="dj-footer">
-        <div class="dj-sal">USD competitive</div>
-        <a class="dj-apply" href="https://job-boards.greenhouse.io/praxent/jobs/7589205003" target="_blank">Apply at Greenhouse →</a>
+  <!-- SECTION 01: THIS WEEK -->
+  <div class="sec-label">
+    <span class="sec-num">01</span>
+    <span class="sec-title">This week in Nortec</span>
+  </div>
+  <div class="week-summary">
+    <div class="ws-item">
+      <span class="ws-icon">📋</span>
+      <div>
+        <div class="ws-num">8 <span class="accent" style="font-size:1rem;color:var(--gray);">roles</span></div>
+        <div class="ws-label">Remote roles<br>worth your time</div>
       </div>
     </div>
-
-    <div class="drop-job">
-      <div class="dj-co">Whippy · Remote LatAm</div>
-      <div class="dj-title">Customer Success Manager</div>
-      <div class="dj-meta">Full-time · Customer Success · AI Comms / SaaS · English req. · <span style="color:var(--atlas-gray);">Nortec Score: 4/5 ▲</span></div>
-      <div class="dj-why"><strong style="color:var(--orient-red);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;">Why it matters:</strong><br>
-      Salary is listed — rare and honest. Fast-growing AI communications platform. Working CS at an AI-native company gives you exposure to AI product workflows that are increasingly valuable for your career.</div>
-      <div class="dj-angle"><strong style="color:var(--orient-red);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;">Apply angle:</strong><br>
-      Lead with onboarding experience, retention metrics you've influenced, and comfort with async US client communication. English fluency is non-negotiable — show it in every line of your application.</div>
-      <div class="dj-footer">
-        <div class="dj-sal">~$35,000 USD/yr</div>
-        <a class="dj-apply" href="https://www.ziprecruiter.com/Jobs/Remote-Latam-Developer" target="_blank">Apply at ZipRecruiter →</a>
+    <div class="ws-item">
+      <span class="ws-icon">📊</span>
+      <div>
+        <div class="ws-num" style="font-size:1rem;padding-top:4px;">Salary signals</div>
+        <div class="ws-label">Across AI, product,<br>and customer success</div>
       </div>
     </div>
-
-    <div class="drop-job">
-      <div class="dj-co">Rapptr Labs · Remote LatAm (ET core hours)</div>
-      <div class="dj-title">QA Analyst — iOS & Android Mobile</div>
-      <div class="dj-meta">Full-time · QA · iOS / Android / Manual · Glassdoor · <span style="color:var(--atlas-gray);">Nortec Score: 3/5 ◆</span></div>
-      <div class="dj-why"><strong style="color:var(--orient-red);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;">Why it matters:</strong><br>
-      Solid mid-level QA role, accessible for LatAm with ET morning overlap (10am–3pm EST). Collaborative with design and engineering. Salary not listed — ask early.</div>
-      <div class="dj-angle"><strong style="color:var(--orient-red);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;">Apply angle:</strong><br>
-      Emphasize detailed test case writing, bug reproduction clarity, and cross-platform mobile experience. Show how your QA work directly improved release quality.</div>
-      <div class="dj-footer">
-        <div class="dj-sal">Disclosed on app</div>
-        <a class="dj-apply" href="https://www.glassdoor.com/Job/remote-qa-latam-jobs-SRCH_IL.0,6_IS11047_KO7,15.htm" target="_blank">Apply at Glassdoor →</a>
+    <div class="ws-item">
+      <span class="ws-icon">🔭</span>
+      <div>
+        <div class="ws-num">1 <span class="accent" style="font-size:1rem;color:var(--gray);">co.</span></div>
+        <div class="ws-label">Company<br>radar profile</div>
+      </div>
+    </div>
+    <div class="ws-item">
+      <span class="ws-icon">📖</span>
+      <div>
+        <div class="ws-num">1 <span class="accent" style="font-size:1rem;color:var(--gray);">play</span></div>
+        <div class="ws-label">Application<br>playbook</div>
       </div>
     </div>
   </div>
 
-  <!-- Section 2: Salary Signal -->
-  <div class="i-section">
-    <div class="i-section-label" data-en="Section 02" data-es="Sección 02">Section 02</div>
-    <div class="i-section-title">Salary Signal / Señal de salario</div>
-    <div class="signal-box">
-      <div class="signal-title">This week's intelligence</div>
-      <div class="signal-body">
-        This week's AI and software roles continue to cluster around <strong>Python, automation, SQL, AWS, APIs, data analysis, and applied AI tooling</strong>. The pattern is consistent: the strongest LatAm candidates right now are not just "AI curious" — they can connect AI workflows to production systems.<br><br>
-        Average total compensation for AI Engineers in remote LatAm roles is tracking around <strong>$118K USD/year</strong> at senior level. Senior backend engineers are seeing <strong>$90–$110K</strong>. Customer success in SaaS ranges from <strong>$35K–$85K</strong> depending on company stage and market.<br><br>
-        <em style="color:var(--teal);">Esta semana, los roles de AI siguen concentrados en Python, LLMs, automatización y AWS. El perfil más buscado no es el ML researcher — es el ingeniero que puede llevar un workflow de AI a producción.</em>
+  <!-- SECTION 02: THE DROP -->
+  <div class="sec-label">
+    <span class="sec-num">02</span>
+    <span class="sec-title">The Drop / Roles remotos que sí valen la pena</span>
+  </div>
+  <div class="drop-grid">
+
+    <div class="drop-card">
+      <div class="dc-num"><span>01</span><span class="dc-icon">⚡</span></div>
+      <div class="dc-title">Senior AI Engineer</div>
+      <div class="dc-where">Remote / Global</div>
+      <div class="dc-salary">$90K–$130K USD</div>
+      <div class="dc-tags">
+        <span class="dc-tag">Python</span><span class="dc-tag">LLMs</span><span class="dc-tag">PyTorch</span>
       </div>
-      <div class="signal-skills">
-        <span class="skill-chip hot">Python</span>
-        <span class="skill-chip hot">LLMs / Anthropic API</span>
-        <span class="skill-chip hot">AWS</span>
-        <span class="skill-chip hot">SQL</span>
-        <span class="skill-chip">Automation</span>
-        <span class="skill-chip">APIs / REST</span>
-        <span class="skill-chip">Data Pipelines</span>
-        <span class="skill-chip">Docker</span>
-        <span class="skill-chip">PostgreSQL</span>
-        <span class="skill-chip">Project Management</span>
+      <a class="dc-cta" href="#">View role →</a>
+    </div>
+
+    <div class="drop-card">
+      <div class="dc-num"><span>02</span><span class="dc-icon">🖥️</span></div>
+      <div class="dc-title">Frontend Engineer</div>
+      <div class="dc-where">Remote / LatAm</div>
+      <div class="dc-salary">$70K–$110K USD</div>
+      <div class="dc-tags">
+        <span class="dc-tag">React</span><span class="dc-tag">TypeScript</span><span class="dc-tag">CSS</span>
       </div>
+      <a class="dc-cta" href="#">View role →</a>
+    </div>
+
+    <div class="drop-card">
+      <div class="dc-num"><span>03</span><span class="dc-icon">🎯</span></div>
+      <div class="dc-title">Customer Success Manager</div>
+      <div class="dc-where">Remote / Americas</div>
+      <div class="dc-salary">$60K–$85K USD</div>
+      <div class="dc-tags">
+        <span class="dc-tag">Spanish</span><span class="dc-tag">CRM</span><span class="dc-tag">Empathy</span>
+      </div>
+      <a class="dc-cta" href="#">View role →</a>
+    </div>
+
+    <div class="drop-card">
+      <div class="dc-num"><span>04</span><span class="dc-icon">🎨</span></div>
+      <div class="dc-title">Product Designer</div>
+      <div class="dc-where">Remote / Global</div>
+      <div class="dc-salary">$65K–$95K USD</div>
+      <div class="dc-tags">
+        <span class="dc-tag">Figma</span><span class="dc-tag">UX</span><span class="dc-tag">Research</span>
+      </div>
+      <a class="dc-cta" href="#">View role →</a>
+    </div>
+
+    <div class="drop-card">
+      <div class="dc-num"><span>05</span><span class="dc-icon">⚙️</span></div>
+      <div class="dc-title">ML Ops Specialist</div>
+      <div class="dc-where">Remote / Global</div>
+      <div class="dc-salary">$85K–$120K USD</div>
+      <div class="dc-tags">
+        <span class="dc-tag">Kubernetes</span><span class="dc-tag">AWS</span><span class="dc-tag">CI/CD</span>
+      </div>
+      <a class="dc-cta" href="#">View role →</a>
+    </div>
+
+    <div class="drop-card">
+      <div class="dc-num"><span>06</span><span class="dc-icon">📈</span></div>
+      <div class="dc-title">Data Analyst</div>
+      <div class="dc-where">Remote / LatAm</div>
+      <div class="dc-salary">$40K–$65K USD</div>
+      <div class="dc-tags">
+        <span class="dc-tag">SQL</span><span class="dc-tag">Excel</span><span class="dc-tag">Looker</span>
+      </div>
+      <a class="dc-cta" href="#">View role →</a>
+    </div>
+
+    <div class="drop-card">
+      <div class="dc-num"><span>07</span><span class="dc-icon">🔧</span></div>
+      <div class="dc-title">Backend Engineer</div>
+      <div class="dc-where">Remote / Global</div>
+      <div class="dc-salary">$80K–$115K USD</div>
+      <div class="dc-tags">
+        <span class="dc-tag">Go</span><span class="dc-tag">PostgreSQL</span><span class="dc-tag">API</span>
+      </div>
+      <a class="dc-cta" href="#">View role →</a>
+    </div>
+
+    <div class="drop-card">
+      <div class="dc-num"><span>08</span><span class="dc-icon">🗺️</span></div>
+      <div class="dc-title">Product Manager</div>
+      <div class="dc-where">Remote / Global</div>
+      <div class="dc-salary">$65K–$130K USD</div>
+      <div class="dc-tags">
+        <span class="dc-tag">Strategy</span><span class="dc-tag">Metrics</span><span class="dc-tag">Roadmap</span>
+      </div>
+      <a class="dc-cta" href="#">View role →</a>
+    </div>
+
+  </div>
+
+  <!-- SECTION 03: HUMAN SPOTLIGHT -->
+  <div class="sec-label">
+    <span class="sec-num">03</span>
+    <span class="sec-title">Human Spotlight / Talento LatAm</span>
+  </div>
+  <div class="spotlight-grid">
+    <div class="spotlight-card">
+      <div class="sc-img sc-bg-1" style="min-height:80px;border-radius:2px;display:flex;align-items:center;justify-content:center;">
+        <span style="font-size:2.5rem;opacity:0.5;">👨🏽‍💻</span>
+      </div>
+      <div class="sc-name">Andrés</div>
+      <div class="sc-role">Software Engineer</div>
+      <div class="sc-country">📍 Colombia</div>
+      <div class="sc-quote">"Looking for global opportunity, keeping local roots."</div>
+    </div>
+    <div class="spotlight-card">
+      <div class="sc-img sc-bg-2" style="min-height:80px;border-radius:2px;display:flex;align-items:center;justify-content:center;">
+        <span style="font-size:2.5rem;opacity:0.5;">👩🏻‍🎨</span>
+      </div>
+      <div class="sc-name">Valeria</div>
+      <div class="sc-role">Product Designer</div>
+      <div class="sc-country">📍 Argentina</div>
+      <div class="sc-quote">"Building a career in tech without leaving home."</div>
+    </div>
+    <div class="spotlight-card">
+      <div class="sc-img sc-bg-3" style="min-height:80px;border-radius:2px;display:flex;align-items:center;justify-content:center;">
+        <span style="font-size:2.5rem;opacity:0.5;">👩🏽‍💼</span>
+      </div>
+      <div class="sc-name">Camila</div>
+      <div class="sc-role">Customer Success</div>
+      <div class="sc-country">📍 Mexico</div>
+      <div class="sc-quote">"I help customers win, from my city and on my own terms."</div>
+    </div>
+    <div class="spotlight-card">
+      <div class="sc-img sc-bg-4" style="min-height:80px;border-radius:2px;display:flex;align-items:center;justify-content:center;">
+        <span style="font-size:2.5rem;opacity:0.5;">👨🏻‍🔬</span>
+      </div>
+      <div class="sc-name">Rafa</div>
+      <div class="sc-role">Data / AI</div>
+      <div class="sc-country">📍 Brazil</div>
+      <div class="sc-quote">"Turning data into impact across borders."</div>
     </div>
   </div>
 
-  <!-- Section 3: Company Radar -->
-  <div class="i-section">
-    <div class="i-section-label" data-en="Section 03" data-es="Sección 03">Section 03</div>
-    <div class="i-section-title">Company Radar</div>
-    <p style="font-family:var(--font-mono);font-size:11px;color:var(--text3);margin-bottom:1.5rem;">Three companies hiring LatAm talent right now worth putting on your radar.</p>
-    <div style="border:1px solid var(--border);padding:1.5rem;">
-      <div class="radar-company">
-        <div class="rc-arrow">▲</div>
-        <div>
-          <div class="rc-name">Clara</div>
-          <div class="rc-desc">LatAm-born fintech expanding its AI innovation team. Backed by Goldman Sachs, General Catalyst, Coatue. They hire LatAm because they <em>are</em> LatAm — not because of cost arbitrage. Watch their Greenhouse board for new AI/engineering roles. <span style="color:var(--teal);">High repeat hiring probability.</span></div>
+  <!-- SECTION 04: SALARY SIGNALS -->
+  <div class="sec-label">
+    <span class="sec-num">04</span>
+    <span class="sec-title">Salary Signals / Señales de Salario</span>
+  </div>
+  <div class="salary-section">
+    <div class="sal-chart">
+      <div class="sal-col-title">Avg total compensation (USD)</div>
+      <div class="bar-row"><div class="bar-label">AI Engineer</div><div class="bar-track"><div class="bar-fill" style="width:90%"></div></div><div class="bar-val">$118K</div></div>
+      <div class="bar-row"><div class="bar-label">Senior Backend</div><div class="bar-track"><div class="bar-fill" style="width:80%"></div></div><div class="bar-val">$104K</div></div>
+      <div class="bar-row"><div class="bar-label">Product Manager</div><div class="bar-track"><div class="bar-fill" style="width:76%"></div></div><div class="bar-val">$98K</div></div>
+      <div class="bar-row"><div class="bar-label">Data Scientist</div><div class="bar-track"><div class="bar-fill" style="width:72%"></div></div><div class="bar-val">$94K</div></div>
+      <div class="bar-row"><div class="bar-label">ML Ops</div><div class="bar-track"><div class="bar-fill" style="width:70%"></div></div><div class="bar-val">$92K</div></div>
+      <div class="bar-row"><div class="bar-label">Product Designer</div><div class="bar-track"><div class="bar-fill" style="width:60%"></div></div><div class="bar-val">$78K</div></div>
+      <div class="bar-row"><div class="bar-label">Customer Success</div><div class="bar-track"><div class="bar-fill" style="width:50%"></div></div><div class="bar-val">$65K</div></div>
+      <div class="bar-row"><div class="bar-label">Data Analyst</div><div class="bar-track"><div class="bar-fill" style="width:38%"></div></div><div class="bar-val">$49K</div></div>
+    </div>
+    <div class="sal-map">
+      <div class="sal-col-title">Remote opportunities<br>across LatAm</div>
+      <svg class="sal-map-svg" viewBox="0 0 180 380" xmlns="http://www.w3.org/2000/svg">
+        <path d="M88,8 L115,14 L128,28 L130,50 L140,72 L138,95 L148,118 L145,145 L150,175 L140,210 L130,248 L118,282 L105,318 L90,345 L78,355 L66,340 L62,310 L68,278 L60,248 L52,210 L50,175 L55,148 L48,118 L52,92 L44,68 L50,44 L62,26 L75,14 Z"
+          fill="none" stroke="#0FA39A" stroke-width="1.5"/>
+        <circle cx="88" cy="110" r="5" fill="#0FA39A" opacity="0.8"/>
+        <circle cx="80" cy="75" r="4" fill="#0FA39A" opacity="0.6"/>
+        <circle cx="118" cy="185" r="6" fill="#0FA39A" opacity="0.9"/>
+        <circle cx="87" cy="280" r="4" fill="#8BC8C5" opacity="0.7"/>
+        <circle cx="78" cy="265" r="3" fill="#8BC8C5" opacity="0.5"/>
+      </svg>
+      <div class="map-legend">
+        <div class="map-legend-item"><div class="legend-dot dot-high"></div>High</div>
+        <div class="map-legend-item"><div class="legend-dot dot-med"></div>Medium</div>
+        <div class="map-legend-item"><div class="legend-dot dot-low"></div>Emerging</div>
+      </div>
+    </div>
+    <div class="sal-takeaways">
+      <div class="sal-col-title light">Key takeaways</div>
+      <div class="takeaway-item">
+        <span class="takeaway-icon">📊</span>
+        <div class="takeaway-text">AI & data roles lead in remote compensation.</div>
+      </div>
+      <div class="takeaway-item">
+        <span class="takeaway-icon">🔧</span>
+        <div class="takeaway-text">Product & engineering follow close behind.</div>
+      </div>
+      <div class="takeaway-item">
+        <span class="takeaway-icon">🌎</span>
+        <div class="takeaway-text">LatAm talent is competing — and winning — globally.</div>
+      </div>
+    </div>
+  </div>
+  <div class="sal-insight-bar">
+    <span class="insight-arrow">▶</span>
+    <div class="insight-text">Remote compensation is rising fastest in AI, data, and product-adjacent roles.</div>
+  </div>
+
+  <!-- SECTION 05+06: COMPANY RADAR + APP PLAYBOOK -->
+  <div class="sec-label">
+    <span class="sec-num">05</span>
+    <span class="sec-title">Company Radar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 06 Application Playbook</span>
+  </div>
+  <div class="bottom-split">
+    <div class="company-radar">
+      <div class="radar-label">Company Radar:</div>
+      <div class="radar-company-name">Linear</div>
+      <div class="radar-why-label">Why it matters:</div>
+      <div class="radar-why-text">Remote-native product culture, strong design and engineering standards, and roles that often fit LatAm talent with strong async collaboration strengths.</div>
+      <div class="radar-why-label" style="margin-top:8px;">Best fit for:</div>
+      <div class="radar-why-text">Frontend engineers, product designers, and product-minded builders.</div>
+      <div class="radar-meta">
+        <div class="radar-meta-item"><strong>HQ:</strong> Remote-first</div>
+        <div class="radar-meta-item"><strong>Founded:</strong> 2019</div>
+        <div class="radar-meta-item"><strong>Team:</strong> 100+</div>
+      </div>
+      <a class="view-roles" href="#">→ View open roles →</a>
+    </div>
+    <div class="app-playbook">
+      <div class="radar-why-label" style="margin-bottom:6px;">Application Playbook:</div>
+      <div class="playbook-h">How to position yourself for AI-adjacent roles</div>
+      <div class="playbook-body">You do not need to call yourself an AI engineer to benefit from the shift. Companies want operators, designers, analysts, and support professionals who can work with automation, data, and modern tooling.</div>
+      <div style="font-family:var(--font-m);font-size:9px;color:var(--gray);margin-bottom:8px;letter-spacing:0.06em;">Show systems thinking. Show communication. Show proof of work.</div>
+      <div class="playbook-checklist">
+        <div class="playbook-item">
+          <span class="pi-icon">💼</span>
+          <div class="pi-body">
+            <div class="pi-title">Portfolio signal</div>
+            <div class="pi-desc">Projects that prove your problem-solving.</div>
+          </div>
+          <span class="pi-check">✓</span>
+        </div>
+        <div class="playbook-item">
+          <span class="pi-icon">💬</span>
+          <div class="pi-body">
+            <div class="pi-title">English clarity</div>
+            <div class="pi-desc">Clear writing and speaking open doors.</div>
+          </div>
+          <span class="pi-check">✓</span>
+        </div>
+        <div class="playbook-item">
+          <span class="pi-icon">🛠️</span>
+          <div class="pi-body">
+            <div class="pi-title">Tool fluency</div>
+            <div class="pi-desc">Use modern tools and show you can learn.</div>
+          </div>
+          <span class="pi-check">✓</span>
+        </div>
+        <div class="playbook-item">
+          <span class="pi-icon">🌐</span>
+          <div class="pi-body">
+            <div class="pi-title">Remote readiness</div>
+            <div class="pi-desc">Async habits, communication, and reliability.</div>
+          </div>
+          <span class="pi-check">✓</span>
         </div>
       </div>
-      <div class="radar-company">
-        <div class="rc-arrow">▲</div>
-        <div>
-          <div class="rc-name">Luxury Presence</div>
-          <div class="rc-desc">Real estate SaaS company building AI-powered tools on top of MLS data. Now explicitly LatAm-open for engineering roles. Stack: Python, AWS, LLMs, PostgreSQL. Good cultural fit for engineers who want ownership and architecture decisions. <span style="color:var(--teal);">Growing AI team — more roles incoming.</span></div>
-        </div>
+    </div>
+  </div>
+
+  <!-- SECTION 07: WHY NORTEC -->
+  <div class="sec-label">
+    <span class="sec-num">07</span>
+    <span class="sec-title">Why Nortec</span>
+  </div>
+  <div class="why-section">
+    <div class="why-h">LatAm roots.<br><span class="teal">Global reach.</span></div>
+    <div class="why-sub">Nortec exists to help Latin American tech talent find better opportunities, benchmark compensation, and navigate the global market with confidence.</div>
+    <div class="why-pillars">
+      <div class="why-pillar">
+        <div class="wp-icon">⇄</div>
+        <div class="wp-title">Bilingual</div>
+        <div class="wp-sub">EN / ES by nature</div>
       </div>
-      <div class="radar-company">
-        <div class="rc-arrow">◆</div>
-        <div>
-          <div class="rc-name">Praxent</div>
-          <div class="rc-desc">US-based digital product agency with an active LatAm hiring pipeline across both Angular and React roles. Agile, client-facing, delivery-focused. If you're a fullstack engineer with 3+ years and want direct client exposure with US companies, this is worth tracking. <span style="color:var(--atlas-gray);">Multiple openings in 2026 pipeline.</span></div>
-        </div>
+      <div class="why-pillar">
+        <div class="wp-icon">📊</div>
+        <div class="wp-title">Data you can use</div>
+        <div class="wp-sub">Signals, not noise</div>
+      </div>
+      <div class="why-pillar">
+        <div class="wp-icon">👥</div>
+        <div class="wp-title">People first</div>
+        <div class="wp-sub">Real stories, real advice</div>
+      </div>
+      <div class="why-pillar">
+        <div class="wp-icon">🌎</div>
+        <div class="wp-title">Global mindset</div>
+        <div class="wp-sub">Local perspective</div>
       </div>
     </div>
   </div>
 
-  <!-- Section 4: Application Playbook -->
-  <div class="i-section">
-    <div class="i-section-label" data-en="Section 04" data-es="Sección 04">Section 04</div>
-    <div class="i-section-title">Application Playbook</div>
-    <div class="tip-box">
-      <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--orient-red);margin-bottom:1rem;">This week: Sell your timezone, don't apologize for it</div>
-      <div style="font-family:var(--font-mono);font-size:12px;color:var(--text2);line-height:1.9;">
-        Most LatAm tech workers (Colombia, Mexico, Argentina) overlap 4–8 hours with US Eastern time. That's a feature, not a bug. US hiring managers worry about async delays — remove that worry in the first paragraph.<br><br>
-        <strong style="color:var(--north-star);">Write this:</strong><br>
-        <span style="border-left:2px solid var(--teal);padding-left:12px;display:block;margin:10px 0;color:var(--north-star);font-style:italic;">"I'm based in Bogotá (COT, UTC-5) — I have full overlap with US ET mornings and can be available for PT afternoons when needed."</span>
-        <strong style="color:var(--north-star);">Not this:</strong><br>
-        <span style="border-left:2px solid var(--orient-red);padding-left:12px;display:block;margin:10px 0;color:var(--text3);font-style:italic;">"I'm in a different time zone but I'm flexible and can adjust my schedule as needed."</span>
-        One projects confidence. The other plants doubt. Same person, completely different first impression.<br><br>
-        <em style="color:var(--teal);">💡 En español: No te disculpes por tu zona horaria — véndela. Colombia y México tienen overlap total con el horario ET de la mañana. Mencionalo en el primer párrafo de tu cover letter.</em>
-      </div>
+  <!-- FOOTER CTA -->
+  <div class="footer-cta">
+    <div>
+      <div class="fcta-h">Stay northbound.</div>
+      <div class="fcta-sub">nortec.com</div>
+    </div>
+    <a class="fcta-btn" href="https://nortec.vercel.app">Subscribe free →</a>
+    <div class="next-drop">
+      <div class="nd-label">Next drop</div>
+      <div class="nd-date">MAY 23, 2026</div>
     </div>
   </div>
 
-  <!-- Section 5: Skill Move -->
-  <div class="i-section">
-    <div class="i-section-label" data-en="Section 05" data-es="Sección 05">Section 05</div>
-    <div class="i-section-title">Skill Move</div>
-    <div class="skill-move">
-      <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--teal);margin-bottom:1rem;">This week: Build the portfolio project that opens AI engineering doors</div>
-      <div style="font-family:var(--font-mono);font-size:12px;color:var(--text2);line-height:1.9;">
-        The most-requested AI role right now is not ML engineer — it's someone who can connect AI to business workflows. The fastest way to prove that is a portfolio project.<br><br>
-        <strong style="color:var(--north-star);">Build this: Customer support AI triage bot</strong><br>
-        • Input: a customer support ticket (text)<br>
-        • Routing logic: classify the issue type using an LLM<br>
-        • Output: suggested response, priority, and team to route to<br>
-        • Tools: Python + Anthropic/OpenAI API + a simple UI<br>
-        • Bonus: show a before/after on resolution time<br><br>
-        Put it on GitHub. Write a short README. Add screenshots. This is the project that gets you past "AI curious" and into "AI capable" — which is where the $90K+ roles live.<br><br>
-        <em style="color:var(--teal);">Esta semana: construye un bot de triage para soporte al cliente usando un LLM. Ponlo en GitHub con un README claro. Ese proyecto te abre puertas a roles de +$90K que requieren experiencia en AI aplicado.</em>
-      </div>
-    </div>
-  </div>
-
-  <!-- Footer -->
-  <div class="issue-footer">
-    <div style="font-family:var(--font-display);font-size:1.5rem;letter-spacing:0.1em;color:var(--north-star);margin-bottom:0.5rem;">NORTE<span style="color:var(--teal);">C</span></div>
-    <p style="font-family:var(--font-mono);font-size:10px;color:var(--text3);letter-spacing:0.06em;margin-bottom:1.5rem;" data-en="Work global. Live local. · Issue #001 · May 9, 2026" data-es="Trabaja global. Vive local. · Edición #001 · 9 mayo, 2026">Work global. Live local. · Issue #001 · May 9, 2026</p>
-    <form class="email-form" style="max-width:380px;margin:0 auto 1rem;" onsubmit="handleSub(event)" data-source="issue-001">
-      <input type="email" placeholder="Forward to a friend's email..." data-en-placeholder="Forward to a friend's email..." data-es-placeholder="Reenvíalo al correo de un amigo..." required>
-      <button type="submit" data-en="Share →" data-es="Compartir →">Share →</button>
-    </form>
-    <p style="font-family:var(--font-mono);font-size:10px;color:var(--text3);">
-      <a href="/archive" style="color:var(--text3);text-decoration:none;" data-en="Archive" data-es="Archivo">Archive</a> ·
-      <a href="/#subscribe" style="color:var(--teal);text-decoration:none;" data-en="Subscribe" data-es="Suscríbete">Subscribe</a> ·
-      <a href="#" style="color:var(--text3);text-decoration:none;" data-en="Unsubscribe" data-es="Cancelar suscripción">Unsubscribe</a>
-    </p>
+  <!-- SITE FOOTER -->
+  <div class="site-footer">
+    <div class="sf-logo">NORTE<span class="c">C</span></div>
+    <div class="sf-note">Built in LatAm. Designed for the world.</div>
   </div>
 
 </div>
-
-<script>
-window.handleSub = function(e) {
-  e.preventDefault();
-  const btn = e.target.querySelector('button');
-  btn.textContent = '✓ Sent!';
-  btn.style.background = 'var(--teal)';
-  e.target.querySelector('input').value = '';
-};
-</script>
-<script type="module">
-import { initI18n } from '/js/i18n.js';
-initI18n();
-</script>
 </body>
 </html>
