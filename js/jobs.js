@@ -28,7 +28,9 @@ export const JOBS = [
       applicationClarity: 4,
     },
     why: 'Strong fullstack role open explicitly to LatAm. Agile environment, mentorship path, and direct client exposure. Salary not listed but company is well-known for fair USD rates.',
+    whyEs: 'Rol fullstack sólido abierto explícitamente para LatAm. Entorno ágil, ruta de mentoría y exposición directa con clientes. No publican salario, pero la empresa es conocida por manejar tarifas justas en USD.',
     applyAngle: 'Highlight sprint delivery experience, fullstack breadth (UI + APIs + cloud), and direct client communication.',
+    applyAngleEs: 'Destaca tu experiencia entregando sprints, amplitud fullstack (UI + APIs + nube) y comunicación directa con clientes.',
   },
   {
     id: 'j002',
@@ -57,7 +59,9 @@ export const JOBS = [
       applicationClarity: 5,
     },
     why: 'Sits at the intersection of backend engineering, data infra, and applied AI. MLS data pipelines + LLM agents. Staff-level = career-defining for LatAm engineers.',
+    whyEs: 'Está en la intersección de backend, infraestructura de datos e IA aplicada. Pipelines de datos MLS + agentes con LLM. Nivel Staff = una oportunidad que puede definir la carrera de ingenieros en LatAm.',
     applyAngle: 'Show production AI/ML experience (not just prompt engineering), data pipeline work at scale, and observability.',
+    applyAngleEs: 'Muestra experiencia real de IA/ML en producción (no solo prompt engineering), trabajo con pipelines de datos a escala y observabilidad.',
   },
   {
     id: 'j003',
@@ -86,7 +90,9 @@ export const JOBS = [
       applicationClarity: 5,
     },
     why: 'Clara is LatAm-born fintech (backed by Coatue, General Catalyst, Goldman). AI innovation team, ultra-fast shipping culture. Perfect for engineers with 2+ AI features in prod.',
+    whyEs: 'Clara es una fintech nacida en LatAm (respaldada por Coatue, General Catalyst y Goldman). Equipo de innovación en IA con cultura de envío ultrarrápido. Ideal para ingenieros con 2+ funcionalidades de IA en producción.',
     applyAngle: 'Show real LLM integrations you shipped to production. Clara wants builders, not AI theorists.',
+    applyAngleEs: 'Muestra integraciones reales de LLM que hayas llevado a producción. Clara busca builders, no teóricos de IA.',
   },
   {
     id: 'j004',
@@ -115,7 +121,9 @@ export const JOBS = [
       applicationClarity: 4,
     },
     why: 'Solid entry/mid QA role, good for LatAm with ET morning overlap. No salary listed — ask early in the process.',
+    whyEs: 'Rol QA sólido de nivel entry/mid, bueno para LatAm con solape en la mañana ET. No publican salario — pregúntalo temprano en el proceso.',
     applyAngle: 'Emphasize detailed test case writing, bug reproduction clarity, and cross-platform mobile experience.',
+    applyAngleEs: 'Enfatiza redacción detallada de casos de prueba, claridad al reproducir bugs y experiencia mobile multiplataforma.',
   },
   {
     id: 'j005',
@@ -144,7 +152,9 @@ export const JOBS = [
       applicationClarity: 4,
     },
     why: 'Salary listed — rare and honest. Fast-growing AI comms platform. CS role at an AI company = exposure to AI-native product workflows.',
+    whyEs: 'Salario publicado — raro y transparente. Plataforma de comunicación con IA en rápido crecimiento. Un rol de CS en una empresa de IA te da exposición a flujos de producto nativos en IA.',
     applyAngle: 'Show onboarding experience, retention metrics you\'ve influenced, and comfort with async US client communication.',
+    applyAngleEs: 'Muestra experiencia en onboarding, métricas de retención que hayas impactado y comodidad con comunicación asíncrona con clientes de EE.UU.',
   },
 ];
 

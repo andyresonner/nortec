@@ -85,7 +85,7 @@
 </div>
 
 <script type="module">
-import { initI18n, getCurrentLanguage } from '/js/i18n.js';
+import { initI18n, getCurrentLanguage, refreshI18n } from '/js/i18n.js';
 import { JOBS } from '/js/jobs.js';
 import { scorePips, scoreLabel } from '/js/components.js';
 
@@ -93,39 +93,88 @@ const panel = document.getElementById('job-panel');
 const params = new URLSearchParams(window.location.search);
 const id = params.get('id') || 'j001';
 const job = JOBS.find((item) => item.id === id);
-const lang = getCurrentLanguage();
-initI18n();
 
-if (!job) {
-  document.title = lang === 'es' ? 'Empleo no encontrado — Nortec' : 'Job not found — Nortec';
-  panel.innerHTML = `
-    <h1 class="job-title">${lang === 'es' ? 'Empleo no encontrado' : 'Job not found'}</h1>
-    <p class="job-empty">${lang === 'es' ? 'No pudimos encontrar ese rol. Vuelve a la lista de empleos y elige otra vacante.' : 'We could not find that role. Go back to the jobs list and pick another listing.'}</p>
-    <div class="job-actions">
-      <a class="btn-primary" href="/jobs">${lang === 'es' ? 'Volver a empleos →' : 'Back to jobs →'}</a>
-      <a class="btn-ghost" href="/issue/001">${lang === 'es' ? 'Abrir edición #001 →' : 'Open issue #001 →'}</a>
-    </div>
-  `;
-} else {
+const typeTranslations = {
+  'Full-time': 'Tiempo completo',
+  'Part-time': 'Medio tiempo',
+  'Contract': 'Contrato',
+};
+
+const functionTranslations = {
+  Engineering: 'Ingeniería',
+  'Customer Success': 'Éxito del Cliente',
+  QA: 'QA',
+};
+
+function formatSalaryDisplay(currentJob, lang) {
+  const rawSalary = (currentJob.salary || '').trim();
+
+  if (/^~\$\d[\d,]*\s*USD\/yr$/i.test(rawSalary)) {
+    return rawSalary;
+  }
+
+  if (Number.isFinite(currentJob.salaryNum) && currentJob.salaryNum > 0) {
+    return `$${currentJob.salaryNum.toLocaleString('en-US')} USD/yr`;
+  }
+
+  if (/(senior usd|competitive usd|usd competitive)/i.test(rawSalary)) {
+    return lang === 'es'
+      ? 'Salario competitivo en USD — detalles al aplicar'
+      : 'Competitive USD salary — details on application';
+  }
+
+  if (/(disclosed on application|on application)/i.test(rawSalary)) {
+    return lang === 'es'
+      ? 'Salario en USD compartido durante la aplicación'
+      : 'USD salary details shared during application';
+  }
+
+  return rawSalary || (lang === 'es' ? 'Salario no especificado' : 'Salary not specified');
+}
+
+function renderJobDetail() {
+  const lang = localStorage.getItem('nortec-language') === 'es' ? 'es' : getCurrentLanguage();
+
+  if (!job) {
+    document.title = lang === 'es' ? 'Empleo no encontrado — Nortec' : 'Job not found — Nortec';
+    panel.innerHTML = `
+      <h1 class="job-title">${lang === 'es' ? 'Empleo no encontrado' : 'Job not found'}</h1>
+      <p class="job-empty">${lang === 'es' ? 'No pudimos encontrar ese rol. Vuelve a la lista de empleos y elige otra vacante.' : 'We could not find that role. Go back to the jobs list and pick another listing.'}</p>
+      <div class="job-actions">
+        <a class="btn-primary" href="/jobs">${lang === 'es' ? 'Volver a empleos →' : 'Back to jobs →'}</a>
+        <a class="btn-ghost" href="/issue/001">${lang === 'es' ? 'Abrir edición #001 →' : 'Open issue #001 →'}</a>
+      </div>
+    `;
+    refreshI18n();
+    return;
+  }
+
+  const whyText = lang === 'es' ? (job.whyEs || job.why) : job.why;
+  const applyAngleText = lang === 'es' ? (job.applyAngleEs || job.applyAngle) : job.applyAngle;
+  const typeText = lang === 'es' ? (typeTranslations[job.type] || job.type) : job.type;
+  const functionText = lang === 'es' ? (functionTranslations[job.function] || job.function) : job.function;
+  const sourceLabel = lang === 'es' ? 'Fuente' : 'Source';
+  const salaryText = formatSalaryDisplay(job, lang);
+
   document.title = `${job.title} — ${job.company} | Nortec`;
   panel.innerHTML = `
     <div class="job-company">${job.company} · ${job.location}</div>
     <h1 class="job-title">${job.title}</h1>
-    <div class="job-meta">${job.type} · ${job.function} · Source: ${job.source}</div>
+    <div class="job-meta">${typeText} · ${functionText} · ${sourceLabel}: ${job.source}</div>
     <div class="job-tags" style="margin-bottom:1rem;">
       ${job.tags.map((tag) => `<span class="job-tag">${tag}</span>`).join('')}
     </div>
     <div class="job-meta" style="border-top:1px solid var(--border);padding-top:1rem;">
       <strong style="color:var(--orient-red);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;">${lang === 'es' ? 'Por qué importa:' : 'Why it matters:'}</strong><br>
-      ${job.why}
+      ${whyText}
     </div>
     <div class="job-meta">
       <strong style="color:var(--orient-red);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;">${lang === 'es' ? 'Cómo aplicar:' : 'Apply angle:'}</strong><br>
-      ${job.applyAngle}
+      ${applyAngleText}
     </div>
     <div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;border-top:1px solid var(--border);padding-top:1rem;">
       <div>
-        <div class="job-salary">${job.salary}</div>
+        <div class="job-salary">${salaryText}</div>
         <div style="display:flex;gap:4px;margin-top:5px;">${scorePips(job.score)}</div>
       </div>
       <div style="text-align:right;">
@@ -137,7 +186,12 @@ if (!job) {
       <a class="btn-ghost" href="/jobs">${lang === 'es' ? 'Volver a empleos' : 'Back to jobs'}</a>
     </div>
   `;
+  refreshI18n();
 }
+
+initI18n();
+renderJobDetail();
+window.addEventListener('nortec:langchange', renderJobDetail);
 </script>
 </body>
 </html>
