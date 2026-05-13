@@ -75,7 +75,7 @@
 .tab-panel {
   display: none;
   opacity: 0;
-  transition: opacity 0.2s ease;
+  transition: opacity 0.3s ease;
 }
 .tab-panel.is-active { display: block; }
 .tab-panel.is-visible { opacity: 1; }
@@ -134,7 +134,15 @@
 .company-card {
   background: var(--surface);
   border-top: 2px solid rgba(15,163,154,0.35);
+  border: 1px solid transparent;
   padding: 1.1rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.company-card:hover {
+  border-color: var(--teal);
+  transform: scale(1.02);
+  box-shadow: 0 0 24px rgba(15,163,154,0.2);
 }
 .company-name {
   font-family: var(--font-display);
@@ -143,6 +151,7 @@
   line-height: 0.98;
   color: var(--north-star);
   margin-bottom: 0.6rem;
+  cursor: pointer;
 }
 .category-badge {
   display: inline-flex;
@@ -244,23 +253,79 @@
   color: var(--text3);
   margin-bottom: 0.7rem;
 }
-.company-focus-pill {
+.jobs-focus-header {
+  display: none;
+  margin-bottom: 1rem;
+  border: 1px solid var(--border2);
+  background: var(--surface);
+  padding: 0.9rem;
+}
+.jobs-focus-header.is-active {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 1rem;
+}
+.back-to-companies {
+  border: 1px solid var(--teal);
+  background: var(--bg2);
+  color: var(--teal);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+.back-to-companies:hover {
+  background: rgba(15,163,154,0.12);
+}
+.jobs-focus-title-wrap {
+  min-width: 0;
+}
+.jobs-focus-kicker {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text3);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.jobs-focus-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+  color: var(--north-star);
+  text-transform: uppercase;
+  line-height: 0.95;
+  margin-top: 2px;
+  border-bottom: 2px solid var(--teal);
+  display: inline-block;
+  padding-bottom: 2px;
+}
+.company-focus-tag {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  border: 1px solid var(--border2);
-  background: rgba(15,163,154,0.08);
-  padding: 4px 8px;
-  margin-left: 8px;
-  color: var(--teal);
+  gap: 8px;
+  background: var(--teal);
+  color: var(--bg);
+  padding: 6px 10px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
 }
 .clear-focus {
-  border: none;
-  background: transparent;
-  color: var(--teal);
+  border: 1px solid rgba(12,22,20,0.35);
+  background: rgba(12,22,20,0.1);
+  color: var(--bg);
   cursor: pointer;
   font-family: var(--font-mono);
   font-size: 10px;
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
 }
 .jobs-table-wrap {
   border: 1px solid var(--border);
@@ -291,7 +356,27 @@
   padding: 11px 12px;
   vertical-align: middle;
 }
+.jobs-row {
+  cursor: pointer;
+}
 .jobs-table tr:hover td { background: rgba(15,163,154,0.05); }
+.apply-cell-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.row-arrow {
+  opacity: 0;
+  transform: translateX(-3px);
+  transition: opacity 0.16s ease, transform 0.16s ease;
+  color: var(--teal);
+  font-size: 12px;
+}
+.jobs-row:hover .row-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
 .co-name {
   color: var(--north-star);
   font-weight: 500;
@@ -319,7 +404,7 @@
   padding: 1.4rem;
 }
 
-/* market signals tab */
+/* trends tab */
 .signals-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -539,6 +624,10 @@
   .company-grid { grid-template-columns: 1fr; }
   .jobs-table { min-width: 820px; }
   .tz-col { display: none; }
+  .jobs-focus-header.is-active {
+    grid-template-columns: 1fr;
+    align-items: flex-start;
+  }
 }
 </style>
 </head>
@@ -658,7 +747,7 @@
     <div class="int-tabs" id="int-tabs">
       <button class="int-tab-btn is-active" type="button" data-tab="companies" data-en="Companies" data-es="Empresas">Companies</button>
       <button class="int-tab-btn" type="button" data-tab="jobs" data-en="Jobs" data-es="Trabajos">Jobs</button>
-      <button class="int-tab-btn" type="button" data-tab="signals" data-en="Market Signals" data-es="Senales de mercado">Market Signals</button>
+      <button class="int-tab-btn" type="button" data-tab="trends" data-en="Trends" data-es="Tendencias">Trends</button>
     </div>
 
     <section class="tab-panel is-active is-visible" id="panel-companies">
@@ -688,16 +777,24 @@
         <div class="freshness" data-en="Last updated: May 9, 2026" data-es="Ultima actualizacion: 9 mayo 2026">Last updated: May 9, 2026</div>
       </div>
 
+      <div class="jobs-focus-header" id="jobs-focus-header">
+        <button id="back-to-companies" class="back-to-companies" type="button" data-en="← Back to all companies" data-es="← Volver a todas las empresas">← Back to all companies</button>
+        <div class="jobs-focus-title-wrap">
+          <div class="jobs-focus-kicker" data-en="Viewing roles at:" data-es="Viendo roles en:">Viewing roles at:</div>
+          <div class="jobs-focus-title" id="jobs-focus-title">ROLES AT COMPANY</div>
+        </div>
+        <div class="company-focus-tag" id="company-focus-tag">
+          <span id="company-focus-name"></span>
+          <button id="clear-company-focus" class="clear-focus" type="button" aria-label="clear company filter">×</button>
+        </div>
+      </div>
+
       <div class="jobs-toolbar">
         <input id="jobs-search" class="jobs-search" type="search" placeholder="Search by company or role..." data-en="Search by company or role..." data-es="Buscar por empresa o rol...">
       </div>
       <div class="jobs-meta">
         <span id="jobs-count">0</span>
         <span data-en="roles in view" data-es="roles en vista">roles in view</span>
-        <span id="company-focus-pill" class="company-focus-pill" style="display:none;">
-          <span id="company-focus-name"></span>
-          <button id="clear-company-focus" class="clear-focus" type="button" data-en="clear" data-es="limpiar">clear</button>
-        </span>
       </div>
 
       <div class="jobs-table-wrap">
@@ -719,9 +816,9 @@
       </div>
     </section>
 
-    <section class="tab-panel" id="panel-signals">
+    <section class="tab-panel" id="panel-trends">
       <div class="panel-topbar">
-        <div></div>
+        <h2 class="jobs-focus-title" data-en="Trends" data-es="Tendencias">Trends</h2>
         <div class="freshness" data-en="Last updated: May 9, 2026" data-es="Ultima actualizacion: 9 mayo 2026">Last updated: May 9, 2026</div>
       </div>
 
@@ -754,17 +851,17 @@
 <script type="module">
 
 const TRACKER_DATA = [
-  { company: 'Bluelight Consulting', role: 'Senior React Engineer', fn: 'Engineering', countries: ['All LatAm'], salary: '$55K-$100K', stack: 'React, TypeScript, AWS', type: 'Full-time', tz: 'US overlap', link: 'https://bluelight.co/careers' },
-  { company: 'Luxury Presence', role: 'Staff Engineer - Data Platform & AI', fn: 'Data & AI', countries: ['LatAm-wide'], salary: '$120K-$160K', stack: 'Python, AWS, LLMs, PostgreSQL', type: 'Full-time', tz: 'Flexible', link: 'https://jobs.lever.co/luxurypresence/88e79420-0e50-413b-85c1-58ded03087cd' },
-  { company: 'Clara', role: 'Forward-Deployed AI Engineer', fn: 'Data & AI', countries: ['LatAm-wide', 'Sao Paulo'], salary: '$70K-$120K', stack: 'Anthropic API, Docker, AWS', type: 'Full-time', tz: 'Americas', link: 'https://job-boards.greenhouse.io/clara/jobs/5095342007' },
-  { company: 'Praxent', role: 'Senior Software Engineer (React/Node)', fn: 'Engineering', countries: ['LatAm-wide'], salary: '$75K-$95K', stack: 'React, Node.js, Agile', type: 'Full-time', tz: 'US CT/ET', link: 'https://job-boards.greenhouse.io/praxent/jobs/7589205003' },
-  { company: 'Whippy', role: 'Customer Success Manager', fn: 'Customer Success', countries: ['LatAm-wide'], salary: '$32K-$38K', stack: 'SaaS, CRM, English req.', type: 'Full-time', tz: 'US overlap', link: 'https://www.whippy.ai/careers' },
-  { company: 'Rapptr Labs', role: 'QA Analyst - iOS & Android', fn: 'Engineering', countries: ['LatAm-wide'], salary: '$35K-$50K', stack: 'iOS, Android, Manual QA', type: 'Full-time', tz: 'ET core hours', link: 'https://www.rapptrlabs.com/careers' },
-  { company: 'CoPilot AI', role: 'Customer Success Specialist', fn: 'Customer Success', countries: ['LatAm-wide'], salary: '$35K', stack: 'CS, AI tools, Sales', type: 'Full-time', tz: 'US overlap', link: 'https://www.copilot.ai/careers' },
-  { company: 'Supabase', role: 'Product Designer', fn: 'Design', countries: ['Global'], salary: '$65K-$95K', stack: 'Figma, UX, Design Systems', type: 'Full-time', tz: 'Flexible', link: 'https://supabase.com/careers' },
-  { company: 'Deel', role: 'Senior Product Manager', fn: 'Product', countries: ['Global'], salary: '$95K-$140K', stack: 'B2B SaaS, Analytics', type: 'Full-time', tz: 'Americas/Europe overlap', link: 'https://www.deel.com/careers' },
-  { company: 'Linear', role: 'Frontend Engineer', fn: 'Engineering', countries: ['Global'], salary: '$70K-$110K', stack: 'React, TypeScript, Web', type: 'Full-time', tz: 'Flexible', link: 'https://linear.app/careers' },
-  { company: 'Zapier', role: 'Data Analyst', fn: 'Data & AI', countries: ['Americas'], salary: '$85K-$120K', stack: 'SQL, Python, dbt, BI', type: 'Full-time', tz: 'Flexible', link: 'https://zapier.com/jobs' }
+  { id: 'j006', company: 'Bluelight Consulting', role: 'Senior React Engineer', fn: 'Engineering', countries: ['All LatAm'], salary: '$55K-$100K', stack: 'React, TypeScript, AWS', type: 'Full-time', tz: 'US overlap', link: 'https://bluelight.co/careers' },
+  { id: 'j002', company: 'Luxury Presence', role: 'Staff Engineer - Data Platform & AI', fn: 'Data & AI', countries: ['LatAm-wide'], salary: '$120K-$160K', stack: 'Python, AWS, LLMs, PostgreSQL', type: 'Full-time', tz: 'Flexible', link: 'https://jobs.lever.co/luxurypresence/88e79420-0e50-413b-85c1-58ded03087cd' },
+  { id: 'j003', company: 'Clara', role: 'Forward-Deployed AI Engineer', fn: 'Data & AI', countries: ['LatAm-wide', 'Sao Paulo'], salary: '$70K-$120K', stack: 'Anthropic API, Docker, AWS', type: 'Full-time', tz: 'Americas', link: 'https://job-boards.greenhouse.io/clara/jobs/5095342007' },
+  { id: 'j001', company: 'Praxent', role: 'Senior Software Engineer (React/Node)', fn: 'Engineering', countries: ['LatAm-wide'], salary: '$75K-$95K', stack: 'React, Node.js, Agile', type: 'Full-time', tz: 'US CT/ET', link: 'https://job-boards.greenhouse.io/praxent/jobs/7589205003' },
+  { id: 'j005', company: 'Whippy', role: 'Customer Success Manager', fn: 'Customer Success', countries: ['LatAm-wide'], salary: '$32K-$38K', stack: 'SaaS, CRM, English req.', type: 'Full-time', tz: 'US overlap', link: 'https://www.whippy.ai/careers' },
+  { id: 'j004', company: 'Rapptr Labs', role: 'QA Analyst - iOS & Android', fn: 'Engineering', countries: ['LatAm-wide'], salary: '$35K-$50K', stack: 'iOS, Android, Manual QA', type: 'Full-time', tz: 'ET core hours', link: 'https://www.rapptrlabs.com/careers' },
+  { id: 'j007', company: 'CoPilot AI', role: 'Customer Success Specialist', fn: 'Customer Success', countries: ['LatAm-wide'], salary: '$35K', stack: 'CS, AI tools, Sales', type: 'Full-time', tz: 'US overlap', link: 'https://www.copilot.ai/careers' },
+  { id: 'j008', company: 'Supabase', role: 'Product Designer', fn: 'Design', countries: ['Global'], salary: '$65K-$95K', stack: 'Figma, UX, Design Systems', type: 'Full-time', tz: 'Flexible', link: 'https://supabase.com/careers' },
+  { id: 'j009', company: 'Deel', role: 'Senior Product Manager', fn: 'Product', countries: ['Global'], salary: '$95K-$140K', stack: 'B2B SaaS, Analytics', type: 'Full-time', tz: 'Americas/Europe overlap', link: 'https://www.deel.com/careers' },
+  { id: 'j010', company: 'Linear', role: 'Frontend Engineer', fn: 'Engineering', countries: ['Global'], salary: '$70K-$110K', stack: 'React, TypeScript, Web', type: 'Full-time', tz: 'Flexible', link: 'https://linear.app/careers' },
+  { id: 'j011', company: 'Zapier', role: 'Data Analyst', fn: 'Data & AI', countries: ['Americas'], salary: '$85K-$120K', stack: 'SQL, Python, dbt, BI', type: 'Full-time', tz: 'Flexible', link: 'https://zapier.com/jobs' }
 ];
 
 const COMPANY_INTEL = [
@@ -893,7 +990,7 @@ const tabButtons = [...document.querySelectorAll('.int-tab-btn')];
 const tabPanels = {
   companies: document.getElementById('panel-companies'),
   jobs: document.getElementById('panel-jobs'),
-  signals: document.getElementById('panel-signals')
+  trends: document.getElementById('panel-trends')
 };
 
 const companyGridEl = document.getElementById('company-grid');
@@ -903,9 +1000,11 @@ const jobsPillsEl = document.getElementById('jobs-filter-pills');
 const jobsSearchEl = document.getElementById('jobs-search');
 const jobsBodyEl = document.getElementById('jobs-body');
 const jobsCountEl = document.getElementById('jobs-count');
-const companyFocusPill = document.getElementById('company-focus-pill');
+const jobsFocusHeader = document.getElementById('jobs-focus-header');
+const jobsFocusTitle = document.getElementById('jobs-focus-title');
 const companyFocusName = document.getElementById('company-focus-name');
 const clearCompanyFocusBtn = document.getElementById('clear-company-focus');
+const backToCompaniesBtn = document.getElementById('back-to-companies');
 
 const skillsListEl = document.getElementById('skills-list');
 const growthListEl = document.getElementById('growth-list');
@@ -961,8 +1060,8 @@ function filteredCompanies() {
 function renderCompaniesTab() {
   const companies = filteredCompanies();
   companyGridEl.innerHTML = companies.map((company) => `
-    <article class="company-card">
-      <h3 class="company-name" ${i18nAttrs(company.name, company.name)}>${company.name}</h3>
+    <article class="company-card" data-company="${escapeAttr(company.name)}">
+      <h3 class="company-name" data-company="${escapeAttr(company.name)}" ${i18nAttrs(company.name, company.name)}>${company.name}</h3>
       <div class="category-badge" ${i18nAttrs(company.category, company.category)}>${company.category}</div>
 
       <div class="intel-row">
@@ -1019,10 +1118,13 @@ function renderJobsTab() {
   jobsCountEl.textContent = rows.length;
 
   if (state.jobsCompanyFocus) {
-    companyFocusPill.style.display = 'inline-flex';
+    jobsFocusHeader.classList.add('is-active');
+    jobsFocusTitle.dataset.en = `ROLES AT ${state.jobsCompanyFocus.toUpperCase()}`;
+    jobsFocusTitle.dataset.es = `ROLES EN ${state.jobsCompanyFocus.toUpperCase()}`;
+    jobsFocusTitle.textContent = jobsFocusTitle.dataset.en;
     companyFocusName.textContent = state.jobsCompanyFocus;
   } else {
-    companyFocusPill.style.display = 'none';
+    jobsFocusHeader.classList.remove('is-active');
   }
 
   if (rows.length === 0) {
@@ -1032,7 +1134,7 @@ function renderJobsTab() {
   }
 
   jobsBodyEl.innerHTML = rows.map((job) => `
-    <tr>
+    <tr class="jobs-row" data-job-id="${escapeAttr(job.id)}">
       <td class="co-name" ${i18nAttrs(job.company, job.company)}>${job.company}</td>
       <td>
         <span ${i18nAttrs(job.role, job.role)}>${job.role}</span><br>
@@ -1050,7 +1152,12 @@ function renderJobsTab() {
       <td style="font-size:10px;color:var(--text3);" ${i18nAttrs(job.stack, job.stack)}>${job.stack}</td>
       <td style="font-size:10px;" ${i18nAttrs(job.type, job.type)}>${job.type}</td>
       <td class="tz-col" style="font-size:10px;color:var(--text3);" ${i18nAttrs(job.tz, job.tz)}>${job.tz}</td>
-      <td><a class="apply-link" href="${escapeAttr(job.link)}" target="_blank" rel="noopener noreferrer" data-en="Apply ->" data-es="Aplicar ->">Apply -></a></td>
+      <td>
+        <div class="apply-cell-wrap">
+          <a class="apply-link" href="${escapeAttr(job.link)}" target="_blank" rel="noopener noreferrer" data-en="Apply ->" data-es="Aplicar ->">Apply -></a>
+          <span class="row-arrow">→</span>
+        </div>
+      </td>
     </tr>
   `).join('');
   refreshTranslations();
@@ -1062,7 +1169,7 @@ function growthFillClass(value) {
   return 'growth-fill-gray';
 }
 
-function renderSignalsTab() {
+function renderTrendsTab() {
   const maxSkill = Math.max(...SKILLS_DATA.map((row) => row.pct));
   skillsListEl.innerHTML = SKILLS_DATA.map((row) => `
     <div class="metric-row">
@@ -1098,18 +1205,41 @@ function renderSignalsTab() {
   refreshTranslations();
 }
 
-function setActiveTab(tab, updateUrl = true) {
+let tabTransitionTimer;
+function setActiveTab(tab, updateUrl = true, animate = true) {
+  if (!tabPanels[tab]) return;
+  if (state.activeTab === tab && tabPanels[tab].classList.contains('is-active')) {
+    if (updateUrl) {
+      const sameUrl = new URL(window.location.href);
+      sameUrl.searchParams.set('tab', tab);
+      history.replaceState(null, '', `${sameUrl.pathname}${sameUrl.search}`);
+    }
+    return;
+  }
+
+  clearTimeout(tabTransitionTimer);
+  const previousTab = state.activeTab;
+  const previousPanel = tabPanels[previousTab];
+  const nextPanel = tabPanels[tab];
+
   state.activeTab = tab;
   tabButtons.forEach((button) => button.classList.toggle('is-active', button.dataset.tab === tab));
-  Object.entries(tabPanels).forEach(([key, panel]) => {
-    if (key === tab) {
-      panel.classList.add('is-active');
-      requestAnimationFrame(() => panel.classList.add('is-visible'));
-    } else {
-      panel.classList.remove('is-visible');
-      panel.classList.remove('is-active');
-    }
-  });
+
+  const activateNext = () => {
+    Object.entries(tabPanels).forEach(([key, panel]) => {
+      if (key !== tab) panel.classList.remove('is-active', 'is-visible');
+    });
+    nextPanel.classList.add('is-active');
+    requestAnimationFrame(() => nextPanel.classList.add('is-visible'));
+  };
+
+  if (animate && previousPanel && previousPanel !== nextPanel) {
+    previousPanel.classList.remove('is-visible');
+    tabTransitionTimer = setTimeout(activateNext, 300);
+  } else {
+    activateNext();
+  }
+
   if (updateUrl) {
     const url = new URL(window.location.href);
     url.searchParams.set('tab', tab);
@@ -1134,17 +1264,20 @@ companyPillsEl.addEventListener('click', (event) => {
 });
 
 companyGridEl.addEventListener('click', (event) => {
+  const card = event.target.closest('.company-card');
   const link = event.target.closest('.company-link');
-  if (!link) return;
+  const title = event.target.closest('.company-name');
+  const source = card || link || title;
+  if (!source) return;
   event.preventDefault();
-  const companyName = link.dataset.company;
+  const companyName = source.dataset.company || card?.dataset.company;
   state.jobsCompanyFocus = companyName || null;
   state.jobsFilter = 'all';
   state.jobsSearch = '';
   jobsSearchEl.value = '';
   jobsPillsEl.querySelectorAll('.pill-btn').forEach((el) => el.classList.toggle('is-active', el.dataset.filter === 'all'));
   renderJobsTab();
-  setActiveTab('jobs');
+  setActiveTab('jobs', true, true);
 });
 
 jobsPillsEl.addEventListener('click', (event) => {
@@ -1164,6 +1297,22 @@ jobsSearchEl.addEventListener('input', (event) => {
 clearCompanyFocusBtn.addEventListener('click', () => {
   state.jobsCompanyFocus = null;
   renderJobsTab();
+  setActiveTab('companies', true, true);
+});
+
+backToCompaniesBtn.addEventListener('click', () => {
+  state.jobsCompanyFocus = null;
+  renderJobsTab();
+  setActiveTab('companies', true, true);
+});
+
+jobsBodyEl.addEventListener('click', (event) => {
+  if (event.target.closest('.apply-link')) return;
+  const row = event.target.closest('.jobs-row');
+  if (!row) return;
+  const jobId = row.dataset.jobId;
+  if (!jobId) return;
+  window.location.href = `/job?id=${encodeURIComponent(jobId)}`;
 });
 
 // welcome modal should still show only with ?welcome=1
@@ -1192,13 +1341,13 @@ document.getElementById('survey-form').addEventListener('submit', (event) => {
 
 renderCompaniesTab();
 renderJobsTab();
-renderSignalsTab();
+renderTrendsTab();
 
 const incomingTab = (params.get('tab') || '').toLowerCase();
-if (incomingTab === 'jobs' || incomingTab === 'signals' || incomingTab === 'companies') {
-  setActiveTab(incomingTab, false);
+if (incomingTab === 'jobs' || incomingTab === 'trends' || incomingTab === 'companies') {
+  setActiveTab(incomingTab, false, false);
 } else {
-  setActiveTab('companies', false);
+  setActiveTab('companies', false, false);
 }
 
 refreshTranslations();
