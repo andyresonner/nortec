@@ -21,6 +21,30 @@
 .chip.teal { border-color:rgba(15,163,154,0.4);color:var(--teal); }
 .apply-link { color:var(--orient-red);text-decoration:none;font-size:10px;letter-spacing:0.06em; }
 .apply-link:hover { color:var(--north-star); }
+.tracker-filters { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:1.5rem; }
+.tracker-filters .filter-btn {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  white-space:nowrap;
+  border-radius:999px;
+  padding:7px 14px;
+  border:1px solid var(--border2);
+  background:transparent;
+  color:var(--text3);
+  font-family:var(--font-mono);
+  font-size:10px;
+  letter-spacing:0.06em;
+  line-height:1;
+  cursor:pointer;
+  transition:all 0.15s;
+}
+.tracker-filters .filter-btn:hover,
+.tracker-filters .filter-btn.active {
+  border-color:var(--teal);
+  color:var(--teal);
+  background:var(--teal-dim);
+}
 
 /* WELCOME MODAL */
 .modal-overlay {
@@ -188,7 +212,7 @@
 </div>
 
 <div class="container" style="padding:2rem 1.5rem;">
-  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1.5rem;">
+  <div class="tracker-filters">
     <button class="filter-btn active" onclick="filterTracker('all',this)" data-en="All" data-es="Todos">All</button>
     <button class="filter-btn" onclick="filterTracker('Engineering',this)" data-en="Engineering" data-es="Ingeniería">Engineering</button>
     <button class="filter-btn" onclick="filterTracker('Data & AI',this)" data-en="Data & AI" data-es="Datos e IA">Data & AI</button>

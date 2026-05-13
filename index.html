@@ -1512,7 +1512,7 @@
 <script type="module">
 import { initI18n, refreshI18n, getCurrentLanguage } from '/js/i18n.js';
 import { submitEmail } from '/js/subscribe.js';
-import { JOBS, SALARY_DATA } from '/js/jobs.js';
+import { SALARY_DATA, getTopJobs } from '/js/jobs.js';
 import { scorePips, scoreLabel } from '/js/components.js';
 import { createSalaryRevealMarkup, initSalaryReveal } from '/js/salary-reveal.js';
 
@@ -1561,7 +1561,8 @@ function renderJobsGrid() {
   if (!grid) return;
   const lang = getCurrentLanguage();
   const sourceLabel = lang === 'es' ? 'Fuente' : 'Source';
-  grid.innerHTML = JOBS.map(j => `
+  const featuredJobs = getTopJobs(8);
+  grid.innerHTML = featuredJobs.map(j => `
     <div class="job-card" onclick="window.location='/job?id=${j.id}'">
       <div class="job-card-co">${j.company} <span style="color:var(--text3)">· ${j.location}</span></div>
       <div class="job-card-title">${j.title}</div>
