@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nortec Job Detail</title>
+<meta name="description" content="Nortec job detail for LatAm remote tech opportunities.">
+<link rel="stylesheet" href="/css/global.css">
+<style>
+.job-page { padding-top: var(--nav-h); }
+.job-shell {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem;
+}
+.job-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: 1px solid rgba(15,163,154,0.35);
+  padding: 2rem;
+}
+.job-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  text-transform: uppercase;
+  color: var(--north-star);
+  line-height: 0.95;
+  margin-bottom: 0.9rem;
+}
+.job-company {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 1rem;
+}
+.job-meta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text2);
+  line-height: 1.9;
+  margin-bottom: 1rem;
+}
+.job-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+}
+.job-subscribe-nudge {
+  margin-top: 1rem;
+  padding: 8px 10px;
+  border: 1px solid var(--border2);
+  background: rgba(15,163,154,0.08);
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+.job-subscribe-copy {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text2);
+  line-height: 1.5;
+  white-space: nowrap;
+}
+.job-subscribe-nudge .email-form {
+  margin-left: auto;
+  min-width: 320px;
+  max-width: 420px;
+}
+.job-empty {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text2);
+  line-height: 1.9;
+}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a class="nav-logo" href="/"><span>NORTE<span class="teal">C</span></span><div class="nav-wordmark" data-en="NORTHBOUND<br>TALENT." data-es="TALENTO<br>RUMBO AL NORTE." data-i18n-html="true">NORTHBOUND<br>TALENT.</div></a>
+  <ul class="nav-links">
+    <li><a href="/jobs" class="active" data-en="Jobs" data-es="Empleos">Jobs</a></li>
+    <li><a href="/tracker" data-en="Tracker" data-es="Tracker">Tracker</a></li>
+    <li><a href="/archive" data-en="Archive" data-es="Archivo">Archive</a></li>
+    <li><a href="/insights" data-en="Insights" data-es="Insights">Insights</a></li>
+    <li><a href="/issue/001">Issue #001</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a class="btn-ghost" href="/employers" data-en="For Employers" data-es="Para Empleadores">For Employers</a>
+    <div class="lang-toggle" aria-label="Language toggle">
+      <button type="button" data-lang-option="en">EN</button>
+      <span class="slash">/</span>
+      <button type="button" data-lang-option="es">ES</button>
+    </div>
+    <a class="btn-primary" href="/#subscribe" data-en="Subscribe" data-es="Suscríbete">Subscribe</a>
+  </div>
+</nav>
+
+<div class="job-page">
+  <main class="job-shell">
+    <div class="section-marker" data-en="→ Role detail" data-es="→ Detalle del rol">→ Role detail</div>
+    <article class="job-panel" id="job-panel"></article>
+  </main>
+</div>
+
+<script type="module">
+import { initI18n, getCurrentLanguage, refreshI18n } from '/js/i18n.js';
+import { JOBS } from '/js/jobs.js';
+import { scorePips, scoreLabel } from '/js/components.js';
+import { createSalaryRevealMarkup, initSalaryReveal } from '/js/salary-reveal.js';
+import { submitEmail } from '/js/subscribe.js';
+
+const panel = document.getElementById('job-panel');
+const params = new URLSearchParams(window.location.search);
+const id = params.get('id') || 'j001';
+const job = JOBS.find((item) => item.id === id);
+
+const typeTranslations = {
+  'Full-time': 'Tiempo completo',
+  'Part-time': 'Medio tiempo',
+  'Contract': 'Contrato',
+};
+
+const functionTranslations = {
+  Engineering: 'Ingeniería',
+  'Customer Success': 'Éxito del Cliente',
+  QA: 'QA',
+};
+
+function renderJobDetail() {
+  const lang = localStorage.getItem('nortec-language') === 'es' ? 'es' : getCurrentLanguage();
+
+  if (!job) {
+    document.title = lang === 'es' ? 'Empleo no encontrado — Nortec' : 'Job not found — Nortec';
+    panel.innerHTML = `
+      <h1 class="job-title">${lang === 'es' ? 'Empleo no encontrado' : 'Job not found'}</h1>
+      <p class="job-empty">${lang === 'es' ? 'No pudimos encontrar ese rol. Vuelve a la lista de empleos y elige otra vacante.' : 'We could not find that role. Go back to the jobs list and pick another listing.'}</p>
+      <div class="job-actions">
+        <a class="btn-primary" href="/jobs">${lang === 'es' ? 'Volver a empleos →' : 'Back to jobs →'}</a>
+        <a class="btn-ghost" href="/issue/001">${lang === 'es' ? 'Abrir edición #001 →' : 'Open issue #001 →'}</a>
+      </div>
+    `;
+    refreshI18n();
+    return;
+  }
+
+  const whyText = lang === 'es' ? (job.whyEs || job.why) : job.why;
+  const applyAngleText = lang === 'es' ? (job.applyAngleEs || job.applyAngle) : job.applyAngle;
+  const typeText = lang === 'es' ? (typeTranslations[job.type] || job.type) : job.type;
+  const functionText = lang === 'es' ? (functionTranslations[job.function] || job.function) : job.function;
+  const sourceLabel = lang === 'es' ? 'Fuente' : 'Source';
+
+  document.title = `${job.title} — ${job.company} | Nortec`;
+  panel.innerHTML = `
+    <div class="job-company">${job.company} · ${job.location}</div>
+    <h1 class="job-title">${job.title}</h1>
+    <div class="job-meta">${typeText} · ${functionText} · ${sourceLabel}: ${job.source}</div>
+    <div class="job-tags" style="margin-bottom:1rem;">
+      ${job.tags.map((tag) => `<span class="job-tag">${tag}</span>`).join('')}
+    </div>
+    <div class="job-meta" style="border-top:1px solid var(--border);padding-top:1rem;">
+      <strong style="color:var(--orient-red);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;">${lang === 'es' ? 'Por qué importa:' : 'Why it matters:'}</strong><br>
+      ${whyText}
+    </div>
+    <div class="job-meta">
+      <strong style="color:var(--orient-red);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;">${lang === 'es' ? 'Cómo aplicar:' : 'Apply angle:'}</strong><br>
+      ${applyAngleText}
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;border-top:1px solid var(--border);padding-top:1rem;">
+      <div>
+        ${createSalaryRevealMarkup(job, lang)}
+        <div style="display:flex;gap:4px;margin-top:5px;">${scorePips(job.score)}</div>
+      </div>
+      <div style="text-align:right;">
+        ${scoreLabel(job.score)}
+      </div>
+    </div>
+    <div class="job-actions">
+      <a class="btn-primary" href="${job.link}" target="_blank" rel="noopener noreferrer">${lang === 'es' ? `Aplicar en ${job.source} →` : `Apply at ${job.source} →`}</a>
+      <a class="btn-ghost" href="/jobs">${lang === 'es' ? 'Volver a empleos' : 'Back to jobs'}</a>
+    </div>
+    <div class="job-subscribe-nudge">
+      <div class="job-subscribe-copy">${lang === 'es' ? '📬 Roles como este, cada semana en tu inbox —' : '📬 Roles like this, weekly in your inbox —'}</div>
+      <form class="email-form" id="job-inline-subscribe" data-source="job-detail-inline">
+        <input type="email" placeholder="${lang === 'es' ? 'tu@email.com' : 'your@email.com'}" required>
+        <button type="submit">${lang === 'es' ? 'Suscribirme →' : 'Subscribe free →'}</button>
+      </form>
+    </div>
+  `;
+  initInlineSubscribe(panel, lang);
+  initSalaryReveal(panel);
+  refreshI18n();
+}
+
+function initInlineSubscribe(root, lang) {
+  const form = root.querySelector('#job-inline-subscribe');
+  if (!form) return;
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const input = form.querySelector('input[type="email"]');
+    const button = form.querySelector('button');
+    const email = input?.value || '';
+    if (!email) return;
+
+    button.disabled = true;
+    button.textContent = lang === 'es' ? 'Enviando...' : 'Sending...';
+    const result = await submitEmail(email, form.dataset.source || 'job-detail-inline');
+    if (result.ok) {
+      button.textContent = lang === 'es' ? '✓ Listo' : '✓ Done';
+      button.style.background = 'var(--teal)';
+      input.value = '';
+    } else {
+      button.disabled = false;
+      button.textContent = lang === 'es' ? 'Intentar otra vez' : 'Try again';
+    }
+  });
+}
+
+initI18n();
+renderJobDetail();
+window.addEventListener('nortec:langchange', renderJobDetail);
+</script>
+</body>
+</html>

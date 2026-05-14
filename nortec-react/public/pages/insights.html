@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Insights — Nortec</title>
+<link rel="stylesheet" href="/css/global.css">
+<style>
+.insights-page {
+  padding-top: var(--nav-h);
+  min-height: 100vh;
+}
+
+.insights-hero {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  padding: 2.75rem 0 2.2rem;
+}
+
+.insights-h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 5vw, 4.8rem);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  line-height: 0.95;
+  color: var(--north-star);
+  margin-bottom: 0.9rem;
+}
+
+.insights-sub {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text2);
+  max-width: 760px;
+  line-height: 1.85;
+}
+
+.insights-main {
+  padding: 2.2rem 0 3rem;
+}
+
+.story-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.featured-story {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  overflow: hidden;
+}
+
+.featured-media {
+  position: relative;
+  min-height: clamp(260px, 40vh, 430px);
+  background:
+    radial-gradient(circle at 20% 25%, rgba(15, 163, 154, 0.45), transparent 40%),
+    radial-gradient(circle at 85% 65%, rgba(255, 75, 40, 0.28), transparent 42%),
+    linear-gradient(135deg, #071112 0%, #0c2121 42%, #24110d 100%);
+  border-bottom: 1px solid var(--border2);
+  overflow: hidden;
+}
+
+.featured-overlay-word {
+  position: absolute;
+  left: 1rem;
+  bottom: 0.5rem;
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 14vw, 8rem);
+  line-height: 0.85;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(242, 233, 213, 0.12);
+  pointer-events: none;
+}
+
+.featured-title-wrap {
+  position: absolute;
+  left: 1.2rem;
+  right: 1.2rem;
+  bottom: 1.1rem;
+}
+
+.featured-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.1rem, 4.2vw, 3.35rem);
+  font-weight: 700;
+  line-height: 0.95;
+  text-transform: uppercase;
+  color: var(--north-star);
+}
+
+.featured-body {
+  padding: 1.2rem;
+  border-left: 6px solid var(--teal);
+}
+
+.meta-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 0.9rem;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+}
+
+.tag-market, .tag-company { background: var(--teal); color: var(--bg); }
+.tag-people, .tag-career { background: #ff8a4b; color: #1b0e08; }
+.tag-skill { background: #d8ab2d; color: #1f1708; }
+.tag-industry { background: var(--orient-red); color: #140b09; }
+
+.read-pill {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--north-star);
+  background: rgba(242, 233, 213, 0.08);
+  border: 1px solid var(--border2);
+  padding: 3px 8px;
+}
+
+.story-excerpt {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text2);
+  line-height: 1.85;
+  margin-bottom: 1rem;
+}
+
+.story-author {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text3);
+  letter-spacing: 0.06em;
+  margin-bottom: 1rem;
+}
+
+.read-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--bg);
+  background: var(--orient-red);
+  border: 1px solid var(--orient-red);
+  padding: 10px 14px;
+  transition: transform 0.15s, opacity 0.15s, border-color 0.15s;
+}
+
+.read-btn:hover {
+  transform: translateY(-1px);
+  opacity: 0.95;
+}
+
+.story-card {
+  position: relative;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  display: grid;
+  grid-template-columns: 1.08fr 1fr;
+  overflow: hidden;
+}
+
+.story-card::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--teal);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.22s ease;
+}
+
+.story-card:hover::after { transform: scaleX(1); }
+
+.story-card.reverse {
+  grid-template-columns: 1fr 1.08fr;
+}
+
+.story-media {
+  position: relative;
+  min-height: 360px;
+  border-right: 1px solid var(--border);
+  overflow: hidden;
+  transition: filter 0.2s ease;
+}
+
+.story-card.reverse .story-media {
+  border-right: none;
+  border-left: 1px solid var(--border);
+  order: 2;
+}
+
+.story-card:hover .story-media {
+  filter: brightness(1.12);
+}
+
+.story-word {
+  position: absolute;
+  left: 1rem;
+  bottom: 0.45rem;
+  font-family: var(--font-display);
+  font-size: clamp(3.1rem, 13vw, 7rem);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 0.83;
+  color: rgba(242, 233, 213, 0.12);
+  pointer-events: none;
+}
+
+.story-content {
+  padding: 1.3rem;
+  border-left: 6px solid var(--teal);
+}
+
+.story-content.border-market,
+.story-content.border-company {
+  border-left-color: var(--teal);
+}
+.story-content.border-people,
+.story-content.border-career {
+  border-left-color: #ff8a4b;
+}
+.story-content.border-skill {
+  border-left-color: #d8ab2d;
+}
+.story-content.border-industry {
+  border-left-color: var(--orient-red);
+}
+
+.story-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  font-weight: 700;
+  line-height: 0.98;
+  text-transform: uppercase;
+  color: var(--north-star);
+  margin-bottom: 1rem;
+}
+
+.media-people {
+  background:
+    radial-gradient(circle at 20% 25%, rgba(255, 148, 84, 0.4), transparent 42%),
+    radial-gradient(circle at 85% 70%, rgba(15, 163, 154, 0.28), transparent 45%),
+    linear-gradient(145deg, #180f0d 0%, #2a120e 45%, #0b1a1d 100%);
+}
+
+.media-skill {
+  background:
+    radial-gradient(circle at 15% 75%, rgba(216, 171, 45, 0.34), transparent 38%),
+    radial-gradient(circle at 90% 20%, rgba(15, 163, 154, 0.25), transparent 42%),
+    linear-gradient(135deg, #12110c 0%, #222012 45%, #0d1514 100%);
+}
+
+.media-company {
+  background:
+    radial-gradient(circle at 30% 30%, rgba(15, 163, 154, 0.38), transparent 44%),
+    radial-gradient(circle at 75% 76%, rgba(68, 114, 212, 0.22), transparent 40%),
+    linear-gradient(155deg, #081115 0%, #0b1f25 52%, #101f2b 100%);
+}
+
+.media-industry {
+  background:
+    radial-gradient(circle at 18% 18%, rgba(255, 75, 40, 0.42), transparent 44%),
+    radial-gradient(circle at 78% 72%, rgba(163, 21, 60, 0.24), transparent 38%),
+    linear-gradient(145deg, #140b0d 0%, #240f16 50%, #0e1016 100%);
+}
+
+.media-career {
+  background:
+    radial-gradient(circle at 25% 25%, rgba(255, 138, 75, 0.34), transparent 42%),
+    radial-gradient(circle at 80% 80%, rgba(15, 163, 154, 0.2), transparent 44%),
+    linear-gradient(160deg, #18100d 0%, #23130f 50%, #0c1717 100%);
+}
+
+.subscribe-nudge {
+  padding: 8px 10px;
+  border: 1px solid var(--border2);
+  background: rgba(15, 163, 154, 0.08);
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+
+.subscribe-copy {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text2);
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+.subscribe-nudge .email-form {
+  margin-left: auto;
+  min-width: 320px;
+  max-width: 420px;
+}
+
+.insights-footer {
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  padding: 2rem 0;
+}
+
+.insights-footer-inner {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.insights-footer-brand {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  letter-spacing: 0.08em;
+  color: var(--north-star);
+}
+
+.insights-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.insights-footer-links a {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text3);
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.insights-footer-links a:hover {
+  color: var(--teal);
+}
+
+@media (max-width: 980px) {
+  .story-card,
+  .story-card.reverse {
+    grid-template-columns: 1fr;
+  }
+  .story-media,
+  .story-card.reverse .story-media {
+    min-height: 280px;
+    order: 0;
+    border: none;
+    border-bottom: 1px solid var(--border);
+  }
+  .subscribe-nudge .email-form {
+    min-width: 240px;
+  }
+}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a class="nav-logo" href="/"><span>NORTE<span class="teal">C</span></span><div class="nav-wordmark" data-en="NORTHBOUND<br>TALENT." data-es="TALENTO<br>RUMBO AL NORTE." data-i18n-html="true">NORTHBOUND<br>TALENT.</div></a>
+  <ul class="nav-links">
+    <li><a href="/jobs" data-en="Jobs" data-es="Empleos">Jobs</a></li>
+    <li><a href="/tracker" data-en="Tracker" data-es="Tracker">Tracker</a></li>
+    <li><a href="/archive" data-en="Archive" data-es="Archivo">Archive</a></li>
+    <li><a href="/insights" class="active" data-en="Insights" data-es="Insights">Insights</a></li>
+    <li><a href="/issue/001">Issue #001</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a class="btn-ghost" href="/employers" data-en="For Employers" data-es="Para Empleadores">For Employers</a>
+    <div class="lang-toggle" aria-label="Language toggle">
+      <button type="button" data-lang-option="en">EN</button>
+      <span class="slash">/</span>
+      <button type="button" data-lang-option="es">ES</button>
+    </div>
+    <a class="btn-primary" href="/#subscribe" data-en="Subscribe" data-es="Suscríbete">Subscribe</a>
+  </div>
+</nav>
+
+<div class="insights-page">
+  <header class="insights-hero">
+    <div class="container">
+      <div class="section-marker" data-en="→ Editorial intelligence" data-es="→ Inteligencia editorial">→ Editorial intelligence</div>
+      <h1 class="insights-h1" data-en="INSIGHTS" data-es="INSIGHTS">INSIGHTS</h1>
+      <p class="insights-sub" data-en="Market intelligence, people stories, and career strategy for LatAm tech talent." data-es="Inteligencia de mercado, historias de personas y estrategia de carrera para talento tech de LatAm.">Market intelligence, people stories, and career strategy for LatAm tech talent.</p>
+    </div>
+  </header>
+
+  <main class="insights-main">
+    <div class="container">
+      <div class="story-stack">
+        <article class="featured-story">
+          <div class="featured-media">
+            <div class="featured-overlay-word" data-en="MARKET" data-es="MERCADO">MARKET</div>
+            <div class="featured-title-wrap">
+              <h2 class="featured-title" data-en="Remote hiring in LatAm is up 38% YoY — here's where the jobs are going" data-es="La contratación remota en LatAm subió 38% interanual — aquí es donde se están moviendo los empleos">Remote hiring in LatAm is up 38% YoY — here's where the jobs are going</h2>
+            </div>
+          </div>
+          <div class="featured-body">
+            <div class="meta-row">
+              <span class="tag tag-market" data-en="Market Report" data-es="Reporte de Mercado">Market Report</span>
+              <span class="read-pill" data-en="4 min read" data-es="4 min de lectura">4 min read</span>
+            </div>
+            <p class="story-excerpt" data-en="AI, data, and DevOps roles are growing fastest. Customer success is holding steady. Here's what the numbers say about where LatAm talent is winning globally." data-es="Los roles de IA, datos y DevOps crecen más rápido. Customer Success se mantiene estable. Esto dicen los datos sobre dónde el talento de LatAm está ganando a nivel global.">AI, data, and DevOps roles are growing fastest. Customer success is holding steady. Here's what the numbers say about where LatAm talent is winning globally.</p>
+            <div class="story-author" data-en="Nortec Editorial · May 2026" data-es="Nortec Editorial · Mayo 2026">Nortec Editorial · May 2026</div>
+            <a class="read-btn" href="#" data-en="Read article →" data-es="Leer artículo →">Read article →</a>
+          </div>
+        </article>
+
+        <div class="subscribe-nudge">
+          <div class="subscribe-copy" data-en="📬 Roles like this, weekly in your inbox —" data-es="📬 Roles como este, cada semana en tu inbox —">📬 Roles like this, weekly in your inbox —</div>
+          <form class="email-form insights-inline-subscribe" data-source="insights-inline-1">
+            <input type="email" placeholder="your@email.com" data-en-placeholder="your@email.com" data-es-placeholder="tu@email.com" required>
+            <button type="submit" data-en="Subscribe free →" data-es="Suscribirme →">Subscribe free →</button>
+          </form>
+        </div>
+
+        <article class="story-card reverse">
+          <div class="story-content border-people">
+            <div class="meta-row">
+              <span class="tag tag-people" data-en="People" data-es="Personas">People</span>
+              <span class="read-pill" data-en="6 min read" data-es="6 min de lectura">6 min read</span>
+            </div>
+            <h2 class="story-title" data-en="From Bogotá agency work to a $90K remote role — Andrés's story" data-es="De una agencia en Bogotá a un rol remoto de $90K — la historia de Andrés">From Bogotá agency work to a $90K remote role — Andrés's story</h2>
+            <p class="story-excerpt" data-en="After three years at a local digital agency, Andrés spent six months applying to remote roles. Here's what finally worked — and what he'd do differently." data-es="Después de tres años en una agencia digital local, Andrés pasó seis meses aplicando a roles remotos. Esto fue lo que por fin funcionó — y lo que haría distinto.">After three years at a local digital agency, Andrés spent six months applying to remote roles. Here's what finally worked — and what he'd do differently.</p>
+            <div class="story-author" data-en="Nortec Editorial · May 2026" data-es="Nortec Editorial · Mayo 2026">Nortec Editorial · May 2026</div>
+            <a class="read-btn" href="#" data-en="Read article →" data-es="Leer artículo →">Read article →</a>
+          </div>
+          <div class="story-media media-people">
+            <div class="story-word" data-en="PEOPLE" data-es="GENTE">PEOPLE</div>
+          </div>
+        </article>
+
+        <div class="subscribe-nudge">
+          <div class="subscribe-copy" data-en="📬 Roles like this, weekly in your inbox —" data-es="📬 Roles como este, cada semana en tu inbox —">📬 Roles like this, weekly in your inbox —</div>
+          <form class="email-form insights-inline-subscribe" data-source="insights-inline-2">
+            <input type="email" placeholder="your@email.com" data-en-placeholder="your@email.com" data-es-placeholder="tu@email.com" required>
+            <button type="submit" data-en="Subscribe free →" data-es="Suscribirme →">Subscribe free →</button>
+          </form>
+        </div>
+
+        <article class="story-card">
+          <div class="story-media media-skill">
+            <div class="story-word" data-en="SKILL" data-es="SKILL">SKILL</div>
+          </div>
+          <div class="story-content border-skill">
+            <div class="meta-row">
+              <span class="tag tag-skill" data-en="Skill Guide" data-es="Guía de Habilidades">Skill Guide</span>
+              <span class="read-pill" data-en="5 min read" data-es="5 min de lectura">5 min read</span>
+            </div>
+            <h2 class="story-title" data-en="The LatAm engineer's guide to negotiating in USD" data-es="Guía para ingenieros de LatAm para negociar en USD">The LatAm engineer's guide to negotiating in USD</h2>
+            <p class="story-excerpt" data-en="Most LatAm engineers undervalue themselves when applying to US companies. Here's a framework for anchoring, countering, and closing at the number you deserve." data-es="La mayoría de los ingenieros de LatAm se subvaloran al aplicar a empresas de EE. UU. Aquí tienes un marco para anclar, contraofertar y cerrar en el número que mereces.">Most LatAm engineers undervalue themselves when applying to US companies. Here's a framework for anchoring, countering, and closing at the number you deserve.</p>
+            <div class="story-author" data-en="Nortec Editorial · May 2026" data-es="Nortec Editorial · Mayo 2026">Nortec Editorial · May 2026</div>
+            <a class="read-btn" href="#" data-en="Read article →" data-es="Leer artículo →">Read article →</a>
+          </div>
+        </article>
+
+        <div class="subscribe-nudge">
+          <div class="subscribe-copy" data-en="📬 Roles like this, weekly in your inbox —" data-es="📬 Roles como este, cada semana en tu inbox —">📬 Roles like this, weekly in your inbox —</div>
+          <form class="email-form insights-inline-subscribe" data-source="insights-inline-3">
+            <input type="email" placeholder="your@email.com" data-en-placeholder="your@email.com" data-es-placeholder="tu@email.com" required>
+            <button type="submit" data-en="Subscribe free →" data-es="Suscribirme →">Subscribe free →</button>
+          </form>
+        </div>
+
+        <article class="story-card reverse">
+          <div class="story-content border-company">
+            <div class="meta-row">
+              <span class="tag tag-company" data-en="Company Spotlight" data-es="Company Spotlight">Company Spotlight</span>
+              <span class="read-pill" data-en="3 min read" data-es="3 min de lectura">3 min read</span>
+            </div>
+            <h2 class="story-title" data-en="Why Clara keeps hiring from LatAm — and what they're really looking for" data-es="Por qué Clara sigue contratando desde LatAm — y qué están buscando realmente">Why Clara keeps hiring from LatAm — and what they're really looking for</h2>
+            <p class="story-excerpt" data-en="Clara is one of the most consistent LatAm-hiring companies we track. We broke down their last 12 months of job posts to find the pattern." data-es="Clara es una de las empresas que contrata desde LatAm con mayor consistencia en nuestro radar. Desglosamos sus últimos 12 meses de vacantes para encontrar el patrón.">Clara is one of the most consistent LatAm-hiring companies we track. We broke down their last 12 months of job posts to find the pattern.</p>
+            <div class="story-author" data-en="Nortec Editorial · May 2026" data-es="Nortec Editorial · Mayo 2026">Nortec Editorial · May 2026</div>
+            <a class="read-btn" href="#" data-en="Read article →" data-es="Leer artículo →">Read article →</a>
+          </div>
+          <div class="story-media media-company">
+            <div class="story-word" data-en="CLARA" data-es="CLARA">CLARA</div>
+          </div>
+        </article>
+
+        <div class="subscribe-nudge">
+          <div class="subscribe-copy" data-en="📬 Roles like this, weekly in your inbox —" data-es="📬 Roles como este, cada semana en tu inbox —">📬 Roles like this, weekly in your inbox —</div>
+          <form class="email-form insights-inline-subscribe" data-source="insights-inline-4">
+            <input type="email" placeholder="your@email.com" data-en-placeholder="your@email.com" data-es-placeholder="tu@email.com" required>
+            <button type="submit" data-en="Subscribe free →" data-es="Suscribirme →">Subscribe free →</button>
+          </form>
+        </div>
+
+        <article class="story-card">
+          <div class="story-media media-industry">
+            <div class="story-word" data-en="INDUSTRY" data-es="INDUSTRIA">INDUSTRY</div>
+          </div>
+          <div class="story-content border-industry">
+            <div class="meta-row">
+              <span class="tag tag-industry" data-en="Industry Take" data-es="Análisis de Industria">Industry Take</span>
+              <span class="read-pill" data-en="5 min read" data-es="5 min de lectura">5 min read</span>
+            </div>
+            <h2 class="story-title" data-en="AI is not taking LatAm tech jobs — it's creating better ones" data-es="La IA no está quitando empleos tech en LatAm — está creando mejores">AI is not taking LatAm tech jobs — it's creating better ones</h2>
+            <p class="story-excerpt" data-en="The roles being created by the AI shift are more accessible to LatAm talent than the ones being displaced. Here's the data behind that claim." data-es="Los roles que está creando el cambio hacia la IA son más accesibles para el talento de LatAm que los que están siendo desplazados. Aquí están los datos detrás de esa afirmación.">The roles being created by the AI shift are more accessible to LatAm talent than the ones being displaced. Here's the data behind that claim.</p>
+            <div class="story-author" data-en="Nortec Editorial · May 2026" data-es="Nortec Editorial · Mayo 2026">Nortec Editorial · May 2026</div>
+            <a class="read-btn" href="#" data-en="Read article →" data-es="Leer artículo →">Read article →</a>
+          </div>
+        </article>
+
+        <div class="subscribe-nudge">
+          <div class="subscribe-copy" data-en="📬 Roles like this, weekly in your inbox —" data-es="📬 Roles como este, cada semana en tu inbox —">📬 Roles like this, weekly in your inbox —</div>
+          <form class="email-form insights-inline-subscribe" data-source="insights-inline-5">
+            <input type="email" placeholder="your@email.com" data-en-placeholder="your@email.com" data-es-placeholder="tu@email.com" required>
+            <button type="submit" data-en="Subscribe free →" data-es="Suscribirme →">Subscribe free →</button>
+          </form>
+        </div>
+
+        <article class="story-card reverse">
+          <div class="story-content border-career">
+            <div class="meta-row">
+              <span class="tag tag-career" data-en="Career Strategy" data-es="Estrategia de Carrera">Career Strategy</span>
+              <span class="read-pill" data-en="3 min read" data-es="3 min de lectura">3 min read</span>
+            </div>
+            <h2 class="story-title" data-en="How to position your timezone as an asset, not an apology" data-es="Cómo posicionar tu zona horaria como una ventaja, no como una disculpa">How to position your timezone as an asset, not an apology</h2>
+            <p class="story-excerpt" data-en="Colombia, Mexico, and Argentina share 4–8 hours of overlap with US Eastern time. Most LatAm candidates apologize for it. The best ones sell it." data-es="Colombia, México y Argentina comparten 4–8 horas de solapamiento con el horario del este de EE. UU. La mayoría de candidatos de LatAm se disculpa por eso. Los mejores lo venden como ventaja.">Colombia, Mexico, and Argentina share 4–8 hours of overlap with US Eastern time. Most LatAm candidates apologize for it. The best ones sell it.</p>
+            <div class="story-author" data-en="Nortec Editorial · May 2026" data-es="Nortec Editorial · Mayo 2026">Nortec Editorial · May 2026</div>
+            <a class="read-btn" href="#" data-en="Read article →" data-es="Leer artículo →">Read article →</a>
+          </div>
+          <div class="story-media media-career">
+            <div class="story-word" data-en="CAREER" data-es="CARRERA">CAREER</div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </main>
+
+  <footer class="insights-footer">
+    <div class="container insights-footer-inner">
+      <div>
+        <div class="insights-footer-brand">NORTE<span class="teal">C</span></div>
+        <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);letter-spacing:0.07em;" data-en="Built in LatAm. Designed for the world." data-es="Hecho en LatAm. Diseñado para el mundo.">Built in LatAm. Designed for the world.</div>
+      </div>
+      <div class="insights-footer-links">
+        <a href="/jobs" data-en="Jobs" data-es="Empleos">Jobs</a>
+        <a href="/tracker" data-en="Tracker" data-es="Tracker">Tracker</a>
+        <a href="/archive" data-en="Archive" data-es="Archivo">Archive</a>
+        <a href="/insights" data-en="Insights" data-es="Insights">Insights</a>
+        <a href="/employers" data-en="For Employers" data-es="Para Empleadores">For Employers</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<script type="module">
+import { initI18n } from '/js/i18n.js';
+import { submitEmail } from '/js/subscribe.js';
+
+initI18n();
+
+document.querySelectorAll('.insights-inline-subscribe').forEach((form) => {
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const input = form.querySelector('input[type="email"]');
+    const button = form.querySelector('button');
+    const lang = localStorage.getItem('nortec-language') === 'es' ? 'es' : 'en';
+    if (!input || !button || !input.value) return;
+
+    button.disabled = true;
+    button.textContent = lang === 'es' ? 'Enviando...' : 'Sending...';
+    const result = await submitEmail(input.value, form.dataset.source || 'insights-inline');
+    if (result.ok) {
+      button.textContent = lang === 'es' ? '✓ Listo' : '✓ Done';
+      button.style.background = 'var(--teal)';
+      input.value = '';
+    } else {
+      button.disabled = false;
+      button.textContent = lang === 'es' ? 'Intentar otra vez' : 'Try again';
+    }
+  });
+});
+</script>
+</body>
+</html>

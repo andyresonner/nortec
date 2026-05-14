@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LatAm Remote AI + Tech Job Tracker — Nortec</title>
+<meta name="description" content="50+ companies hiring remote tech talent from Latin America. Roles, salary, stack, timezone, and Nortec Score.">
+<link rel="stylesheet" href="/css/global.css">
+<style>
+.tracker-page { padding-top: var(--nav-h); }
+.tracker-header {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  padding: 2.5rem 0 2rem;
+}
+.tracker-h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--north-star);
+  line-height: 0.95;
+  margin-bottom: 0.6rem;
+}
+.tracker-h1 em { color: var(--teal); font-style: normal; }
+.tracker-sub {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text2);
+  max-width: 700px;
+}
+.tracker-stats {
+  margin-top: 1.4rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+.tracker-stats .stat-box {
+  border: none;
+  border-left: none;
+}
+.tracker-main { padding: 1.8rem 0 2.8rem; }
+
+/* tab system */
+.int-tabs {
+  display: flex;
+  align-items: flex-end;
+  gap: 1.6rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 1.3rem;
+  padding-bottom: 0.2rem;
+}
+.int-tab-btn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-size: clamp(1.45rem, 2.9vw, 2rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text3);
+  padding: 0.3rem 0 0.55rem;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.int-tab-btn:hover { color: var(--north-star); }
+.int-tab-btn.is-active {
+  color: var(--north-star);
+  border-bottom-color: var(--teal);
+}
+
+.tab-panel {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.tab-panel.is-active { display: block; }
+.tab-panel.is-visible { opacity: 1; }
+
+.panel-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  margin-bottom: 1rem;
+}
+.freshness {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--teal);
+  border: 1px solid var(--border2);
+  background: rgba(15,163,154,0.07);
+  padding: 6px 10px;
+}
+
+.pill-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.pill-btn {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  border: 1px solid var(--border2);
+  background: transparent;
+  color: var(--text3);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.pill-btn:hover,
+.pill-btn.is-active {
+  border-color: var(--teal);
+  color: var(--teal);
+  background: var(--teal-dim);
+}
+
+/* companies tab */
+.company-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+.company-card {
+  background: var(--surface);
+  border-top: 2px solid rgba(15,163,154,0.35);
+  border: 1px solid transparent;
+  padding: 1.1rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.company-card:hover {
+  border-color: var(--teal);
+  transform: scale(1.02);
+  box-shadow: 0 0 24px rgba(15,163,154,0.2);
+}
+.company-name {
+  font-family: var(--font-display);
+  font-size: 1.55rem;
+  text-transform: uppercase;
+  line-height: 0.98;
+  color: var(--north-star);
+  margin-bottom: 0.6rem;
+  cursor: pointer;
+}
+.category-badge {
+  display: inline-flex;
+  border: 1px solid var(--border2);
+  color: var(--teal);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  margin-bottom: 0.8rem;
+}
+.intel-row { margin-bottom: 0.58rem; }
+.intel-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 0.2rem;
+}
+.intel-value {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--north-star);
+}
+.reliability-dots { display: flex; gap: 4px; }
+.rdot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1px solid var(--border2);
+}
+.rdot.fill {
+  background: var(--teal);
+  border-color: var(--teal);
+}
+.country-chip-wrap,
+.stack-chip-wrap {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+.flag-chip,
+.stack-chip {
+  border: 1px solid var(--border2);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--text3);
+  letter-spacing: 0.04em;
+  padding: 2px 6px;
+}
+.stack-chip {
+  border-color: rgba(15,163,154,0.4);
+  color: var(--teal);
+}
+.company-note {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text2);
+  line-height: 1.65;
+  border-left: 2px solid var(--border2);
+  padding-left: 9px;
+  margin: 0.66rem 0 0.8rem;
+}
+.company-link {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--orient-red);
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+.company-link:hover { color: var(--north-star); }
+
+/* jobs tab */
+.jobs-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.9rem;
+  margin-bottom: 0.9rem;
+}
+.jobs-search {
+  width: min(420px, 100%);
+  border: 1px solid var(--border2);
+  background: var(--surface);
+  padding: 10px 11px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--north-star);
+}
+.jobs-search::placeholder { color: var(--text3); }
+.jobs-meta {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: var(--text3);
+  margin-bottom: 0.7rem;
+}
+.jobs-focus-header {
+  display: none;
+  margin-bottom: 1rem;
+  border: 1px solid var(--border2);
+  background: var(--surface);
+  padding: 0.9rem;
+}
+.jobs-focus-header.is-active {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 1rem;
+}
+.back-to-companies {
+  border: 1px solid var(--teal);
+  background: var(--bg2);
+  color: var(--teal);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+.back-to-companies:hover {
+  background: rgba(15,163,154,0.12);
+}
+.jobs-focus-title-wrap {
+  min-width: 0;
+}
+.jobs-focus-kicker {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text3);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.jobs-focus-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+  color: var(--north-star);
+  text-transform: uppercase;
+  line-height: 0.95;
+  margin-top: 2px;
+  border-bottom: 2px solid var(--teal);
+  display: inline-block;
+  padding-bottom: 2px;
+}
+.company-focus-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--teal);
+  color: var(--bg);
+  padding: 6px 10px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+.clear-focus {
+  border: 1px solid rgba(12,22,20,0.35);
+  background: rgba(12,22,20,0.1);
+  color: var(--bg);
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+.jobs-table-wrap {
+  border: 1px solid var(--border);
+  overflow-x: auto;
+  background: var(--surface);
+}
+.jobs-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 940px;
+}
+.jobs-table th {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border2);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text3);
+  text-align: left;
+  padding: 11px 12px;
+}
+.jobs-table td {
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text2);
+  padding: 11px 12px;
+  vertical-align: middle;
+}
+.jobs-row {
+  cursor: pointer;
+}
+.jobs-table tr:hover td { background: rgba(15,163,154,0.05); }
+.apply-cell-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.row-arrow {
+  opacity: 0;
+  transform: translateX(-3px);
+  transition: opacity 0.16s ease, transform 0.16s ease;
+  color: var(--teal);
+  font-size: 12px;
+}
+.jobs-row:hover .row-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+.co-name {
+  color: var(--north-star);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+.role-sub {
+  font-size: 9px;
+  color: var(--text3);
+  letter-spacing: 0.06em;
+}
+.sal-cell {
+  color: var(--teal-bright);
+  font-weight: 500;
+}
+.salary-visible-label {
+  display: inline-block;
+  margin-top: 3px;
+  border: 1px solid rgba(15,163,154,0.42);
+  color: var(--teal);
+  background: rgba(15,163,154,0.08);
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 1px 5px;
+}
+.apply-link {
+  color: var(--orient-red);
+  text-decoration: none;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+}
+.apply-link:hover { color: var(--north-star); }
+.empty-state {
+  text-align: center;
+  color: var(--text3);
+  padding: 1.4rem;
+}
+
+/* trends tab */
+.signals-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+.signal-panel {
+  background: var(--surface);
+  padding: 1rem;
+}
+.signal-title {
+  font-family: var(--font-display);
+  font-size: 1.55rem;
+  text-transform: uppercase;
+  line-height: 1;
+  color: var(--north-star);
+  margin-bottom: 0.8rem;
+}
+.signal-sub {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text3);
+  line-height: 1.55;
+  margin-bottom: 0.8rem;
+}
+.metric-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.metric-row {
+  display: grid;
+  grid-template-columns: 130px 1fr 50px;
+  gap: 8px;
+  align-items: center;
+}
+.metric-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text2);
+}
+.metric-track {
+  width: 100%;
+  height: 8px;
+  background: var(--border);
+  position: relative;
+}
+.metric-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  background: var(--teal);
+}
+.metric-value {
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--teal);
+}
+.growth-fill-green { background: #28c840; }
+.growth-fill-teal { background: var(--teal); }
+.growth-fill-gray { background: var(--atlas-gray); }
+
+.salary-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.salary-row {
+  display: grid;
+  grid-template-columns: 130px 1fr 84px;
+  gap: 8px;
+  align-items: center;
+}
+.salary-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text2);
+}
+.salary-track {
+  background: var(--border);
+  height: 8px;
+  position: relative;
+}
+.salary-range {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: var(--teal);
+}
+.salary-band {
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--teal);
+}
+
+.signals-footnote {
+  margin-top: 0.9rem;
+  border: 1px solid var(--border2);
+  background: rgba(15,163,154,0.05);
+  padding: 0.7rem 0.8rem;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text3);
+  line-height: 1.7;
+}
+
+/* welcome survey modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.86);
+  backdrop-filter: blur(3px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+.modal-overlay.hidden { display: none; }
+.modal {
+  width: min(620px, 96vw);
+  max-height: 88vh;
+  overflow: auto;
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  padding: 1.4rem;
+}
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+.close-modal {
+  border: 1px solid var(--border2);
+  background: transparent;
+  color: var(--text3);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+.close-modal:hover { color: var(--teal); border-color: var(--teal); }
+.modal-h2 {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  line-height: 0.95;
+  text-transform: uppercase;
+  color: var(--north-star);
+  margin: 0.6rem 0;
+}
+.modal-sub {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text2);
+  line-height: 1.7;
+  margin-bottom: 1.2rem;
+}
+.survey-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.9rem;
+}
+.survey-q { margin-bottom: 0.85rem; }
+.survey-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--orient-red);
+  margin-bottom: 5px;
+}
+.survey-select,
+.survey-input {
+  width: 100%;
+  border: 1px solid var(--border2);
+  background: var(--surface);
+  color: var(--north-star);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  padding: 9px 10px;
+}
+.survey-submit {
+  width: 100%;
+  margin-top: 0.8rem;
+  border: none;
+  background: var(--orient-red);
+  color: var(--bg);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 12px;
+  cursor: pointer;
+}
+.survey-submit:hover { background: #ff6344; }
+
+@media (max-width: 900px) {
+  .tracker-stats { grid-template-columns: 1fr; }
+  .company-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .signals-grid { grid-template-columns: 1fr; }
+  .survey-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 760px) {
+  .int-tabs {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.4rem;
+  }
+  .int-tab-btn { text-align: left; }
+  .company-grid { grid-template-columns: 1fr; }
+  .jobs-table { min-width: 820px; }
+  .tz-col { display: none; }
+  .jobs-focus-header.is-active {
+    grid-template-columns: 1fr;
+    align-items: flex-start;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="modal-overlay hidden" id="welcome-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span class="live-dot"></span>
+          <span style="font-family:var(--font-mono);font-size:10px;color:var(--teal);letter-spacing:0.1em;text-transform:uppercase;" data-en="Welcome to Nortec" data-es="Bienvenido a Nortec">Welcome to Nortec</span>
+        </div>
+        <h2 class="modal-h2" data-en="Access your tracker" data-es="Accede a tu tracker">Access your tracker</h2>
+      </div>
+      <button class="close-modal" id="close-modal" type="button" data-en="Close" data-es="Cerrar">Close</button>
+    </div>
+    <p class="modal-sub" data-en="Answer this quick survey so we can tune your weekly roles and salary insights for your profile." data-es="Responde esta encuesta rapida para ajustar tus roles semanales e insights salariales a tu perfil.">Answer this quick survey so we can tune your weekly roles and salary insights for your profile.</p>
+
+    <form id="survey-form">
+      <div class="survey-grid">
+        <div class="survey-q">
+          <label class="survey-label" data-en="Country" data-es="Pais">Country</label>
+          <select class="survey-select" name="country" required>
+            <option value="" data-en="Select..." data-es="Selecciona...">Select...</option>
+            <option data-en="Colombia" data-es="Colombia">Colombia</option>
+            <option data-en="Mexico" data-es="Mexico">Mexico</option>
+            <option data-en="Argentina" data-es="Argentina">Argentina</option>
+            <option data-en="Brazil" data-es="Brasil">Brazil</option>
+            <option data-en="Chile" data-es="Chile">Chile</option>
+            <option data-en="Peru" data-es="Peru">Peru</option>
+            <option data-en="Other" data-es="Otro">Other</option>
+          </select>
+        </div>
+        <div class="survey-q">
+          <label class="survey-label" data-en="Current role" data-es="Rol actual">Current role</label>
+          <select class="survey-select" name="current_role">
+            <option value="" data-en="Select..." data-es="Selecciona...">Select...</option>
+            <option data-en="Software Engineer" data-es="Ingeniero de Software">Software Engineer</option>
+            <option data-en="Data Engineer" data-es="Ingeniero de Datos">Data Engineer</option>
+            <option data-en="AI/ML Engineer" data-es="Ingeniero de IA/ML">AI/ML Engineer</option>
+            <option data-en="Product Manager" data-es="Product Manager">Product Manager</option>
+            <option data-en="Designer" data-es="Disenador">Designer</option>
+            <option data-en="Customer Success" data-es="Customer Success">Customer Success</option>
+            <option data-en="Other" data-es="Otro">Other</option>
+          </select>
+        </div>
+        <div class="survey-q">
+          <label class="survey-label" data-en="Seniority" data-es="Seniority">Seniority</label>
+          <select class="survey-select" name="seniority">
+            <option value="" data-en="Select..." data-es="Selecciona...">Select...</option>
+            <option data-en="Junior" data-es="Junior">Junior</option>
+            <option data-en="Mid" data-es="Mid">Mid</option>
+            <option data-en="Senior" data-es="Senior">Senior</option>
+            <option data-en="Lead/Staff" data-es="Lead/Staff">Lead/Staff</option>
+          </select>
+        </div>
+        <div class="survey-q">
+          <label class="survey-label" data-en="English level" data-es="Nivel de ingles">English level</label>
+          <select class="survey-select" name="english_level">
+            <option value="" data-en="Select..." data-es="Selecciona...">Select...</option>
+            <option data-en="Intermediate" data-es="Intermedio">Intermediate</option>
+            <option data-en="Advanced" data-es="Avanzado">Advanced</option>
+            <option data-en="Native/Bilingual" data-es="Nativo/Bilingue">Native/Bilingual</option>
+          </select>
+        </div>
+      </div>
+      <div class="survey-q">
+        <label class="survey-label" data-en="Primary stack (optional)" data-es="Stack principal (opcional)">Primary stack (optional)</label>
+        <input class="survey-input" type="text" name="stack" placeholder="Python, React, SQL, AWS, LLMs...">
+      </div>
+      <button class="survey-submit" type="submit" data-en="Save and enter tracker ->" data-es="Guardar y entrar al tracker ->">Save and enter tracker -></button>
+    </form>
+  </div>
+</div>
+
+<nav class="nav">
+  <a class="nav-logo" href="/" data-en="NORTEC" data-es="NORTEC">NORTEC<div class="nav-wordmark" data-en="NORTHBOUND TALENT." data-es="TALENTO RUMBO AL NORTE.">NORTHBOUND<br>TALENT.</div></a>
+  <ul class="nav-links">
+    <li><a href="/jobs" data-en="Jobs" data-es="Trabajos">Jobs</a></li>
+    <li><a href="/tracker" class="active" data-en="Tracker" data-es="Tracker">Tracker</a></li>
+    <li><a href="/archive" data-en="Archive" data-es="Archivo">Archive</a></li>
+    <li><a href="/insights" data-en="Insights" data-es="Insights">Insights</a></li>
+    <li><a href="/issue/001" data-en="Issue #001" data-es="Issue #001">Issue #001</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a class="btn-ghost" href="/employers" data-en="For Employers" data-es="Para empleadores">For Employers</a>
+    <a class="btn-primary" href="/#subscribe" data-en="Subscribe" data-es="Suscribete">Subscribe</a>
+  </div>
+</nav>
+
+<div class="tracker-page">
+
+  <header class="tracker-header">
+    <div class="container">
+      <div class="section-marker"><span class="arrow">→</span> <span data-en="Company radar" data-es="Radar de empresas">Company radar</span></div>
+      <h1 class="tracker-h1"><span data-en="LatAm Remote AI +" data-es="LatAm Remote AI +">LatAm Remote AI +</span><br><span data-en="Tech" data-es="Tech">Tech</span> <em data-en="Tracker" data-es="Tracker">Tracker</em></h1>
+      <p class="tracker-sub" data-en="Curated opportunities from remote-friendly companies that actively hire in Latin America." data-es="Oportunidades curadas de empresas remotas que contratan activamente en Latinoamerica.">Curated opportunities from remote-friendly companies that actively hire in Latin America.</p>
+      <div class="tracker-stats">
+        <div class="stat-box">
+          <div class="stat-num">50<span class="accent">+</span></div>
+          <div class="stat-label" data-en="Companies" data-es="Empresas">Companies</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">16</div>
+          <div class="stat-label" data-en="New this week" data-es="Nuevas esta semana">New this week</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">56<span class="accent">%</span></div>
+          <div class="stat-label" data-en="Not on LinkedIn" data-es="No estan en LinkedIn">Not on LinkedIn</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container tracker-main">
+    <div class="int-tabs" id="int-tabs">
+      <button class="int-tab-btn is-active" type="button" data-tab="companies" data-en="Companies" data-es="Empresas">Companies</button>
+      <button class="int-tab-btn" type="button" data-tab="jobs" data-en="Jobs" data-es="Trabajos">Jobs</button>
+      <button class="int-tab-btn" type="button" data-tab="trends" data-en="Trends" data-es="Tendencias">Trends</button>
+    </div>
+
+    <section class="tab-panel is-active is-visible" id="panel-companies">
+      <div class="panel-topbar">
+        <div class="pill-row" id="company-filter-pills">
+          <button class="pill-btn is-active" type="button" data-filter="all" data-en="All" data-es="Todos">All</button>
+          <button class="pill-btn" type="button" data-filter="ai" data-en="AI-focused" data-es="Enfoque AI">AI-focused</button>
+          <button class="pill-btn" type="button" data-filter="engineering" data-en="Engineering" data-es="Ingenieria">Engineering</button>
+          <button class="pill-btn" type="button" data-filter="cs" data-en="Customer Success" data-es="Customer Success">Customer Success</button>
+          <button class="pill-btn" type="button" data-filter="fintech" data-en="Fintech" data-es="Fintech">Fintech</button>
+        </div>
+        <div class="freshness" data-en="Last updated: May 9, 2026" data-es="Ultima actualizacion: 9 mayo 2026">Last updated: May 9, 2026</div>
+      </div>
+      <div class="company-grid" id="company-grid"></div>
+    </section>
+
+    <section class="tab-panel" id="panel-jobs">
+      <div class="panel-topbar">
+        <div class="pill-row" id="jobs-filter-pills">
+          <button class="pill-btn is-active" type="button" data-filter="all" data-en="All" data-es="Todos">All</button>
+          <button class="pill-btn" type="button" data-filter="Engineering" data-en="Engineering" data-es="Ingenieria">Engineering</button>
+          <button class="pill-btn" type="button" data-filter="Data & AI" data-en="Data & AI" data-es="Data & AI">Data & AI</button>
+          <button class="pill-btn" type="button" data-filter="Customer Success" data-en="Customer Success" data-es="Customer Success">Customer Success</button>
+          <button class="pill-btn" type="button" data-filter="Design" data-en="Design" data-es="Diseno">Design</button>
+          <button class="pill-btn" type="button" data-filter="Product" data-en="Product" data-es="Producto">Product</button>
+        </div>
+        <div class="freshness" data-en="Last updated: May 9, 2026" data-es="Ultima actualizacion: 9 mayo 2026">Last updated: May 9, 2026</div>
+      </div>
+
+      <div class="jobs-focus-header" id="jobs-focus-header">
+        <button id="back-to-companies" class="back-to-companies" type="button" data-en="← Back to all companies" data-es="← Volver a todas las empresas">← Back to all companies</button>
+        <div class="jobs-focus-title-wrap">
+          <div class="jobs-focus-kicker" data-en="Viewing roles at:" data-es="Viendo roles en:">Viewing roles at:</div>
+          <div class="jobs-focus-title" id="jobs-focus-title">ROLES AT COMPANY</div>
+        </div>
+        <div class="company-focus-tag" id="company-focus-tag">
+          <span id="company-focus-name"></span>
+          <button id="clear-company-focus" class="clear-focus" type="button" aria-label="clear company filter">×</button>
+        </div>
+      </div>
+
+      <div class="jobs-toolbar">
+        <input id="jobs-search" class="jobs-search" type="search" placeholder="Search by company or role..." data-en="Search by company or role..." data-es="Buscar por empresa o rol...">
+      </div>
+      <div class="jobs-meta">
+        <span id="jobs-count">0</span>
+        <span data-en="roles in view" data-es="roles en vista">roles in view</span>
+      </div>
+
+      <div class="jobs-table-wrap">
+        <table class="jobs-table">
+          <thead>
+            <tr>
+              <th data-en="Company" data-es="Empresa">Company</th>
+              <th data-en="Role / Function" data-es="Rol / Funcion">Role / Function</th>
+              <th data-en="Countries Accepted" data-es="Paises aceptados">Countries Accepted</th>
+              <th data-en="Salary (USD)" data-es="Salario (USD)">Salary (USD)</th>
+              <th data-en="Stack / Tools" data-es="Stack / Herramientas">Stack / Tools</th>
+              <th class="tz-col" data-en="TZ Overlap" data-es="Solape TZ">TZ Overlap</th>
+              <th data-en="Apply" data-es="Aplicar">Apply</th>
+            </tr>
+          </thead>
+          <tbody id="jobs-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="panel-trends">
+      <div class="panel-topbar">
+        <h2 class="jobs-focus-title" data-en="Trends" data-es="Tendencias">Trends</h2>
+        <div class="freshness" data-en="Last updated: May 9, 2026" data-es="Ultima actualizacion: 9 mayo 2026">Last updated: May 9, 2026</div>
+      </div>
+
+      <div class="signals-grid">
+        <article class="signal-panel">
+          <h3 class="signal-title" data-en="Trending Skills This Week" data-es="Skills en tendencia esta semana">Trending Skills This Week</h3>
+          <p class="signal-sub" data-en="Top requested skills across verified remote LatAm-friendly openings." data-es="Skills mas solicitadas en vacantes remotas verificadas para LatAm.">Top requested skills across verified remote LatAm-friendly openings.</p>
+          <div class="metric-list" id="skills-list"></div>
+        </article>
+        <article class="signal-panel">
+          <h3 class="signal-title" data-en="Fastest Growing Roles (YoY)" data-es="Roles con mayor crecimiento (YoY)">Fastest Growing Roles (YoY)</h3>
+          <p class="signal-sub" data-en="Year-over-year expansion by function in remote hiring demand." data-es="Expansion interanual por funcion en demanda de contratacion remota.">Year-over-year expansion by function in remote hiring demand.</p>
+          <div class="metric-list" id="growth-list"></div>
+        </article>
+        <article class="signal-panel">
+          <h3 class="signal-title" data-en="Salary Ranges by Function" data-es="Rangos salariales por funcion">Salary Ranges by Function</h3>
+          <p class="signal-sub" data-en="Observed min-max salary bands from active LatAm-eligible postings." data-es="Bandas min-max observadas en publicaciones activas elegibles para LatAm.">Observed min-max salary bands from active LatAm-eligible postings.</p>
+          <div class="salary-chart" id="salary-ranges"></div>
+        </article>
+      </div>
+      <div class="signals-footnote">
+        <div data-en="Last updated: May 9, 2026" data-es="Ultima actualizacion: 9 mayo 2026">Last updated: May 9, 2026</div>
+        <div data-en="Data sourced from verified LatAm remote job postings. Updated with each issue." data-es="Datos provenientes de publicaciones remotas LatAm verificadas. Actualizado con cada issue.">Data sourced from verified LatAm remote job postings. Updated with each issue.</div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script type="module">
+import { JOBS } from '/js/jobs.js';
+
+function normalizeFunction(fn, aiRelevance) {
+  if (fn === 'QA') return 'Engineering';
+  if (fn === 'Engineering' && aiRelevance) return 'Data & AI';
+  return fn;
+}
+
+function inferCountries(location = '') {
+  const loc = location.toLowerCase();
+  if (loc.includes('latam')) return ['LatAm-wide'];
+  if (loc.includes('americas')) return ['Americas'];
+  if (loc.includes('global')) return ['Global'];
+  return ['LatAm-wide'];
+}
+
+const TRACKER_DATA = JOBS.map((job) => ({
+  id: job.id,
+  company: job.company,
+  role: job.title,
+  fn: normalizeFunction(job.function, job.aiRelevance),
+  countries: inferCountries(job.location),
+  salary: job.salary,
+  stack: job.tags.join(', '),
+  tz: job.tzOverlap || 'Flexible',
+  link: job.link
+}));
+
+const COMPANY_INTEL = [
+  {
+    name: 'Bluelight Consulting',
+    category: 'Software Consultancy',
+    reliability: 5,
+    countries: ['All LatAm'],
+    salary: '$55K-$100K',
+    stack: ['React', 'Python', 'Ruby', 'DevOps', 'AWS'],
+    roles: 5,
+    noteEn: 'Hires exclusively across LatAm. Most consistent pipeline we track.',
+    noteEs: 'Contrata exclusivamente en LatAm. El pipeline mas consistente que rastreamos.',
+    groups: ['engineering']
+  },
+  {
+    name: 'Luxury Presence',
+    category: 'AI / Real Estate SaaS',
+    reliability: 5,
+    countries: ['LatAm-wide'],
+    salary: '$120K-$160K',
+    stack: ['React', 'Python', 'LLMs', 'AWS'],
+    roles: 3,
+    noteEn: 'Top 1% AI-native engineering org. Unlimited Anthropic token budget for engineers.',
+    noteEs: 'Organizacion de ingenieria AI-native top 1%. Presupuesto ilimitado de tokens Anthropic para ingenieros.',
+    groups: ['ai', 'engineering']
+  },
+  {
+    name: 'Clara',
+    category: 'B2B Fintech',
+    reliability: 5,
+    countries: ['LatAm-wide', 'Sao Paulo'],
+    salary: '$70K-$120K',
+    stack: ['Anthropic API', 'Docker', 'AWS', 'Fintech'],
+    roles: 2,
+    noteEn: 'LatAm-born, Goldman-backed. Builds for the region, hires from it.',
+    noteEs: 'Nacida en LatAm, respaldada por Goldman. Construye para la region y contrata desde ella.',
+    groups: ['fintech', 'ai', 'engineering']
+  },
+  {
+    name: 'Praxent',
+    category: 'Digital Product Agency',
+    reliability: 4,
+    countries: ['LatAm-wide'],
+    salary: '$75K-$95K',
+    stack: ['React', 'Node.js', 'Agile'],
+    roles: 1,
+    noteEn: 'US agency with consistent LatAm engineering pipeline. Good mentorship culture.',
+    noteEs: 'Agencia de EE.UU. con pipeline de ingenieria LatAm consistente. Buena cultura de mentoria.',
+    groups: ['engineering']
+  },
+  {
+    name: 'Whippy',
+    category: 'AI Communications SaaS',
+    reliability: 3,
+    countries: ['LatAm-wide'],
+    salary: '$32K-$38K',
+    stack: ['SaaS', 'CRM', 'English req.'],
+    roles: 1,
+    noteEn: 'Salary listed and honest. AI-native product - good CS career entry point.',
+    noteEs: 'Salario listado y honesto. Producto AI-native: buen punto de entrada para Customer Success.',
+    groups: ['ai', 'cs']
+  },
+  {
+    name: 'Rapptr Labs',
+    category: 'Mobile Agency',
+    reliability: 3,
+    countries: ['LatAm-wide'],
+    salary: '$35K-$50K',
+    stack: ['iOS', 'Android', 'Manual QA'],
+    roles: 1,
+    noteEn: 'Solid for QA engineers. ET core hours overlap required.',
+    noteEs: 'Solida para ingenieros QA. Requiere solape con horas centrales ET.',
+    groups: ['engineering']
+  },
+  {
+    name: 'CoPilot AI',
+    category: 'AI Sales SaaS',
+    reliability: 3,
+    countries: ['LatAm-wide'],
+    salary: '$35K',
+    stack: ['CS', 'AI tools', 'Sales'],
+    roles: 1,
+    noteEn: 'AI prospecting tool. Good entry into AI SaaS world.',
+    noteEs: 'Herramienta de prospeccion con IA. Buena entrada al mundo AI SaaS.',
+    groups: ['ai', 'cs']
+  }
+];
+
+const SKILLS_DATA = [
+  { skill: 'Python', pct: 94 },
+  { skill: 'LLMs/AI APIs', pct: 88 },
+  { skill: 'React', pct: 82 },
+  { skill: 'AWS', pct: 78 },
+  { skill: 'TypeScript', pct: 71 },
+  { skill: 'SQL', pct: 68 },
+  { skill: 'Docker', pct: 65 },
+  { skill: 'Node.js', pct: 61 },
+  { skill: 'PostgreSQL', pct: 55 },
+  { skill: 'Figma', pct: 48 }
+];
+
+const GROWTH_DATA = [
+  { role: 'AI/ML Engineer', pct: 283 },
+  { role: 'DevOps/MLOps', pct: 94 },
+  { role: 'Data Engineer', pct: 67 },
+  { role: 'Product Designer', pct: 45 },
+  { role: 'Backend Engineer', pct: 38 },
+  { role: 'Customer Success', pct: 31 },
+  { role: 'Frontend Engineer', pct: 28 }
+];
+
+const SALARY_RANGE_DATA = [
+  { role: 'AI Engineer', min: 80, max: 150 },
+  { role: 'Staff Engineer', min: 120, max: 160 },
+  { role: 'Senior Backend', min: 85, max: 115 },
+  { role: 'Data Engineer', min: 65, max: 95 },
+  { role: 'Frontend Engineer', min: 60, max: 90 },
+  { role: 'Product Manager', min: 70, max: 110 },
+  { role: 'Product Designer', min: 55, max: 85 },
+  { role: 'Customer Success', min: 30, max: 65 },
+  { role: 'QA Engineer', min: 35, max: 55 }
+];
+
+const tabButtons = [...document.querySelectorAll('.int-tab-btn')];
+const tabPanels = {
+  companies: document.getElementById('panel-companies'),
+  jobs: document.getElementById('panel-jobs'),
+  trends: document.getElementById('panel-trends')
+};
+
+const companyGridEl = document.getElementById('company-grid');
+const companyPillsEl = document.getElementById('company-filter-pills');
+
+const jobsPillsEl = document.getElementById('jobs-filter-pills');
+const jobsSearchEl = document.getElementById('jobs-search');
+const jobsBodyEl = document.getElementById('jobs-body');
+const jobsCountEl = document.getElementById('jobs-count');
+const jobsFocusHeader = document.getElementById('jobs-focus-header');
+const jobsFocusTitle = document.getElementById('jobs-focus-title');
+const companyFocusName = document.getElementById('company-focus-name');
+const clearCompanyFocusBtn = document.getElementById('clear-company-focus');
+const backToCompaniesBtn = document.getElementById('back-to-companies');
+
+const skillsListEl = document.getElementById('skills-list');
+const growthListEl = document.getElementById('growth-list');
+const salaryRangesEl = document.getElementById('salary-ranges');
+
+const state = {
+  activeTab: 'companies',
+  companyFilter: 'all',
+  jobsFilter: 'all',
+  jobsSearch: '',
+  jobsCompanyFocus: null
+};
+
+function escapeAttr(value) {
+  return String(value).replaceAll('&', '&amp;').replaceAll('"', '&quot;');
+}
+
+function i18nAttrs(en, es) {
+  return `data-en="${escapeAttr(en)}" data-es="${escapeAttr(es)}"`;
+}
+
+function refreshTranslations() {
+  if (typeof window.refreshI18n === 'function') {
+    window.refreshI18n();
+    return;
+  }
+  const langRaw = (document.documentElement.getAttribute('lang') || 'en').toLowerCase();
+  const lang = langRaw.startsWith('es') ? 'es' : 'en';
+  document.querySelectorAll('[data-en][data-es]').forEach((el) => {
+    if (el.children.length > 0) return;
+    el.textContent = lang === 'es' ? el.dataset.es : el.dataset.en;
+  });
+}
+
+function countryBadgeParts(country) {
+  if (country === 'All LatAm') return ['🌎', 'All LatAm', 'Toda LatAm'];
+  if (country === 'LatAm-wide') return ['🌎', 'LatAm-wide', 'LatAm completa'];
+  if (country === 'Sao Paulo') return ['🇧🇷', 'Sao Paulo', 'Sao Paulo'];
+  if (country === 'Global') return ['🌍', 'Global', 'Global'];
+  if (country === 'Americas') return ['🌎', 'Americas', 'Americas'];
+  return ['🌐', country, country];
+}
+
+function reliabilityMarkup(score) {
+  return Array.from({ length: 5 }, (_, idx) => `<span class="rdot${idx < score ? ' fill' : ''}"></span>`).join('');
+}
+
+function filteredCompanies() {
+  if (state.companyFilter === 'all') return COMPANY_INTEL;
+  return COMPANY_INTEL.filter((company) => company.groups.includes(state.companyFilter));
+}
+
+function renderCompaniesTab() {
+  const companies = filteredCompanies();
+  companyGridEl.innerHTML = companies.map((company) => `
+    <article class="company-card" data-company="${escapeAttr(company.name)}">
+      <h3 class="company-name" data-company="${escapeAttr(company.name)}" ${i18nAttrs(company.name, company.name)}>${company.name}</h3>
+      <div class="category-badge" ${i18nAttrs(company.category, company.category)}>${company.category}</div>
+
+      <div class="intel-row">
+        <div class="intel-label" data-en="LatAm Reliability" data-es="Confiabilidad LatAm">LatAm Reliability</div>
+        <div class="reliability-dots">${reliabilityMarkup(company.reliability)}</div>
+      </div>
+
+      <div class="intel-row">
+        <div class="intel-label" data-en="Countries accepted" data-es="Paises aceptados">Countries accepted</div>
+        <div class="country-chip-wrap">
+          ${company.countries.map((country) => {
+            const [flag, enText, esText] = countryBadgeParts(country);
+            return `<span class="flag-chip" ${i18nAttrs(`${flag} ${enText}`, `${flag} ${esText}`)}>${flag} ${enText}</span>`;
+          }).join('')}
+        </div>
+      </div>
+
+      <div class="intel-row">
+        <div class="intel-label" data-en="Typical salary range" data-es="Rango salarial tipico">Typical salary range</div>
+        <div class="intel-value" ${i18nAttrs(company.salary, company.salary)}>${company.salary}</div>
+      </div>
+
+      <div class="intel-row">
+        <div class="intel-label" data-en="Stack they hire for" data-es="Stack que contratan">Stack they hire for</div>
+        <div class="stack-chip-wrap">
+          ${company.stack.map((tag) => `<span class="stack-chip" ${i18nAttrs(tag, tag)}>${tag}</span>`).join('')}
+        </div>
+      </div>
+
+      <div class="intel-row">
+        <div class="intel-label" data-en="Recent roles posted" data-es="Roles publicados recientemente">Recent roles posted</div>
+        <div class="intel-value" ${i18nAttrs(`${company.roles} roles active`, `${company.roles} roles activos`)}>${company.roles} roles active</div>
+      </div>
+
+      <p class="company-note" ${i18nAttrs(company.noteEn, company.noteEs)}>${company.noteEn}</p>
+      <a href="#" class="company-link" data-company="${escapeAttr(company.name)}" data-en="View open roles ->" data-es="Ver roles abiertos ->">View open roles -></a>
+    </article>
+  `).join('');
+  refreshTranslations();
+}
+
+function currentJobsRows() {
+  return TRACKER_DATA.filter((job) => {
+    const passFn = state.jobsFilter === 'all' ? true : job.fn === state.jobsFilter;
+    const passCompany = state.jobsCompanyFocus ? job.company === state.jobsCompanyFocus : true;
+    const term = state.jobsSearch.trim().toLowerCase();
+    const passSearch = !term ? true : job.company.toLowerCase().includes(term) || job.role.toLowerCase().includes(term);
+    return passFn && passCompany && passSearch;
+  });
+}
+
+function renderJobsTab() {
+  const rows = currentJobsRows();
+  jobsCountEl.textContent = rows.length;
+
+  if (state.jobsCompanyFocus) {
+    jobsFocusHeader.classList.add('is-active');
+    jobsFocusTitle.dataset.en = `ROLES AT ${state.jobsCompanyFocus.toUpperCase()}`;
+    jobsFocusTitle.dataset.es = `ROLES EN ${state.jobsCompanyFocus.toUpperCase()}`;
+    jobsFocusTitle.textContent = jobsFocusTitle.dataset.en;
+    companyFocusName.textContent = state.jobsCompanyFocus;
+  } else {
+    jobsFocusHeader.classList.remove('is-active');
+  }
+
+  if (rows.length === 0) {
+    jobsBodyEl.innerHTML = `<tr><td colspan="7" class="empty-state" data-en="No matches for this filter right now." data-es="No hay coincidencias para este filtro.">No matches for this filter right now.</td></tr>`;
+    refreshTranslations();
+    return;
+  }
+
+  jobsBodyEl.innerHTML = rows.map((job) => `
+    <tr class="jobs-row" data-job-id="${escapeAttr(job.id)}">
+      <td class="co-name" ${i18nAttrs(job.company, job.company)}>${job.company}</td>
+      <td>
+        <span ${i18nAttrs(job.role, job.role)}>${job.role}</span><br>
+        <span class="role-sub" ${i18nAttrs(job.fn, job.fn)}>${job.fn}</span>
+      </td>
+      <td>
+        <div class="country-chip-wrap">
+          ${job.countries.map((country) => {
+            const [flag, enText, esText] = countryBadgeParts(country);
+            return `<span class="flag-chip" ${i18nAttrs(`${flag} ${enText}`, `${flag} ${esText}`)}>${flag} ${enText}</span>`;
+          }).join('')}
+        </div>
+      </td>
+      <td class="sal-cell" ${i18nAttrs(job.salary, job.salary)}>${job.salary}<br><span class="salary-visible-label" data-en="Visible in Tracker" data-es="Visible en Tracker">Visible in Tracker</span></td>
+      <td style="font-size:10px;color:var(--text3);" ${i18nAttrs(job.stack, job.stack)}>${job.stack}</td>
+      <td class="tz-col" style="font-size:10px;color:var(--text3);" ${i18nAttrs(job.tz, job.tz)}>${job.tz}</td>
+      <td>
+        <div class="apply-cell-wrap">
+          <a class="apply-link" href="${escapeAttr(job.link)}" target="_blank" rel="noopener noreferrer" data-en="Apply ->" data-es="Aplicar ->">Apply -></a>
+          <span class="row-arrow">→</span>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+  refreshTranslations();
+}
+
+function growthFillClass(value) {
+  if (value > 100) return 'growth-fill-green';
+  if (value >= 30) return 'growth-fill-teal';
+  return 'growth-fill-gray';
+}
+
+function renderTrendsTab() {
+  const maxSkill = Math.max(...SKILLS_DATA.map((row) => row.pct));
+  skillsListEl.innerHTML = SKILLS_DATA.map((row) => `
+    <div class="metric-row">
+      <div class="metric-label" ${i18nAttrs(row.skill, row.skill)}>${row.skill}</div>
+      <div class="metric-track"><div class="metric-fill" style="width:${(row.pct / maxSkill) * 100}%;"></div></div>
+      <div class="metric-value">${row.pct}%</div>
+    </div>
+  `).join('');
+
+  const maxGrowth = Math.max(...GROWTH_DATA.map((row) => row.pct));
+  growthListEl.innerHTML = GROWTH_DATA.map((row) => `
+    <div class="metric-row">
+      <div class="metric-label" ${i18nAttrs(row.role, row.role)}>${row.role}</div>
+      <div class="metric-track"><div class="metric-fill ${growthFillClass(row.pct)}" style="width:${(row.pct / maxGrowth) * 100}%;"></div></div>
+      <div class="metric-value">+${row.pct}%</div>
+    </div>
+  `).join('');
+
+  const minBound = Math.min(...SALARY_RANGE_DATA.map((row) => row.min));
+  const maxBound = Math.max(...SALARY_RANGE_DATA.map((row) => row.max));
+  const total = maxBound - minBound;
+  salaryRangesEl.innerHTML = SALARY_RANGE_DATA.map((row) => {
+    const left = ((row.min - minBound) / total) * 100;
+    const width = ((row.max - row.min) / total) * 100;
+    return `
+      <div class="salary-row">
+        <div class="salary-label" ${i18nAttrs(row.role, row.role)}>${row.role}</div>
+        <div class="salary-track"><div class="salary-range" style="left:${left}%;width:${width}%;"></div></div>
+        <div class="salary-band">$${row.min}K-$${row.max}K</div>
+      </div>
+    `;
+  }).join('');
+  refreshTranslations();
+}
+
+let tabTransitionTimer;
+function setActiveTab(tab, updateUrl = true, animate = true) {
+  if (!tabPanels[tab]) return;
+  if (state.activeTab === tab && tabPanels[tab].classList.contains('is-active')) {
+    if (updateUrl) {
+      const sameUrl = new URL(window.location.href);
+      sameUrl.searchParams.set('tab', tab);
+      history.replaceState(null, '', `${sameUrl.pathname}${sameUrl.search}`);
+    }
+    return;
+  }
+
+  clearTimeout(tabTransitionTimer);
+  const previousTab = state.activeTab;
+  const previousPanel = tabPanels[previousTab];
+  const nextPanel = tabPanels[tab];
+
+  state.activeTab = tab;
+  tabButtons.forEach((button) => button.classList.toggle('is-active', button.dataset.tab === tab));
+
+  const activateNext = () => {
+    Object.entries(tabPanels).forEach(([key, panel]) => {
+      if (key !== tab) panel.classList.remove('is-active', 'is-visible');
+    });
+    nextPanel.classList.add('is-active');
+    requestAnimationFrame(() => nextPanel.classList.add('is-visible'));
+  };
+
+  if (animate && previousPanel && previousPanel !== nextPanel) {
+    previousPanel.classList.remove('is-visible');
+    tabTransitionTimer = setTimeout(activateNext, 300);
+  } else {
+    activateNext();
+  }
+
+  if (updateUrl) {
+    const url = new URL(window.location.href);
+    url.searchParams.set('tab', tab);
+    history.replaceState(null, '', `${url.pathname}${url.search}`);
+  }
+  refreshTranslations();
+}
+
+document.getElementById('int-tabs').addEventListener('click', (event) => {
+  const button = event.target.closest('.int-tab-btn');
+  if (!button) return;
+  setActiveTab(button.dataset.tab || 'companies');
+});
+
+companyPillsEl.addEventListener('click', (event) => {
+  const button = event.target.closest('.pill-btn');
+  if (!button) return;
+  state.companyFilter = button.dataset.filter || 'all';
+  companyPillsEl.querySelectorAll('.pill-btn').forEach((el) => el.classList.remove('is-active'));
+  button.classList.add('is-active');
+  renderCompaniesTab();
+});
+
+companyGridEl.addEventListener('click', (event) => {
+  const card = event.target.closest('.company-card');
+  const link = event.target.closest('.company-link');
+  const title = event.target.closest('.company-name');
+  const source = card || link || title;
+  if (!source) return;
+  event.preventDefault();
+  const companyName = source.dataset.company || card?.dataset.company;
+  state.jobsCompanyFocus = companyName || null;
+  state.jobsFilter = 'all';
+  state.jobsSearch = '';
+  jobsSearchEl.value = '';
+  jobsPillsEl.querySelectorAll('.pill-btn').forEach((el) => el.classList.toggle('is-active', el.dataset.filter === 'all'));
+  renderJobsTab();
+  setActiveTab('jobs', true, true);
+});
+
+jobsPillsEl.addEventListener('click', (event) => {
+  const button = event.target.closest('.pill-btn');
+  if (!button) return;
+  state.jobsFilter = button.dataset.filter || 'all';
+  jobsPillsEl.querySelectorAll('.pill-btn').forEach((el) => el.classList.remove('is-active'));
+  button.classList.add('is-active');
+  renderJobsTab();
+});
+
+jobsSearchEl.addEventListener('input', (event) => {
+  state.jobsSearch = event.target.value || '';
+  renderJobsTab();
+});
+
+clearCompanyFocusBtn.addEventListener('click', () => {
+  state.jobsCompanyFocus = null;
+  renderJobsTab();
+  setActiveTab('companies', true, true);
+});
+
+backToCompaniesBtn.addEventListener('click', () => {
+  state.jobsCompanyFocus = null;
+  renderJobsTab();
+  setActiveTab('companies', true, true);
+});
+
+jobsBodyEl.addEventListener('click', (event) => {
+  if (event.target.closest('.apply-link')) return;
+  const row = event.target.closest('.jobs-row');
+  if (!row) return;
+  const jobId = row.dataset.jobId;
+  if (!jobId) return;
+  window.location.href = `/job?id=${encodeURIComponent(jobId)}`;
+});
+
+// welcome modal should still show only with ?welcome=1
+const modal = document.getElementById('welcome-modal');
+const closeModalBtn = document.getElementById('close-modal');
+const params = new URLSearchParams(window.location.search);
+if (params.get('welcome') === '1') {
+  modal.classList.remove('hidden');
+}
+
+function closeModal() {
+  modal.classList.add('hidden');
+}
+
+closeModalBtn.addEventListener('click', closeModal);
+modal.addEventListener('click', (event) => {
+  if (event.target === modal) closeModal();
+});
+
+document.getElementById('survey-form').addEventListener('submit', (event) => {
+  event.preventDefault();
+  const payload = Object.fromEntries(new FormData(event.target));
+  localStorage.setItem('nortec-survey', JSON.stringify(payload));
+  closeModal();
+});
+
+renderCompaniesTab();
+renderJobsTab();
+renderTrendsTab();
+
+const incomingTab = (params.get('tab') || '').toLowerCase();
+if (incomingTab === 'jobs' || incomingTab === 'trends' || incomingTab === 'companies') {
+  setActiveTab(incomingTab, false, false);
+} else {
+  setActiveTab('companies', false, false);
+}
+
+refreshTranslations();
+</script>
+</body>
+</html>

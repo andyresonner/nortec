@@ -1,0 +1,11 @@
+{
+  "name": "nortec-react-shell",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Build shell for Nortec Vite + React deployment",
+  "scripts": {
+    "dev": "npm --prefix nortec-react run dev",
+    "build": "npm --prefix nortec-react install && npm --prefix nortec-react run build && rm -rf dist && cp -r nortec-react/dist ./dist",
+    "preview": "npm --prefix nortec-react run preview"
+  }
+}
