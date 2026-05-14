@@ -49,28 +49,28 @@
   margin-top: 1.5rem;
 }
 .job-subscribe-nudge {
-  margin: 1rem 0 1.2rem;
-  padding: 0.9rem;
+  margin-top: 1rem;
+  padding: 8px 10px;
   border: 1px solid var(--border2);
   background: rgba(15,163,154,0.08);
-}
-.job-subscribe-title {
-  font-family: var(--font-display);
-  font-size: 1.2rem;
-  text-transform: uppercase;
-  color: var(--north-star);
-  letter-spacing: 0.03em;
-  margin-bottom: 0.35rem;
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
 }
 .job-subscribe-copy {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 11px;
   color: var(--text2);
-  margin-bottom: 0.6rem;
-  line-height: 1.7;
+  line-height: 1.5;
+  white-space: nowrap;
 }
 .job-subscribe-nudge .email-form {
-  max-width: 460px;
+  margin-left: auto;
+  min-width: 320px;
+  max-width: 420px;
 }
 .job-empty {
   font-family: var(--font-mono);
@@ -171,14 +171,6 @@ function renderJobDetail() {
       <strong style="color:var(--orient-red);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;">${lang === 'es' ? 'Cómo aplicar:' : 'Apply angle:'}</strong><br>
       ${applyAngleText}
     </div>
-    <div class="job-subscribe-nudge">
-      <div class="job-subscribe-title">${lang === 'es' ? 'Recibe el brief semanal' : 'Get the weekly brief'}</div>
-      <div class="job-subscribe-copy">${lang === 'es' ? 'Nuevos roles, señales salariales y tácticas para aplicar — directo a tu inbox.' : 'Fresh roles, salary signals, and practical apply tactics — straight to your inbox.'}</div>
-      <form class="email-form" id="job-inline-subscribe" data-source="job-detail-inline">
-        <input type="email" placeholder="${lang === 'es' ? 'tu@email.com' : 'your@email.com'}" required>
-        <button type="submit">${lang === 'es' ? 'Suscribirme gratis →' : 'Subscribe free →'}</button>
-      </form>
-    </div>
     <div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;border-top:1px solid var(--border);padding-top:1rem;">
       <div>
         ${createSalaryRevealMarkup(job, lang)}
@@ -191,6 +183,13 @@ function renderJobDetail() {
     <div class="job-actions">
       <a class="btn-primary" href="${job.link}" target="_blank" rel="noopener noreferrer">${lang === 'es' ? `Aplicar en ${job.source} →` : `Apply at ${job.source} →`}</a>
       <a class="btn-ghost" href="/jobs">${lang === 'es' ? 'Volver a empleos' : 'Back to jobs'}</a>
+    </div>
+    <div class="job-subscribe-nudge">
+      <div class="job-subscribe-copy">${lang === 'es' ? '📬 Roles como este, cada semana en tu inbox —' : '📬 Roles like this, weekly in your inbox —'}</div>
+      <form class="email-form" id="job-inline-subscribe" data-source="job-detail-inline">
+        <input type="email" placeholder="${lang === 'es' ? 'tu@email.com' : 'your@email.com'}" required>
+        <button type="submit">${lang === 'es' ? 'Suscribirme →' : 'Subscribe free →'}</button>
+      </form>
     </div>
   `;
   initInlineSubscribe(panel, lang);

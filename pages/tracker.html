@@ -818,7 +818,6 @@
               <th data-en="Countries Accepted" data-es="Paises aceptados">Countries Accepted</th>
               <th data-en="Salary (USD)" data-es="Salario (USD)">Salary (USD)</th>
               <th data-en="Stack / Tools" data-es="Stack / Herramientas">Stack / Tools</th>
-              <th data-en="Type" data-es="Tipo">Type</th>
               <th class="tz-col" data-en="TZ Overlap" data-es="Solape TZ">TZ Overlap</th>
               <th data-en="Apply" data-es="Aplicar">Apply</th>
             </tr>
@@ -885,7 +884,6 @@ const TRACKER_DATA = JOBS.map((job) => ({
   countries: inferCountries(job.location),
   salary: job.salary,
   stack: job.tags.join(', '),
-  type: job.type,
   tz: job.tzOverlap || 'Flexible',
   link: job.link
 }));
@@ -1154,7 +1152,7 @@ function renderJobsTab() {
   }
 
   if (rows.length === 0) {
-    jobsBodyEl.innerHTML = `<tr><td colspan="8" class="empty-state" data-en="No matches for this filter right now." data-es="No hay coincidencias para este filtro.">No matches for this filter right now.</td></tr>`;
+    jobsBodyEl.innerHTML = `<tr><td colspan="7" class="empty-state" data-en="No matches for this filter right now." data-es="No hay coincidencias para este filtro.">No matches for this filter right now.</td></tr>`;
     refreshTranslations();
     return;
   }
@@ -1176,7 +1174,6 @@ function renderJobsTab() {
       </td>
       <td class="sal-cell" ${i18nAttrs(job.salary, job.salary)}>${job.salary}<br><span class="salary-visible-label" data-en="Visible in Tracker" data-es="Visible en Tracker">Visible in Tracker</span></td>
       <td style="font-size:10px;color:var(--text3);" ${i18nAttrs(job.stack, job.stack)}>${job.stack}</td>
-      <td style="font-size:10px;" ${i18nAttrs(job.type, job.type)}>${job.type}</td>
       <td class="tz-col" style="font-size:10px;color:var(--text3);" ${i18nAttrs(job.tz, job.tz)}>${job.tz}</td>
       <td>
         <div class="apply-cell-wrap">
