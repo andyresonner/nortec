@@ -11,11 +11,17 @@ import Blog from './pages/Blog';
 import Employers from './pages/Employers';
 import Issue001 from './pages/Issue001';
 import JobDetail from './pages/JobDetail';
+import RemoteHiring from './pages/blog/RemoteHiring';
+import AndresStory from './pages/blog/AndresStory';
+import SalaryNegotiation from './pages/blog/SalaryNegotiation';
+import ClaraSpotlight from './pages/blog/ClaraSpotlight';
+import AILatamJobs from './pages/blog/AILatamJobs';
+import TimezoneStrategy from './pages/blog/TimezoneStrategy';
 import { initI18n, refreshI18n } from './utils/i18n';
 
 function RouterBody() {
   const location = useLocation();
-  const showFooter = location.pathname === '/blog';
+  const showFooter = location.pathname === '/blog' || location.pathname.startsWith('/blog/');
 
   useEffect(() => {
     initI18n();
@@ -36,6 +42,12 @@ function RouterBody() {
         <Route path="/archive" element={<Archive />} />
         <Route path="/insights" element={<Insights />} />
         <Route path="/blog" element={<Blog />} />
+        <Route path="/blog/remote-hiring-latam" element={<RemoteHiring />} />
+        <Route path="/blog/andres-story" element={<AndresStory />} />
+        <Route path="/blog/salary-negotiation" element={<SalaryNegotiation />} />
+        <Route path="/blog/clara-spotlight" element={<ClaraSpotlight />} />
+        <Route path="/blog/ai-latam-jobs" element={<AILatamJobs />} />
+        <Route path="/blog/timezone-strategy" element={<TimezoneStrategy />} />
         <Route path="/employers" element={<Employers />} />
         <Route path="/issue/001" element={<Issue001 />} />
         <Route path="/job" element={<JobDetail />} />

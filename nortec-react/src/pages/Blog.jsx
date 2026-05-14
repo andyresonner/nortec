@@ -16,12 +16,9 @@ function useLanguage() {
   return lang;
 }
 
-function ArticleMeta({ tagClass, tagEn, tagEs, timeEn, timeEs }) {
+function ArticleMeta({ timeEn, timeEs }) {
   return (
     <div>
-      <span className={`blog-tag ${tagClass}`} data-en={tagEn} data-es={tagEs}>
-        {tagEn}
-      </span>
       <span className="read-pill" data-en={timeEn} data-es={timeEs}>
         {timeEn}
       </span>
@@ -165,9 +162,6 @@ export default function Blog() {
           </div>
           <div className="hero-copy">
             <ArticleMeta
-              tagClass="tag-market"
-              tagEn="Market Report"
-              tagEs="Reporte de Mercado"
               timeEn="4 min read"
               timeEs="4 min de lectura"
             />
@@ -189,7 +183,7 @@ export default function Blog() {
             <div className="blog-author" data-en="Nortec Editorial · May 2026" data-es="Nortec Editorial · Mayo 2026">
               Nortec Editorial · May 2026
             </div>
-            <a className="blog-read-btn" href="#" data-en="Read report →" data-es="Leer reporte →">
+            <a className="blog-read-btn" href="/blog/remote-hiring-latam" data-en="Read report →" data-es="Leer reporte →">
               Read report →
             </a>
           </div>
@@ -198,9 +192,6 @@ export default function Blog() {
         <section className="story-row reverse" ref={peopleRef}>
           <div className="story-copy border-orange">
             <ArticleMeta
-              tagClass="tag-people"
-              tagEn="People"
-              tagEs="Personas"
               timeEn="6 min read"
               timeEs="6 min de lectura"
             />
@@ -222,7 +213,7 @@ export default function Blog() {
             <div className="blog-author" data-en="Nortec Editorial · May 2026" data-es="Nortec Editorial · Mayo 2026">
               Nortec Editorial · May 2026
             </div>
-            <a className="blog-read-btn" href="#" data-en="Read article →" data-es="Leer artículo →">
+            <a className="blog-read-btn" href="/blog/andres-story" data-en="Read article →" data-es="Leer artículo →">
               Read article →
             </a>
           </div>
@@ -266,9 +257,6 @@ export default function Blog() {
           </div>
           <div className="story-copy border-amber">
             <ArticleMeta
-              tagClass="tag-skill"
-              tagEn="Skill Guide"
-              tagEs="Guía de Habilidades"
               timeEn="5 min read"
               timeEs="5 min de lectura"
             />
@@ -290,7 +278,7 @@ export default function Blog() {
             <div className="blog-author" data-en="Nortec Editorial · May 2026" data-es="Nortec Editorial · Mayo 2026">
               Nortec Editorial · May 2026
             </div>
-            <a className="blog-read-btn" href="#" data-en="Read article →" data-es="Leer artículo →">
+            <a className="blog-read-btn" href="/blog/salary-negotiation" data-en="Read article →" data-es="Leer artículo →">
               Read article →
             </a>
           </div>
@@ -322,9 +310,6 @@ export default function Blog() {
         <section className="story-row reverse" ref={radarRef}>
           <div className="story-copy border-teal">
             <ArticleMeta
-              tagClass="tag-company"
-              tagEn="Company Spotlight"
-              tagEs="Company Spotlight"
               timeEn="3 min read"
               timeEs="3 min de lectura"
             />
@@ -346,7 +331,7 @@ export default function Blog() {
             <div className="blog-author" data-en="Nortec Editorial · May 2026" data-es="Nortec Editorial · Mayo 2026">
               Nortec Editorial · May 2026
             </div>
-            <a className="blog-read-btn" href="#" data-en="Read article →" data-es="Leer artículo →">
+            <a className="blog-read-btn" href="/blog/clara-spotlight" data-en="Read article →" data-es="Leer artículo →">
               Read article →
             </a>
           </div>
@@ -431,9 +416,6 @@ export default function Blog() {
           </div>
           <div className="story-copy border-red">
             <ArticleMeta
-              tagClass="tag-industry"
-              tagEn="Industry Take"
-              tagEs="Análisis de Industria"
               timeEn="5 min read"
               timeEs="5 min de lectura"
             />
@@ -455,7 +437,7 @@ export default function Blog() {
             <div className="blog-author" data-en="Nortec Editorial · May 2026" data-es="Nortec Editorial · Mayo 2026">
               Nortec Editorial · May 2026
             </div>
-            <a className="blog-read-btn" href="#" data-en="Read article →" data-es="Leer artículo →">
+            <a className="blog-read-btn" href="/blog/ai-latam-jobs" data-en="Read article →" data-es="Leer artículo →">
               Read article →
             </a>
           </div>
@@ -464,9 +446,6 @@ export default function Blog() {
         <section className="story-row reverse" ref={clockRef}>
           <div className="story-copy border-orange">
             <ArticleMeta
-              tagClass="tag-career"
-              tagEn="Career Strategy"
-              tagEs="Estrategia de Carrera"
               timeEn="3 min read"
               timeEs="3 min de lectura"
             />
@@ -488,7 +467,7 @@ export default function Blog() {
             <div className="blog-author" data-en="Nortec Editorial · May 2026" data-es="Nortec Editorial · Mayo 2026">
               Nortec Editorial · May 2026
             </div>
-            <a className="blog-read-btn" href="#" data-en="Read article →" data-es="Leer artículo →">
+            <a className="blog-read-btn" href="/blog/timezone-strategy" data-en="Read article →" data-es="Leer artículo →">
               Read article →
             </a>
           </div>
@@ -539,8 +518,8 @@ export default function Blog() {
         </section>
 
         <section className="blog-cta">
-          <h3 data-en="These insights, plus 15 curated remote roles, every week. Free." data-es="Estos insights, más 15 roles remotos curados, cada semana. Gratis.">
-            These insights, plus 15 curated remote roles, every week. Free.
+          <h3 data-en="The weekly brief for LatAm tech talent — remote jobs, salary signals, and career moves. Free." data-es="El resumen semanal para talento tech en LatAm — empleos remotos, señales de salario y movimientos de carrera. Gratis.">
+            The weekly brief for LatAm tech talent — remote jobs, salary signals, and career moves. Free.
           </h3>
           <form
             className="email-form"

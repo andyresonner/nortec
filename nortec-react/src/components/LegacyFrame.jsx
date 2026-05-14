@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { getCurrentLanguage } from '../utils/i18n';
 
-export default function LegacyFrame({ src }) {
+export default function LegacyFrame({ src, minHeight = 320 }) {
   const iframeRef = useRef(null);
 
   useEffect(() => {
@@ -37,7 +37,7 @@ export default function LegacyFrame({ src }) {
             doc.body?.scrollHeight || 0,
             doc.documentElement?.scrollHeight || 0
           );
-          frame.style.height = `${Math.max(height, 900)}px`;
+          frame.style.height = `${Math.max(height, minHeight)}px`;
         };
 
         setHeight();
@@ -81,7 +81,7 @@ export default function LegacyFrame({ src }) {
       window.removeEventListener('nortec:langchange', syncLanguage);
       if (resizeObserver) resizeObserver.disconnect();
     };
-  }, [src]);
+  }, [src, minHeight]);
 
   return (
     <iframe
@@ -91,7 +91,7 @@ export default function LegacyFrame({ src }) {
       style={{
         width: '100%',
         border: 'none',
-        minHeight: '900px',
+        minHeight: `${minHeight}px`,
         display: 'block',
         background: 'var(--bg)',
       }}

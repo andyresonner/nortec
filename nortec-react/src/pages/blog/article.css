@@ -1,0 +1,231 @@
+.article-page {
+  padding-top: var(--nav-h);
+  background: var(--bg);
+  color: var(--north-star);
+}
+
+.article-shell {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0 1.5rem 3rem;
+}
+
+.article-hero {
+  min-height: 56vh;
+  border: 1px solid var(--border);
+  border-top: none;
+  background: linear-gradient(140deg, #0a1213 0%, #132324 54%, #23140e 100%);
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  overflow: hidden;
+}
+
+.article-hero-viz {
+  border-right: 1px solid var(--border2);
+  min-height: 360px;
+  background: #091214;
+}
+
+.article-hero-copy {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.article-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 4rem);
+  text-transform: uppercase;
+  line-height: 0.95;
+  margin: 0.7rem 0 1rem;
+}
+
+.article-meta {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.article-pill {
+  border: 1px solid var(--border2);
+  background: rgba(242, 233, 213, 0.08);
+  padding: 4px 8px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.article-lede {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text2);
+  line-height: 1.9;
+}
+
+.article-content {
+  margin-top: 2rem;
+  display: grid;
+  gap: 1.6rem;
+}
+
+.article-section h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 2.7vw, 2.2rem);
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 0.7rem;
+}
+
+.article-section p {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text2);
+  line-height: 1.95;
+  margin-bottom: 0.85rem;
+}
+
+.pull-quote {
+  margin: 0.4rem 0;
+  border-left: 6px solid var(--teal);
+  padding: 1rem 1.2rem;
+  background: var(--surface);
+}
+
+.pull-quote p {
+  font-family: var(--font-serif);
+  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+  line-height: 1.55;
+  font-style: italic;
+  color: var(--north-star);
+}
+
+.data-callout {
+  border: 1px solid var(--border2);
+  background: var(--surface);
+  padding: 1.2rem;
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.data-value {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  line-height: 0.9;
+  color: var(--teal);
+}
+
+.data-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text2);
+  letter-spacing: 0.06em;
+}
+
+.share-row {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 1rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.share-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text3);
+}
+
+.share-btn {
+  border: 1px solid var(--border2);
+  color: var(--text);
+  background: transparent;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.more-from {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  padding: 1.1rem;
+}
+
+.more-from h3 {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  text-transform: uppercase;
+  margin-bottom: 0.8rem;
+}
+
+.more-list {
+  display: grid;
+  gap: 8px;
+}
+
+.more-list a {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text2);
+  text-decoration: none;
+  letter-spacing: 0.04em;
+}
+
+.more-list a:hover {
+  color: var(--teal);
+}
+
+.article-nudge {
+  padding: 8px 10px;
+  border: 1px solid var(--border2);
+  background: rgba(15, 163, 154, 0.08);
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+
+.article-nudge-copy {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text2);
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+.article-nudge .email-form {
+  margin-left: auto;
+  min-width: 320px;
+  max-width: 420px;
+}
+
+@media (max-width: 980px) {
+  .article-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .article-hero-viz {
+    border-right: none;
+    border-bottom: 1px solid var(--border2);
+    min-height: 280px;
+  }
+
+  .article-nudge .email-form {
+    min-width: 240px;
+  }
+}
