@@ -12,7 +12,7 @@ export function renderNav(activePage = '') {
     <li><a href="/tracker" class="${activePage==='tracker'?'active':''}">Tracker</a></li>
     <li><a href="/archive" class="${activePage==='archive'?'active':''}">Archive</a></li>
     <li><a href="/insights" class="${activePage==='insights'?'active':''}">Insights</a></li>
-    <li><a href="/employers" class="${activePage==='employers'?'active':''}">For Employers</a></li>
+    <li><a href="/issue/001">Issue #001</a></li>
   </ul>
   <div class="nav-actions">
     <a class="btn-ghost" href="/employers">For Employers</a>
