@@ -48,6 +48,30 @@
   flex-wrap: wrap;
   margin-top: 1.5rem;
 }
+.job-subscribe-nudge {
+  margin: 1rem 0 1.2rem;
+  padding: 0.9rem;
+  border: 1px solid var(--border2);
+  background: rgba(15,163,154,0.08);
+}
+.job-subscribe-title {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  color: var(--north-star);
+  letter-spacing: 0.03em;
+  margin-bottom: 0.35rem;
+}
+.job-subscribe-copy {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text2);
+  margin-bottom: 0.6rem;
+  line-height: 1.7;
+}
+.job-subscribe-nudge .email-form {
+  max-width: 460px;
+}
 .job-empty {
   font-family: var(--font-mono);
   font-size: 11px;
@@ -89,6 +113,7 @@ import { initI18n, getCurrentLanguage, refreshI18n } from '/js/i18n.js';
 import { JOBS } from '/js/jobs.js';
 import { scorePips, scoreLabel } from '/js/components.js';
 import { createSalaryRevealMarkup, initSalaryReveal } from '/js/salary-reveal.js';
+import { submitEmail } from '/js/subscribe.js';
 
 const panel = document.getElementById('job-panel');
 const params = new URLSearchParams(window.location.search);
@@ -146,6 +171,14 @@ function renderJobDetail() {
       <strong style="color:var(--orient-red);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;">${lang === 'es' ? 'Cómo aplicar:' : 'Apply angle:'}</strong><br>
       ${applyAngleText}
     </div>
+    <div class="job-subscribe-nudge">
+      <div class="job-subscribe-title">${lang === 'es' ? 'Recibe el brief semanal' : 'Get the weekly brief'}</div>
+      <div class="job-subscribe-copy">${lang === 'es' ? 'Nuevos roles, señales salariales y tácticas para aplicar — directo a tu inbox.' : 'Fresh roles, salary signals, and practical apply tactics — straight to your inbox.'}</div>
+      <form class="email-form" id="job-inline-subscribe" data-source="job-detail-inline">
+        <input type="email" placeholder="${lang === 'es' ? 'tu@email.com' : 'your@email.com'}" required>
+        <button type="submit">${lang === 'es' ? 'Suscribirme gratis →' : 'Subscribe free →'}</button>
+      </form>
+    </div>
     <div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;border-top:1px solid var(--border);padding-top:1rem;">
       <div>
         ${createSalaryRevealMarkup(job, lang)}
@@ -160,8 +193,33 @@ function renderJobDetail() {
       <a class="btn-ghost" href="/jobs">${lang === 'es' ? 'Volver a empleos' : 'Back to jobs'}</a>
     </div>
   `;
+  initInlineSubscribe(panel, lang);
   initSalaryReveal(panel);
   refreshI18n();
+}
+
+function initInlineSubscribe(root, lang) {
+  const form = root.querySelector('#job-inline-subscribe');
+  if (!form) return;
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const input = form.querySelector('input[type="email"]');
+    const button = form.querySelector('button');
+    const email = input?.value || '';
+    if (!email) return;
+
+    button.disabled = true;
+    button.textContent = lang === 'es' ? 'Enviando...' : 'Sending...';
+    const result = await submitEmail(email, form.dataset.source || 'job-detail-inline');
+    if (result.ok) {
+      button.textContent = lang === 'es' ? '✓ Listo' : '✓ Done';
+      button.style.background = 'var(--teal)';
+      input.value = '';
+    } else {
+      button.disabled = false;
+      button.textContent = lang === 'es' ? 'Intentar otra vez' : 'Try again';
+    }
+  });
 }
 
 initI18n();

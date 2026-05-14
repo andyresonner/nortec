@@ -391,6 +391,18 @@
   color: var(--teal-bright);
   font-weight: 500;
 }
+.salary-visible-label {
+  display: inline-block;
+  margin-top: 3px;
+  border: 1px solid rgba(15,163,154,0.42);
+  color: var(--teal);
+  background: rgba(15,163,154,0.08);
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 1px 5px;
+}
 .apply-link {
   color: var(--orient-red);
   text-decoration: none;
@@ -849,20 +861,34 @@
 </div>
 
 <script type="module">
+import { JOBS } from '/js/jobs.js';
 
-const TRACKER_DATA = [
-  { id: 'j006', company: 'Bluelight Consulting', role: 'Senior React Engineer', fn: 'Engineering', countries: ['All LatAm'], salary: '$55K-$100K', stack: 'React, TypeScript, AWS', type: 'Full-time', tz: 'US overlap', link: 'https://bluelight.co/careers' },
-  { id: 'j002', company: 'Luxury Presence', role: 'Staff Engineer - Data Platform & AI', fn: 'Data & AI', countries: ['LatAm-wide'], salary: '$120K-$160K', stack: 'Python, AWS, LLMs, PostgreSQL', type: 'Full-time', tz: 'Flexible', link: 'https://jobs.lever.co/luxurypresence/88e79420-0e50-413b-85c1-58ded03087cd' },
-  { id: 'j003', company: 'Clara', role: 'Forward-Deployed AI Engineer', fn: 'Data & AI', countries: ['LatAm-wide', 'Sao Paulo'], salary: '$70K-$120K', stack: 'Anthropic API, Docker, AWS', type: 'Full-time', tz: 'Americas', link: 'https://job-boards.greenhouse.io/clara/jobs/5095342007' },
-  { id: 'j001', company: 'Praxent', role: 'Senior Software Engineer (React/Node)', fn: 'Engineering', countries: ['LatAm-wide'], salary: '$75K-$95K', stack: 'React, Node.js, Agile', type: 'Full-time', tz: 'US CT/ET', link: 'https://job-boards.greenhouse.io/praxent/jobs/7589205003' },
-  { id: 'j005', company: 'Whippy', role: 'Customer Success Manager', fn: 'Customer Success', countries: ['LatAm-wide'], salary: '$32K-$38K', stack: 'SaaS, CRM, English req.', type: 'Full-time', tz: 'US overlap', link: 'https://www.whippy.ai/careers' },
-  { id: 'j004', company: 'Rapptr Labs', role: 'QA Analyst - iOS & Android', fn: 'Engineering', countries: ['LatAm-wide'], salary: '$35K-$50K', stack: 'iOS, Android, Manual QA', type: 'Full-time', tz: 'ET core hours', link: 'https://www.rapptrlabs.com/careers' },
-  { id: 'j007', company: 'CoPilot AI', role: 'Customer Success Specialist', fn: 'Customer Success', countries: ['LatAm-wide'], salary: '$35K', stack: 'CS, AI tools, Sales', type: 'Full-time', tz: 'US overlap', link: 'https://www.copilot.ai/careers' },
-  { id: 'j008', company: 'Supabase', role: 'Product Designer', fn: 'Design', countries: ['Global'], salary: '$65K-$95K', stack: 'Figma, UX, Design Systems', type: 'Full-time', tz: 'Flexible', link: 'https://supabase.com/careers' },
-  { id: 'j009', company: 'Deel', role: 'Senior Product Manager', fn: 'Product', countries: ['Global'], salary: '$95K-$140K', stack: 'B2B SaaS, Analytics', type: 'Full-time', tz: 'Americas/Europe overlap', link: 'https://www.deel.com/careers' },
-  { id: 'j010', company: 'Linear', role: 'Frontend Engineer', fn: 'Engineering', countries: ['Global'], salary: '$70K-$110K', stack: 'React, TypeScript, Web', type: 'Full-time', tz: 'Flexible', link: 'https://linear.app/careers' },
-  { id: 'j011', company: 'Zapier', role: 'Data Analyst', fn: 'Data & AI', countries: ['Americas'], salary: '$85K-$120K', stack: 'SQL, Python, dbt, BI', type: 'Full-time', tz: 'Flexible', link: 'https://zapier.com/jobs' }
-];
+function normalizeFunction(fn, aiRelevance) {
+  if (fn === 'QA') return 'Engineering';
+  if (fn === 'Engineering' && aiRelevance) return 'Data & AI';
+  return fn;
+}
+
+function inferCountries(location = '') {
+  const loc = location.toLowerCase();
+  if (loc.includes('latam')) return ['LatAm-wide'];
+  if (loc.includes('americas')) return ['Americas'];
+  if (loc.includes('global')) return ['Global'];
+  return ['LatAm-wide'];
+}
+
+const TRACKER_DATA = JOBS.map((job) => ({
+  id: job.id,
+  company: job.company,
+  role: job.title,
+  fn: normalizeFunction(job.function, job.aiRelevance),
+  countries: inferCountries(job.location),
+  salary: job.salary,
+  stack: job.tags.join(', '),
+  type: job.type,
+  tz: job.tzOverlap || 'Flexible',
+  link: job.link
+}));
 
 const COMPANY_INTEL = [
   {
@@ -1148,7 +1174,7 @@ function renderJobsTab() {
           }).join('')}
         </div>
       </td>
-      <td class="sal-cell" ${i18nAttrs(job.salary, job.salary)}>${job.salary}</td>
+      <td class="sal-cell" ${i18nAttrs(job.salary, job.salary)}>${job.salary}<br><span class="salary-visible-label" data-en="Visible in Tracker" data-es="Visible en Tracker">Visible in Tracker</span></td>
       <td style="font-size:10px;color:var(--text3);" ${i18nAttrs(job.stack, job.stack)}>${job.stack}</td>
       <td style="font-size:10px;" ${i18nAttrs(job.type, job.type)}>${job.type}</td>
       <td class="tz-col" style="font-size:10px;color:var(--text3);" ${i18nAttrs(job.tz, job.tz)}>${job.tz}</td>
