@@ -1,3 +1,4 @@
+import { useMemo, useState } from 'react';
 import ArticleTemplate from './ArticleTemplate';
 
 const sections = [
@@ -89,6 +90,57 @@ const sections = [
   },
 ];
 
+function SalaryCalculator({ lang, visible }) {
+  const [current, setCurrent] = useState(65000);
+  const [seniority, setSeniority] = useState('senior');
+  const [role, setRole] = useState('engineering');
+
+  const recommendation = useMemo(() => {
+    const seniorityBoost = seniority === 'junior' ? 1.1 : seniority === 'mid' ? 1.22 : seniority === 'lead' ? 1.45 : 1.32;
+    const roleBoost = role === 'engineering' ? 1.08 : role === 'data' ? 1.12 : role === 'product' ? 1.04 : 1.0;
+    const base = Math.round(current * seniorityBoost * roleBoost);
+    return {
+      low: Math.round(base * 0.94),
+      high: Math.round(base * 1.08),
+    };
+  }, [current, role, seniority]);
+
+  return (
+    <div className="salary-calculator-visual" style={{ opacity: visible ? 1 : 0.2, transform: visible ? 'translateY(0)' : 'translateY(10px)', transition: 'all 0.35s ease' }}>
+      <div className="salary-calculator-grid">
+        <label>
+          <span>{lang === 'es' ? 'Salario actual (USD)' : 'Current salary (USD)'}</span>
+          <input type="number" min="10000" step="1000" value={current} onChange={(event) => setCurrent(Number(event.target.value || 0))} />
+        </label>
+        <label>
+          <span>{lang === 'es' ? 'Senioridad' : 'Seniority'}</span>
+          <select value={seniority} onChange={(event) => setSeniority(event.target.value)}>
+            <option value="junior">{lang === 'es' ? 'Junior' : 'Junior'}</option>
+            <option value="mid">{lang === 'es' ? 'Mid' : 'Mid'}</option>
+            <option value="senior">{lang === 'es' ? 'Senior' : 'Senior'}</option>
+            <option value="lead">{lang === 'es' ? 'Lead/Staff' : 'Lead/Staff'}</option>
+          </select>
+        </label>
+        <label>
+          <span>{lang === 'es' ? 'Función' : 'Role focus'}</span>
+          <select value={role} onChange={(event) => setRole(event.target.value)}>
+            <option value="engineering">{lang === 'es' ? 'Ingeniería' : 'Engineering'}</option>
+            <option value="data">{lang === 'es' ? 'Datos / IA' : 'Data / AI'}</option>
+            <option value="product">{lang === 'es' ? 'Producto' : 'Product'}</option>
+            <option value="success">{lang === 'es' ? 'Customer Success' : 'Customer Success'}</option>
+          </select>
+        </label>
+      </div>
+      <div className="salary-calculator-result">
+        <div>{lang === 'es' ? 'Rango recomendado para pedir:' : 'Recommended ask range:'}</div>
+        <strong>
+          ${recommendation.low.toLocaleString()} - ${recommendation.high.toLocaleString()}
+        </strong>
+      </div>
+    </div>
+  );
+}
+
 export default function SalaryNegotiation() {
   return (
     <ArticleTemplate
@@ -155,6 +207,45 @@ export default function SalaryNegotiation() {
         </svg>
       )}
       sections={sections}
+      takeaways={{
+        items: [
+          {
+            en: 'How to anchor salary conversations around scope instead of title.',
+            es: 'Cómo anclar conversaciones salariales alrededor del alcance y no solo del título.',
+          },
+          {
+            en: 'Which scripts keep negotiation firm without sounding aggressive.',
+            es: 'Qué guiones mantienen una negociación firme sin sonar agresiva.',
+          },
+          {
+            en: 'How to convert low first offers into better final packages.',
+            es: 'Cómo convertir ofertas iniciales bajas en paquetes finales más sólidos.',
+          },
+        ],
+      }}
+      floatingStats={[
+        {
+          sectionIndex: 0,
+          paragraphIndex: 0,
+          value: '$30K',
+          label: 'Typical spread between low and high scope interpretations.',
+          labelEs: 'Brecha típica entre interpretaciones de alcance bajo y alto.',
+        },
+        {
+          sectionIndex: 2,
+          paragraphIndex: 1,
+          value: '3x',
+          label: 'Higher acceptance rate when anchors are role-scoped.',
+          labelEs: 'Mayor tasa de aceptación cuando el ancla se basa en alcance de rol.',
+        },
+        {
+          sectionIndex: 4,
+          paragraphIndex: 0,
+          value: '5 min',
+          label: 'Time needed to pre-script your counter path before offer calls.',
+          labelEs: 'Tiempo necesario para preparar tu contraoferta antes de la llamada final.',
+        },
+      ]}
       inlineVisualInsertAfter={1}
       inlineVisual={{
         title: 'Negotiation gap: before and after',
@@ -222,6 +313,17 @@ export default function SalaryNegotiation() {
             </text>
           </svg>
         ),
+      }}
+      secondaryVisualInsertAfter={3}
+      secondaryVisual={{
+        title: 'Salary ask calculator',
+        titleEs: 'Calculadora de salario objetivo',
+        description:
+          'Enter your baseline and compare a realistic negotiation ask range using role and seniority multipliers.',
+        descriptionEs:
+          'Ingresa tu base y compara un rango realista de negociación usando multiplicadores por rol y senioridad.',
+        layout: 'two-column',
+        render: ({ visible, lang }) => <SalaryCalculator visible={visible} lang={lang} />,
       }}
       pullQuote="Negotiation is not about being aggressive. It is about making your value legible in the language the business already uses."
       pullQuoteEs="Negotiation is not about being aggressive. It is about making your value legible in the language the business already uses."

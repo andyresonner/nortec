@@ -138,6 +138,38 @@ export default function AILatamJobs() {
         </svg>
       )}
       sections={sections}
+      takeaways={{
+        items: [
+          {
+            en: 'Why AI is recomposing role scope instead of simply removing jobs.',
+            es: 'Por qué la IA está recomponiendo el alcance de roles en lugar de solo eliminar empleos.',
+          },
+          {
+            en: 'Which adjacent skills increase compensation in AI-enabled teams.',
+            es: 'Qué habilidades adyacentes aumentan la compensación en equipos habilitados por IA.',
+          },
+          {
+            en: 'How to build an AI-useful portfolio in a practical 90-day cycle.',
+            es: 'Cómo construir un portafolio útil para IA en un ciclo práctico de 90 días.',
+          },
+        ],
+      }}
+      floatingStats={[
+        {
+          sectionIndex: 0,
+          paragraphIndex: 2,
+          value: '+283%',
+          label: 'YoY acceleration in AI/ML demand across tracked segments.',
+          labelEs: 'Aceleración interanual en demanda AI/ML en segmentos rastreados.',
+        },
+        {
+          sectionIndex: 3,
+          paragraphIndex: 0,
+          value: '24 mo',
+          label: 'Window where hybrid AI+core-function profiles are compounding fastest.',
+          labelEs: 'Ventana en la que perfiles híbridos IA+función base están creciendo más rápido.',
+        },
+      ]}
       inlineVisualInsertAfter={1}
       inlineVisual={{
         title: 'AI growth vs compensation scatter',
@@ -175,6 +207,38 @@ export default function AILatamJobs() {
               {lang === 'es' ? 'Banda salarial (USD)' : 'Salary band (USD)'}
             </text>
           </svg>
+        ),
+      }}
+      secondaryVisualInsertAfter={3}
+      secondaryVisual={{
+        title: 'Role safety heatmap',
+        titleEs: 'Mapa de seguridad de roles',
+        description:
+          'A simplified lens for prioritizing roles where automation complements human operators versus roles under replacement pressure.',
+        descriptionEs:
+          'Una vista simplificada para priorizar roles donde la automatización complementa operadores humanos frente a roles bajo presión de reemplazo.',
+        layout: 'two-column',
+        render: ({ visible, lang }) => (
+          <div className="safe-risk-visual">
+            <div className="safe-risk-col safe" style={{ opacity: visible ? 1 : 0.25, transition: 'opacity 0.4s ease' }}>
+              <h4>{lang === 'es' ? 'Más seguros' : 'Safer tracks'}</h4>
+              {['AI Ops', 'Data Engineering', 'Technical CS', 'Workflow Design'].map((item, idx) => (
+                <div key={item} className="safe-risk-item" style={{ transitionDelay: `${idx * 80}ms` }}>
+                  <span className="icon">{'◼'}</span>
+                  <span>{item}</span>
+                </div>
+              ))}
+            </div>
+            <div className="safe-risk-col risk" style={{ opacity: visible ? 1 : 0.25, transition: 'opacity 0.4s ease 120ms' }}>
+              <h4>{lang === 'es' ? 'En riesgo' : 'At risk'}</h4>
+              {['Routine QA only', 'Pure manual tagging', 'Scripted support only', 'Template content churn'].map((item, idx) => (
+                <div key={item} className="safe-risk-item" style={{ transitionDelay: `${idx * 80}ms` }}>
+                  <span className="icon">{'△'}</span>
+                  <span>{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
         ),
       }}
       pullQuote="The winners in this cycle are not the people who talk most about AI. They are the people who make AI useful in production workflows."

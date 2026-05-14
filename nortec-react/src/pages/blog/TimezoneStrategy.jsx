@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import ArticleTemplate from './ArticleTemplate';
 
 const sections = [
@@ -97,6 +98,50 @@ const sections = [
   },
 ];
 
+function TimezoneClockVisual({ lang, visible }) {
+  const [times, setTimes] = useState({ bogota: '--:--:--', newYork: '--:--:--' });
+
+  useEffect(() => {
+    const formatter = (timeZone) =>
+      new Intl.DateTimeFormat('en-US', {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false,
+        timeZone,
+      }).format(new Date());
+
+    const update = () => {
+      setTimes({
+        bogota: formatter('America/Bogota'),
+        newYork: formatter('America/New_York'),
+      });
+    };
+
+    update();
+    const id = setInterval(update, 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  return (
+    <div className="timezone-clocks" style={{ opacity: visible ? 1 : 0.2, transition: 'opacity 0.4s ease' }}>
+      <div className="timezone-clock-card">
+        <div className="article-share-label">Bogotá</div>
+        <strong>{times.bogota}</strong>
+      </div>
+      <div className="timezone-clock-card">
+        <div className="article-share-label">New York</div>
+        <strong>{times.newYork}</strong>
+      </div>
+      <div className="timezone-clock-note">
+        {lang === 'es'
+          ? 'Actualización en vivo para planificar ventanas de colaboración.'
+          : 'Live update for planning collaboration overlap windows.'}
+      </div>
+    </div>
+  );
+}
+
 export default function TimezoneStrategy() {
   return (
     <ArticleTemplate
@@ -145,6 +190,38 @@ export default function TimezoneStrategy() {
         </svg>
       )}
       sections={sections}
+      takeaways={{
+        items: [
+          {
+            en: 'How to frame timezone overlap as a business throughput advantage.',
+            es: 'Cómo presentar el solapamiento horario como ventaja de throughput para negocio.',
+          },
+          {
+            en: 'Which interview language converts availability into strategic value.',
+            es: 'Qué lenguaje de entrevista convierte disponibilidad en valor estratégico.',
+          },
+          {
+            en: 'How to build repeatable collaboration signals that compound over time.',
+            es: 'Cómo construir señales repetibles de colaboración que se acumulen con el tiempo.',
+          },
+        ],
+      }}
+      floatingStats={[
+        {
+          sectionIndex: 0,
+          paragraphIndex: 0,
+          value: '4-8h',
+          label: 'Typical overlap window with ET across major LatAm hubs.',
+          labelEs: 'Ventana típica de solapamiento con ET en hubs principales de LatAm.',
+        },
+        {
+          sectionIndex: 3,
+          paragraphIndex: 1,
+          value: '1 day',
+          label: 'Potential delay removed when overlap windows are designed well.',
+          labelEs: 'Demora potencial eliminada cuando se diseñan bien las ventanas de solapamiento.',
+        },
+      ]}
       inlineVisualInsertAfter={1}
       inlineVisual={{
         title: 'Overlap band map',
@@ -200,6 +277,17 @@ export default function TimezoneStrategy() {
             />
           </svg>
         ),
+      }}
+      secondaryVisualInsertAfter={3}
+      secondaryVisual={{
+        title: 'Live overlap clock',
+        titleEs: 'Reloj en vivo de solapamiento',
+        description:
+          'Use this as a practical reminder: overlap is measurable and can be communicated as operating leverage.',
+        descriptionEs:
+          'Úsalo como recordatorio práctico: el solapamiento es medible y puede comunicarse como ventaja operativa.',
+        layout: 'two-column',
+        render: ({ visible, lang }) => <TimezoneClockVisual visible={visible} lang={lang} />,
       }}
       pullQuote="Timezone overlap is not a convenience feature. In remote teams, it is a throughput multiplier."
       pullQuoteEs="Timezone overlap is not a convenience feature. In remote teams, it is a throughput multiplier."

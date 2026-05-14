@@ -120,6 +120,38 @@ export default function ClaraSpotlight() {
         </svg>
       )}
       sections={sections}
+      takeaways={{
+        items: [
+          {
+            en: 'What makes Clara a high-signal employer in volatile hiring cycles.',
+            es: 'Qué hace de Clara un empleador de alta señal en ciclos volátiles.',
+          },
+          {
+            en: 'How role descriptions reveal operating expectations and pay trajectory.',
+            es: 'Cómo las descripciones de rol revelan expectativas operativas y trayectoria salarial.',
+          },
+          {
+            en: 'How to mirror these signals in your own portfolio and interview narrative.',
+            es: 'Cómo reflejar estas señales en tu portafolio y narrativa de entrevista.',
+          },
+        ],
+      }}
+      floatingStats={[
+        {
+          sectionIndex: 1,
+          paragraphIndex: 0,
+          value: '12 mo',
+          label: 'Posting cadence window used for pattern analysis.',
+          labelEs: 'Ventana de cadencia de publicaciones usada para analizar patrones.',
+        },
+        {
+          sectionIndex: 2,
+          paragraphIndex: 1,
+          value: '5/5',
+          label: 'Reliability signal in Nortec LatAm consistency tracking.',
+          labelEs: 'Señal de confiabilidad en el tracking de consistencia LatAm de Nortec.',
+        },
+      ]}
       inlineVisualInsertAfter={1}
       inlineVisual={{
         title: 'Hiring frequency radar (12 months)',
@@ -162,6 +194,32 @@ export default function ClaraSpotlight() {
               {lang === 'es' ? 'Intensidad relativa de contrataciones por mes' : 'Relative hiring intensity by month'}
             </text>
           </svg>
+        ),
+      }}
+      secondaryVisualInsertAfter={3}
+      secondaryVisual={{
+        title: 'Company signal card',
+        titleEs: 'Ficha de señal de empresa',
+        description:
+          'A compact company profile snapshot that candidates can use to evaluate fit before applying.',
+        descriptionEs:
+          'Un snapshot compacto del perfil de empresa para evaluar encaje antes de aplicar.',
+        layout: 'two-column',
+        render: ({ visible, lang }) => (
+          <div className="company-signal-card" style={{ opacity: visible ? 1 : 0.3, transform: visible ? 'translateY(0)' : 'translateY(10px)', transition: 'all 0.4s ease' }}>
+            <div className="company-signal-head">
+              <strong>CLARA</strong>
+              <span>{lang === 'es' ? 'Fintech B2B' : 'B2B Fintech'}</span>
+            </div>
+            <div className="company-signal-grid">
+              <div><label>{lang === 'es' ? 'Fundada' : 'Founded'}</label><span>2020</span></div>
+              <div><label>{lang === 'es' ? 'Tamaño' : 'Team size'}</label><span>500+</span></div>
+              <div><label>{lang === 'es' ? 'Funding' : 'Funding'}</label><span>$160M+</span></div>
+              <div><label>{lang === 'es' ? 'Stack' : 'Stack'}</label><span>AWS · Go · Python · React</span></div>
+              <div><label>{lang === 'es' ? 'Mercados' : 'Markets hired from'}</label><span>MX · BR · CO · AR</span></div>
+              <div><label>{lang === 'es' ? 'Modo' : 'Mode'}</label><span>{lang === 'es' ? 'Remoto híbrido' : 'Remote-first hybrid'}</span></div>
+            </div>
+          </div>
         ),
       }}
       pullQuote="Clara does not reward generic talent claims. It rewards evidence of ownership in systems where reliability and decision speed directly affect revenue."

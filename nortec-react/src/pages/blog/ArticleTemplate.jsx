@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getCurrentLanguage } from '../../utils/i18n';
 import { submitEmail } from '../../utils/subscribe';
@@ -46,12 +46,74 @@ function DataCounter({ prefix = '', suffix = '', target = 0, label, labelEs, lan
   );
 }
 
-function splitParagraph(text) {
+function splitParagraph(text, maxSentences = 3) {
   if (!text) return [''];
   const sentences = text.split(/(?<=[.!?])\s+/).filter(Boolean);
-  if (text.length < 250 || sentences.length < 3) return [text];
-  const midpoint = Math.ceil(sentences.length / 2);
-  return [sentences.slice(0, midpoint).join(' '), sentences.slice(midpoint).join(' ')];
+  if (sentences.length <= maxSentences) return [text];
+  const chunks = [];
+  for (let i = 0; i < sentences.length; i += maxSentences) {
+    chunks.push(sentences.slice(i, i + maxSentences).join(' '));
+  }
+  return chunks;
+}
+
+function buildFloatingStatMap(items = []) {
+  const map = new Map();
+  items.forEach((item) => {
+    const key = `${item.sectionIndex}-${item.paragraphIndex}`;
+    const current = map.get(key) || [];
+    current.push(item);
+    map.set(key, current);
+  });
+  return map;
+}
+
+function SectionIcon({ index }) {
+  const icons = [
+    (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 3 L20 12 L12 21 L4 12 Z" fill="none" stroke="#0fa39a" strokeWidth="1.6" />
+        <path d="M12 7 L14.5 12 L12 17 L9.5 12 Z" fill="#0fa39a" />
+      </svg>
+    ),
+    (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M4 16 C7 13, 9 13, 12 16 C15 19, 17 19, 20 16" fill="none" stroke="#0fa39a" strokeWidth="1.7" />
+        <path d="M6 11 C8.3 9.3, 10 9.3, 12 11 C14 12.7, 15.7 12.7, 18 11" fill="none" stroke="#0fa39a" strokeWidth="1.5" />
+        <circle cx="12" cy="8" r="1.6" fill="#0fa39a" />
+      </svg>
+    ),
+    (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 4 C8.9 4 6.4 6.5 6.4 9.6 C6.4 13.6 12 20 12 20 C12 20 17.6 13.6 17.6 9.6 C17.6 6.5 15.1 4 12 4 Z" fill="none" stroke="#0fa39a" strokeWidth="1.6" />
+        <circle cx="12" cy="9.7" r="2" fill="#0fa39a" />
+      </svg>
+    ),
+    (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M4 18 L18 6" stroke="#0fa39a" strokeWidth="1.8" />
+        <path d="M12 6 H18 V12" fill="none" stroke="#0fa39a" strokeWidth="1.8" />
+      </svg>
+    ),
+    (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        {Array.from({ length: 3 }).map((_, row) =>
+          Array.from({ length: 3 }).map((__, col) => (
+            <circle key={`${row}-${col}`} cx={6 + col * 6} cy={6 + row * 6} r="1.2" fill="#0fa39a" />
+          ))
+        )}
+      </svg>
+    ),
+    (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M4 12 H20" stroke="#0fa39a" strokeWidth="1.6" />
+        <path d="M12 4 V20" stroke="#0fa39a" strokeWidth="1.6" />
+        <circle cx="12" cy="12" r="3.4" fill="none" stroke="#0fa39a" strokeWidth="1.4" />
+      </svg>
+    ),
+  ];
+
+  return <span className="article-section-icon">{icons[index % icons.length]}</span>;
 }
 
 export default function ArticleTemplate({
@@ -63,8 +125,12 @@ export default function ArticleTemplate({
   standfirstEs,
   heroVisual,
   sections,
+  takeaways,
   inlineVisual,
   inlineVisualInsertAfter = 1,
+  secondaryVisual,
+  secondaryVisualInsertAfter = 3,
+  floatingStats,
   pullQuote,
   pullQuoteEs,
   dataCallout,
@@ -75,13 +141,17 @@ export default function ArticleTemplate({
   const [heroScroll, setHeroScroll] = useState(0);
   const [copyState, setCopyState] = useState('');
   const [showStickyShare, setShowStickyShare] = useState(false);
+  const [showMobileShare, setShowMobileShare] = useState(false);
   const [email, setEmail] = useState('');
   const [subState, setSubState] = useState('');
 
   const heroRef = useRef(null);
   const inlineVizRef = useRef(null);
+  const secondaryVizRef = useRef(null);
   const inlineVizVisible = useIntersectionObserver(inlineVizRef, { threshold: 0.2 });
+  const secondaryVizVisible = useIntersectionObserver(secondaryVizRef, { threshold: 0.2 });
   const heroVisible = useIntersectionObserver(heroRef, { threshold: 0.1, once: false });
+  const floatingStatsMap = useMemo(() => buildFloatingStatMap(floatingStats), [floatingStats]);
 
   useEffect(() => {
     const handler = (event) => setLang(event.detail?.lang || getCurrentLanguage());
@@ -104,7 +174,9 @@ export default function ArticleTemplate({
       const heroHeight = heroRef.current?.offsetHeight || 0;
       const footer = document.querySelector('footer');
       const footerVisible = footer ? footer.getBoundingClientRect().top < window.innerHeight : false;
-      setShowStickyShare(top > heroHeight - 120 && !footerVisible);
+      const canShowShare = top > heroHeight - 120 && !footerVisible;
+      setShowStickyShare(canShowShare);
+      setShowMobileShare(canShowShare);
     };
 
     onScroll();
@@ -149,6 +221,15 @@ export default function ArticleTemplate({
         </button>
       </div>
 
+      <div className={`article-mobile-share ${showMobileShare ? 'is-visible' : ''}`}>
+        <div className="article-share-label" data-en="Share" data-es="Compartir">
+          {lang === 'es' ? 'Compartir' : 'Share'}
+        </div>
+        <button className="article-share-btn" type="button" onClick={onCopy}>
+          {copyState || (lang === 'es' ? 'Copiar enlace' : 'Copy link')}
+        </button>
+      </div>
+
       <header className="article-template-hero" ref={heroRef}>
         <div
           className="article-template-hero-visual"
@@ -174,28 +255,69 @@ export default function ArticleTemplate({
 
       <article className="article-template-body">
         {sections.map((section, index) => (
-          <div key={section.heading}>
+          <div key={section.heading} className={`article-section-block ${index % 2 === 0 ? 'tone-base' : 'tone-alt'}`}>
             <section className="article-template-section">
               <Reveal delay={0}>
-                <h2 data-en={section.heading} data-es={section.headingEs}>
-                  {lang === 'es' ? section.headingEs : section.heading}
-                </h2>
+                <div className="article-section-heading">
+                  <SectionIcon index={index} />
+                  <h2 data-en={section.heading} data-es={section.headingEs}>
+                    {lang === 'es' ? section.headingEs : section.heading}
+                  </h2>
+                </div>
               </Reveal>
               {section.paragraphs.map((paragraph, pIdx) => (
                 <div key={`${section.heading}-${pIdx}`}>
-                  {Array.from({ length: Math.max(splitParagraph(paragraph.en).length, splitParagraph(paragraph.es).length) }).map(
-                    (_, chunkIdx) => {
-                      const enChunk = splitParagraph(paragraph.en)[chunkIdx] || splitParagraph(paragraph.en).slice(-1)[0];
-                      const esChunk = splitParagraph(paragraph.es)[chunkIdx] || splitParagraph(paragraph.es).slice(-1)[0];
-                      return (
-                        <Reveal key={`${section.heading}-${pIdx}-${chunkIdx}`} delay={100 * (pIdx + 1 + chunkIdx)}>
+                  {Array.from({
+                    length: Math.max(splitParagraph(paragraph.en).length, splitParagraph(paragraph.es).length),
+                  }).map((_, chunkIdx) => {
+                    const enChunks = splitParagraph(paragraph.en);
+                    const esChunks = splitParagraph(paragraph.es);
+                    const enChunk = enChunks[chunkIdx] || enChunks.slice(-1)[0];
+                    const esChunk = esChunks[chunkIdx] || esChunks.slice(-1)[0];
+                    const statCards = floatingStatsMap.get(`${index}-${pIdx}`) || [];
+                    const isFirstReadableChunk = index === 0 && pIdx === 0 && chunkIdx === 0;
+
+                    return (
+                      <div key={`${section.heading}-${pIdx}-${chunkIdx}`}>
+                        {chunkIdx === 0 &&
+                          statCards.map((stat, statIdx) => (
+                            <Reveal key={`${section.heading}-${pIdx}-stat-${statIdx}`} className="float-stat-wrap" delay={120}>
+                              <aside className="float-stat-card">
+                                <div className="float-stat-value" data-en={stat.value} data-es={stat.valueEs || stat.value}>
+                                  {lang === 'es' ? stat.valueEs || stat.value : stat.value}
+                                </div>
+                                <div className="float-stat-label" data-en={stat.label} data-es={stat.labelEs}>
+                                  {lang === 'es' ? stat.labelEs : stat.label}
+                                </div>
+                              </aside>
+                            </Reveal>
+                          ))}
+
+                        <Reveal key={`${section.heading}-${pIdx}-${chunkIdx}-paragraph`} delay={100 * (pIdx + 1 + chunkIdx)}>
                           <p data-en={enChunk} data-es={esChunk}>
                             {lang === 'es' ? esChunk : enChunk}
                           </p>
                         </Reveal>
-                      );
-                    }
-                  )}
+
+                        {isFirstReadableChunk && takeaways ? (
+                          <Reveal className="article-takeaways-wrap" delay={100}>
+                            <aside className="article-takeaways">
+                              <div className="article-takeaways-title" data-en="Key takeaways" data-es="Puntos clave">
+                                {lang === 'es' ? 'Puntos clave' : 'Key takeaways'}
+                              </div>
+                              <ul>
+                                {takeaways.items.map((item, itemIdx) => (
+                                  <li key={`takeaway-${itemIdx}`} data-en={item.en} data-es={item.es}>
+                                    {lang === 'es' ? item.es : item.en}
+                                  </li>
+                                ))}
+                              </ul>
+                            </aside>
+                          </Reveal>
+                        ) : null}
+                      </div>
+                    );
+                  })}
                 </div>
               ))}
             </section>
@@ -210,6 +332,22 @@ export default function ArticleTemplate({
                     </h3>
                     <p data-en={inlineVisual.description} data-es={inlineVisual.descriptionEs}>
                       {lang === 'es' ? inlineVisual.descriptionEs : inlineVisual.description}
+                    </p>
+                  </div>
+                </div>
+              </Reveal>
+            ) : null}
+
+            {index === secondaryVisualInsertAfter && secondaryVisual ? (
+              <Reveal>
+                <div ref={secondaryVizRef} className={`article-inline-viz ${secondaryVisual.layout === 'two-column' ? 'article-inline-viz-two' : ''}`}>
+                  <div className="article-inline-viz-media">{secondaryVisual.render({ visible: secondaryVizVisible, lang })}</div>
+                  <div className="article-inline-viz-copy">
+                    <h3 data-en={secondaryVisual.title} data-es={secondaryVisual.titleEs}>
+                      {lang === 'es' ? secondaryVisual.titleEs : secondaryVisual.title}
+                    </h3>
+                    <p data-en={secondaryVisual.description} data-es={secondaryVisual.descriptionEs}>
+                      {lang === 'es' ? secondaryVisual.descriptionEs : secondaryVisual.description}
                     </p>
                   </div>
                 </div>

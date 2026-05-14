@@ -133,6 +133,45 @@ export default function AndresStory() {
         </svg>
       )}
       sections={sections}
+      takeaways={{
+        items: [
+          {
+            en: 'How Andrés moved from volume applications to a disciplined conversion system.',
+            es: 'Cómo Andrés pasó de aplicar en volumen a un sistema disciplinado de conversión.',
+          },
+          {
+            en: 'Which narrative changes unlocked recruiter replies and final-round traction.',
+            es: 'Qué cambios narrativos desbloquearon respuestas de recruiters y tracción en rondas finales.',
+          },
+          {
+            en: 'What repeatable steps can be copied immediately in your own search.',
+            es: 'Qué pasos repetibles puedes copiar de inmediato en tu propia búsqueda.',
+          },
+        ],
+      }}
+      floatingStats={[
+        {
+          sectionIndex: 0,
+          paragraphIndex: 1,
+          value: '120+',
+          label: 'Applications sent in month one before process redesign.',
+          labelEs: 'Aplicaciones enviadas en el primer mes antes del rediseño.',
+        },
+        {
+          sectionIndex: 2,
+          paragraphIndex: 2,
+          value: '$90K+',
+          label: 'Base offer accepted after process and narrative upgrades.',
+          labelEs: 'Oferta base aceptada tras mejoras de proceso y narrativa.',
+        },
+        {
+          sectionIndex: 4,
+          paragraphIndex: 1,
+          value: '6 mo',
+          label: 'Timeline from scattered search to optimized pipeline.',
+          labelEs: 'Tiempo desde búsqueda dispersa hasta pipeline optimizado.',
+        },
+      ]}
       inlineVisualInsertAfter={1}
       inlineVisual={{
         title: 'Search journey timeline',
@@ -192,6 +231,54 @@ export default function AndresStory() {
               {lang === 'es' ? 'Progreso de proceso de búsqueda (índice)' : 'Search process progress (index)'}
             </text>
           </svg>
+        ),
+      }}
+      secondaryVisualInsertAfter={3}
+      secondaryVisual={{
+        title: 'Before vs after: process shift',
+        titleEs: 'Antes vs después: cambio de proceso',
+        description:
+          'A practical comparison of how his search looked before and after introducing weekly funnel discipline.',
+        descriptionEs:
+          'Una comparación práctica de cómo se veía su búsqueda antes y después de introducir disciplina semanal de funnel.',
+        layout: 'two-column',
+        render: ({ visible, lang }) => (
+          <div className="before-after-visual">
+            <div
+              className="before-after-col before"
+              style={{ transform: visible ? 'translateY(0)' : 'translateY(16px)', opacity: visible ? 1 : 0, transition: 'transform 0.45s ease, opacity 0.45s ease' }}
+            >
+              <div className="article-share-label">{lang === 'es' ? 'ANTES' : 'BEFORE'}</div>
+              <ul style={{ paddingLeft: '1rem', marginTop: '0.6rem', display: 'grid', gap: '0.45rem' }}>
+                <li style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'var(--text2)' }}>
+                  {lang === 'es' ? 'Aplicaciones masivas sin segmentación' : 'Mass applications without segmentation'}
+                </li>
+                <li style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'var(--text2)' }}>
+                  {lang === 'es' ? 'CV centrado en tareas, no impacto' : 'Task-centered resume, no outcome signal'}
+                </li>
+                <li style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'var(--text2)' }}>
+                  {lang === 'es' ? 'Sin revisión semanal de embudo' : 'No weekly funnel review process'}
+                </li>
+              </ul>
+            </div>
+            <div
+              className="before-after-col after"
+              style={{ transform: visible ? 'translateY(0)' : 'translateY(16px)', opacity: visible ? 1 : 0, transition: 'transform 0.45s ease 120ms, opacity 0.45s ease 120ms' }}
+            >
+              <div className="article-share-label">{lang === 'es' ? 'DESPUÉS' : 'AFTER'}</div>
+              <ul style={{ paddingLeft: '1rem', marginTop: '0.6rem', display: 'grid', gap: '0.45rem' }}>
+                <li style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'var(--text2)' }}>
+                  {lang === 'es' ? 'Aplicación por lote con targeting' : 'Batch application strategy with targeting'}
+                </li>
+                <li style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'var(--text2)' }}>
+                  {lang === 'es' ? 'Narrativa de impacto por métrica' : 'Outcome narrative backed by metrics'}
+                </li>
+                <li style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'var(--text2)' }}>
+                  {lang === 'es' ? 'Ritual semanal de ajuste de pipeline' : 'Weekly pipeline adjustment ritual'}
+                </li>
+              </ul>
+            </div>
+          </div>
         ),
       }}
       pullQuote="The biggest shift was not skill level. It was narrative clarity: once his impact was obvious, interviews and offers followed."

@@ -142,6 +142,45 @@ export default function RemoteHiring() {
         </svg>
       )}
       sections={sections}
+      takeaways={{
+        items: [
+          {
+            en: 'Which role families are accelerating fastest in remote LatAm hiring.',
+            es: 'Qué familias de roles se aceleran más en la contratación remota en LatAm.',
+          },
+          {
+            en: 'How hiring quality is shifting from task execution to ownership.',
+            es: 'Cómo la calidad de contratación está pasando de ejecución de tareas a ownership.',
+          },
+          {
+            en: 'What concrete signals increase interview conversion in this cycle.',
+            es: 'Qué señales concretas aumentan la conversión a entrevista en este ciclo.',
+          },
+        ],
+      }}
+      floatingStats={[
+        {
+          sectionIndex: 1,
+          paragraphIndex: 0,
+          value: '+283%',
+          label: 'AI/ML role growth in tracked remote pipelines.',
+          labelEs: 'Crecimiento de roles AI/ML en pipelines remotos rastreados.',
+        },
+        {
+          sectionIndex: 2,
+          paragraphIndex: 1,
+          value: '56%',
+          label: 'Openings emphasizing ownership language in role scope.',
+          labelEs: 'Vacantes que enfatizan lenguaje de ownership en el alcance del rol.',
+        },
+        {
+          sectionIndex: 4,
+          paragraphIndex: 0,
+          value: '30d',
+          label: 'Suggested cycle to reposition your profile and applications.',
+          labelEs: 'Ciclo sugerido para reposicionar tu perfil y aplicaciones.',
+        },
+      ]}
       inlineVisualInsertAfter={1}
       inlineVisual={{
         title: 'Where the jobs are moving',
@@ -183,6 +222,63 @@ export default function RemoteHiring() {
             })}
             <text x="30" y="248" fill="#9caeb5" fontFamily="IBM Plex Mono" fontSize="11">
               {lang === 'es' ? 'Variación interanual de vacantes remotas' : 'YoY change in remote openings'}
+            </text>
+          </svg>
+        ),
+      }}
+      secondaryVisualInsertAfter={3}
+      secondaryVisual={{
+        title: 'Remote demand by LatAm market',
+        titleEs: 'Demanda remota por mercado en LatAm',
+        description:
+          'A mini map view of where hiring volume keeps clustering, with bigger nodes marking heavier remote demand.',
+        descriptionEs:
+          'Una vista mini mapa de dónde se sigue concentrando el volumen de contratación, con nodos más grandes en mercados de mayor demanda remota.',
+        layout: 'two-column',
+        render: ({ visible, lang }) => (
+          <svg className="svg-fill" viewBox="0 0 700 260" aria-label="LatAm remote jobs volume map">
+            <rect width="700" height="260" fill="#071112" />
+            <path
+              d="M165,60 L195,40 L232,35 L262,49 L278,74 L270,96 L250,110 L252,132 L278,161 L296,192 L294,219 L282,239 L268,245 L248,222 L235,194 L217,171 L199,148 L175,120 L163,91 Z"
+              fill="rgba(15,163,154,0.26)"
+              stroke="#0fa39a"
+              strokeWidth="1.6"
+            />
+            {[
+              { x: 210, y: 72, r: 10, label: 'MX' },
+              { x: 232, y: 124, r: 8, label: 'CO' },
+              { x: 268, y: 164, r: 11, label: 'BR' },
+              { x: 245, y: 214, r: 7, label: 'AR' },
+              { x: 216, y: 192, r: 6, label: 'CL' },
+            ].map((dot, i) => (
+              <g key={dot.label}>
+                <circle
+                  cx={dot.x}
+                  cy={dot.y}
+                  r={dot.r}
+                  fill="rgba(255,75,40,0.72)"
+                  style={{
+                    transformOrigin: `${dot.x}px ${dot.y}px`,
+                    transform: visible ? 'scale(1)' : 'scale(0.2)',
+                    opacity: visible ? 1 : 0,
+                    transition: `transform 0.45s ease ${i * 100}ms, opacity 0.45s ease ${i * 100}ms`,
+                  }}
+                />
+                <text x={dot.x + 14} y={dot.y + 3} fill="#f2e9d5" fontFamily="IBM Plex Mono" fontSize="11">
+                  {dot.label}
+                </text>
+              </g>
+            ))}
+            <text x="358" y="70" fill="#f2e9d5" fontFamily="IBM Plex Mono" fontSize="12">
+              {lang === 'es' ? 'Volumen relativo de vacantes' : 'Relative opening volume'}
+            </text>
+            <rect x="360" y="90" width="260" height="12" fill="rgba(255,255,255,0.1)" />
+            <rect x="360" y="90" width="220" height="12" fill="#0fa39a" />
+            <text x="360" y="124" fill="#9caeb5" fontFamily="IBM Plex Mono" fontSize="10">
+              MX/BR highest concentration
+            </text>
+            <text x="360" y="142" fill="#9caeb5" fontFamily="IBM Plex Mono" fontSize="10">
+              CO/AR steady growth cohorts
             </text>
           </svg>
         ),
