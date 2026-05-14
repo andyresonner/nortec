@@ -11,10 +11,11 @@ export function renderNav(activePage = '') {
     <li><a href="/jobs" class="${activePage==='jobs'?'active':''}">Jobs</a></li>
     <li><a href="/tracker" class="${activePage==='tracker'?'active':''}">Tracker</a></li>
     <li><a href="/archive" class="${activePage==='archive'?'active':''}">Archive</a></li>
-    <li><a href="/sponsors" class="${activePage==='sponsors'?'active':''}">Sponsors</a></li>
+    <li><a href="/insights" class="${activePage==='insights'?'active':''}">Insights</a></li>
+    <li><a href="/employers" class="${activePage==='employers'?'active':''}">For Employers</a></li>
   </ul>
   <div class="nav-actions">
-    <a class="btn-ghost" href="/sponsors">For Employers</a>
+    <a class="btn-ghost" href="/employers">For Employers</a>
     <a class="btn-primary" href="/#subscribe">Subscribe</a>
   </div>
 </nav>`;

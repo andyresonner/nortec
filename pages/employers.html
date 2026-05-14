@@ -33,11 +33,12 @@
     <li><a href="/jobs" data-en="Jobs" data-es="Empleos">Jobs</a></li>
     <li><a href="/tracker" data-en="Tracker" data-es="Tracker">Tracker</a></li>
     <li><a href="/archive" data-en="Archive" data-es="Archivo">Archive</a></li>
-    <li><a href="/sponsors" class="active" data-en="Sponsors" data-es="Patrocinadores">Sponsors</a></li>
+    <li><a href="/insights" data-en="Insights" data-es="Insights">Insights</a></li>
+    <li><a href="/employers" class="active" data-en="For Employers" data-es="Para Empleadores">For Employers</a></li>
     <li><a href="/issue/001">Issue #001</a></li>
   </ul>
   <div class="nav-actions">
-    <a class="btn-ghost" href="/sponsors" data-en="For Employers" data-es="Para Empleadores">For Employers</a>
+    <a class="btn-ghost" href="/employers" data-en="For Employers" data-es="Para Empleadores">For Employers</a>
     <div class="lang-toggle" aria-label="Language toggle">
       <button type="button" data-lang-option="en">EN</button>
       <span class="slash">/</span>
@@ -154,21 +155,7 @@
 <section style="padding:3rem 0;">
   <div class="container">
     <div class="section-marker"><span class="arrow">→</span> <span data-en="Best-fit sponsors" data-es="Patrocinadores ideales">Best-fit sponsors</span></div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
-      ${[
-        ['EOR / Payroll platforms','Deel, Remote, Rippling — they monetize global hiring. Nortec delivers the candidates.'],
-        ['Dev tools / cloud','AWS, Railway, Vercel, Supabase — technical audience that actually uses these products.'],
-        ['Recruiting platforms','Pallet, Ashby, Lever — need LatAm candidate flow and hiring velocity.'],
-        ['English / interview prep','Cambly, Interview Cake — direct job-seeker pain point, high conversion.'],
-        ['AI bootcamps / upskilling','Platzi, Coursera, DataCamp — skill gap = monetization opportunity.'],
-        ['Contractor banking / fintech','Deel Card, Wise, Payoneer — USD earners need financial products.'],
-      ].map(([t,d])=>`
-        <div style="background:var(--surface);border:1px solid var(--border);padding:1.25rem;">
-          <div style="font-family:var(--font-display);font-size:1rem;font-weight:600;text-transform:uppercase;color:var(--north-star);margin-bottom:6px;">${t}</div>
-          <div style="font-family:var(--font-mono);font-size:11px;color:var(--text2);line-height:1.7;">${d}</div>
-        </div>
-      `).join('')}
-    </div>
+    <div id="best-fit-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;"></div>
   </div>
 </section>
 
@@ -182,6 +169,23 @@
 </section>
 <script type="module">
 import { initI18n } from '/js/i18n.js';
+
+const bestFitData = [
+  ['EOR / Payroll platforms', 'Deel, Remote, Rippling — they monetize global hiring. Nortec delivers the candidates.'],
+  ['Dev tools / cloud', 'AWS, Railway, Vercel, Supabase — technical audience that actually uses these products.'],
+  ['Recruiting platforms', 'Pallet, Ashby, Lever — need LatAm candidate flow and hiring velocity.'],
+  ['English / interview prep', 'Cambly, Interview Cake — direct job-seeker pain point, high conversion.'],
+  ['AI bootcamps / upskilling', 'Platzi, Coursera, DataCamp — skill gap = monetization opportunity.'],
+  ['Contractor banking / fintech', 'Deel Card, Wise, Payoneer — USD earners need financial products.'],
+];
+
+document.getElementById('best-fit-grid').innerHTML = bestFitData.map(([t, d]) => `
+  <div style="background:var(--surface);border:1px solid var(--border);padding:1.25rem;">
+    <div style="font-family:var(--font-display);font-size:1rem;font-weight:600;text-transform:uppercase;color:var(--north-star);margin-bottom:6px;">${t}</div>
+    <div style="font-family:var(--font-mono);font-size:11px;color:var(--text2);line-height:1.7;">${d}</div>
+  </div>
+`).join('');
+
 initI18n();
 </script>
 </body>

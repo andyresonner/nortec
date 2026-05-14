@@ -1,11 +1,15 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    { "source": "/sponsors", "destination": "/employers", "permanent": true }
+  ],
   "rewrites": [
     { "source": "/jobs", "destination": "/pages/jobs" },
     { "source": "/tracker", "destination": "/pages/tracker" },
     { "source": "/archive", "destination": "/pages/archive" },
-    { "source": "/sponsors", "destination": "/pages/sponsors" },
+    { "source": "/insights", "destination": "/pages/insights" },
+    { "source": "/employers", "destination": "/pages/employers" },
     { "source": "/issue/001", "destination": "/pages/issue-001" },
     { "source": "/job", "destination": "/pages/job" }
   ],
