@@ -360,3 +360,16 @@
     min-width: 240px;
   }
 }
+
+@media (max-width: 768px) {
+  .hero-viz,
+  .story-viz {
+    max-height: 300px;
+    min-height: 260px;
+  }
+
+  .hero-copy,
+  .story-copy {
+    padding: 1rem;
+  }
+}

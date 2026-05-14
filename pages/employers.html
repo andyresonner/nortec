@@ -23,7 +23,19 @@
 .pkg-cta-ghost:hover { background:var(--teal-dim); }
 .audience-grid { display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border); }
 .aud-card { background:var(--surface);padding:1.5rem; }
-@media(max-width:900px){.pkg-grid{grid-template-columns:1fr;}.audience-grid{grid-template-columns:1fr 1fr;}}
+.audience-stats-grid { display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-top:none; }
+#best-fit-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:10px; }
+@media(max-width:900px){
+  .pkg-grid{grid-template-columns:1fr;}
+  .audience-grid{grid-template-columns:1fr 1fr;}
+  .audience-stats-grid{grid-template-columns:1fr 1fr;}
+  #best-fit-grid{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:768px){
+  .audience-grid,
+  .audience-stats-grid,
+  #best-fit-grid{grid-template-columns:1fr;}
+}
 </style>
 </head>
 <body>
@@ -91,7 +103,7 @@
       </div>
     </div>
 
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-top:none;">
+    <div class="audience-stats-grid">
       <div class="aud-card"><div class="stat-num">45<span class="accent">K+</span></div><div class="stat-label" data-en="Subscribers" data-es="Suscriptores">Subscribers</div></div>
       <div class="aud-card"><div class="stat-num">48<span class="accent">%</span></div><div class="stat-label" data-en="Average open rate" data-es="Tasa media de apertura">Average open rate</div></div>
       <div class="aud-card"><div class="stat-num">87<span class="accent">%</span></div><div class="stat-label" data-en="Survey completion" data-es="Encuesta completada">Survey completion</div></div>
@@ -154,7 +166,7 @@
 <section style="padding:3rem 0;">
   <div class="container">
     <div class="section-marker"><span class="arrow">→</span> <span data-en="Best-fit sponsors" data-es="Patrocinadores ideales">Best-fit sponsors</span></div>
-    <div id="best-fit-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;"></div>
+    <div id="best-fit-grid"></div>
   </div>
 </section>
 

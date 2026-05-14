@@ -1030,7 +1030,12 @@
 /* ── RESPONSIVE ── */
 @media (max-width: 1000px) {
   .hero-body { grid-template-columns: 1fr; min-height: auto; }
-  .hero-right { display: none; }
+  .hero-right {
+    display: flex;
+    min-height: 340px;
+    border-left: none;
+    border-top: 1px solid var(--border);
+  }
   .salary-grid { grid-template-columns: 1fr; }
   .feature-strip { grid-auto-columns: minmax(260px, 1fr); }
   .why-grid { grid-template-columns: 1fr; }
@@ -1039,8 +1044,20 @@
   .cta-section { grid-template-columns: 1fr; gap: 2rem; padding: 2rem; }
   .footer-simple-grid { grid-template-columns: 1fr; }
 }
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .jobs-grid { grid-template-columns: 1fr; }
+  .hero-right {
+    min-height: 280px;
+  }
+  .feature-strip {
+    grid-auto-columns: minmax(220px, 1fr);
+  }
+  .hero-stat-item {
+    flex: 1 1 calc(50% - 1px);
+  }
+  .hero-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
   .section-header { flex-direction: column; align-items: flex-start; }
   .why-stats-inline { grid-template-columns: 1fr; }
   .footer-links-grid { grid-template-columns: 1fr; }

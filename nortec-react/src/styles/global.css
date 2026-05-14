@@ -161,6 +161,94 @@ body::before {
 .nav-links a:hover { color: var(--teal); }
 .nav-links a.active { color: var(--north-star); }
 .nav-actions { display: flex; gap: 8px; align-items: center; }
+.mobile-menu-btn {
+  display: none;
+  border: 1px solid var(--border2);
+  background: transparent;
+  color: var(--north-star);
+  width: 44px;
+  height: 44px;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  line-height: 1;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.mobile-nav-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  background: rgba(8, 17, 18, 0.98);
+  display: none;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+.mobile-nav-overlay.is-open {
+  display: flex;
+}
+
+.mobile-nav-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.mobile-nav-brand {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  letter-spacing: 0.08em;
+  color: var(--north-star);
+}
+
+.mobile-nav-close {
+  border: 1px solid var(--border2);
+  background: transparent;
+  color: var(--north-star);
+  width: 44px;
+  height: 44px;
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+
+.mobile-nav-links {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.mobile-nav-links a {
+  text-decoration: none;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 7vw, 2.8rem);
+  line-height: 1;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--north-star);
+  padding: 0.5rem 0.2rem;
+  border-bottom: 1px solid var(--border);
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+
+.mobile-nav-links a.active,
+.mobile-nav-links a:hover {
+  color: var(--teal);
+}
+
+.mobile-nav-actions {
+  margin-top: auto;
+  display: grid;
+  gap: 0.8rem;
+}
+
+.mobile-nav-actions .btn-primary {
+  width: 100%;
+  text-align: center;
+}
 .btn-ghost {
   font-family: var(--font-mono);
   font-size: 11px;
@@ -689,4 +777,41 @@ body::before {
   .lang-toggle { padding: 5px 8px; gap: 5px; }
   .lang-toggle button,
   .lang-toggle .slash { font-size: 10px; }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 1rem;
+  }
+
+  .nav {
+    grid-template-columns: auto 1fr auto;
+    gap: 0.8rem;
+    padding: 0 1rem;
+  }
+
+  .nav-links,
+  .nav-actions {
+    display: none;
+  }
+
+  .mobile-menu-btn {
+    display: inline-flex;
+  }
+
+  button,
+  .btn-primary,
+  .btn-ghost,
+  .read-btn,
+  .blog-read-btn,
+  .article-share-btn,
+  .filter-btn,
+  .pill-btn {
+    min-height: 44px;
+  }
+
+  .email-form input,
+  .email-form button {
+    min-height: 44px;
+  }
 }

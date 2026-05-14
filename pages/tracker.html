@@ -356,6 +356,20 @@
   padding: 11px 12px;
   vertical-align: middle;
 }
+.jobs-table th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 3;
+}
+.jobs-table td:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  background: var(--surface);
+}
+.jobs-table tr:hover td:first-child {
+  background: rgba(15,163,154,0.08);
+}
 .jobs-row {
   cursor: pointer;
 }
@@ -632,7 +646,10 @@
     grid-template-columns: 1fr;
     gap: 0.4rem;
   }
-  .int-tab-btn { text-align: left; }
+  .int-tab-btn {
+    text-align: left;
+    font-size: 1.25rem;
+  }
   .company-grid { grid-template-columns: 1fr; }
   .jobs-table { min-width: 820px; }
   .tz-col { display: none; }

@@ -107,6 +107,22 @@
   .jobs-layout { grid-template-columns: 1fr; }
   .jobs-sidebar { border-right: none; border-bottom: 1px solid var(--border); }
 }
+@media (max-width: 768px) {
+  .jobs-main {
+    padding: 1rem;
+  }
+  .filter-bar {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+  .jobs-sidebar {
+    display: none;
+  }
+  .job-list-row {
+    grid-template-columns: 1fr;
+  }
+}
 </style>
 </head>
 <body>

@@ -690,3 +690,28 @@ body::before {
   .lang-toggle button,
   .lang-toggle .slash { font-size: 10px; }
 }
+
+@media (max-width: 768px) {
+  html,
+  body {
+    overflow-x: hidden;
+  }
+
+  .container {
+    padding: 0 1rem;
+  }
+
+  button,
+  .btn-primary,
+  .btn-ghost,
+  .filter-btn,
+  .pill-btn,
+  .read-btn {
+    min-height: 44px;
+  }
+
+  .email-form input,
+  .email-form button {
+    min-height: 44px;
+  }
+}
