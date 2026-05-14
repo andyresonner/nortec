@@ -1,4 +1,4 @@
-import ArticleLayout from './ArticleLayout';
+import ArticleTemplate from './ArticleTemplate';
 
 const sections = [
   {
@@ -99,15 +99,13 @@ const sections = [
 
 export default function TimezoneStrategy() {
   return (
-    <ArticleLayout
+    <ArticleTemplate
       title="How to position your timezone as an asset, not an apology"
       titleEs="Cómo posicionar tu zona horaria como una ventaja, no como una disculpa"
       readTime="9 min read"
       readTimeEs="9 min de lectura"
-      author="Nortec Editorial · May 2026"
-      authorEs="Nortec Editorial · Mayo 2026"
-      lede="Colombia, Mexico, and Argentina share meaningful overlap with US Eastern time. The best candidates do not apologize for it. They use it as an operational advantage."
-      ledeEs="Colombia, Mexico, and Argentina share meaningful overlap with US Eastern time. The best candidates do not apologize for it. They use it as an operational advantage."
+      standfirst="Colombia, Mexico, and Argentina offer a practical overlap window with US teams; candidates who translate that overlap into throughput language gain clear interview leverage."
+      standfirstEs="Colombia, México y Argentina ofrecen una ventana real de solapamiento con equipos de EE.UU.; quienes traducen ese solapamiento en lenguaje de productividad ganan ventaja clara en entrevistas."
       heroVisual={
         <svg className="svg-fill" viewBox="0 0 760 420" aria-label="Timezone overlap visual">
           <rect width="760" height="420" fill="#0b1116" />
@@ -123,15 +121,89 @@ export default function TimezoneStrategy() {
         </svg>
       }
       sections={sections}
+      inlineVisualInsertAfter={1}
+      inlineVisual={{
+        title: 'Overlap band map',
+        titleEs: 'Mapa de bandas de solapamiento',
+        description:
+          'When teams schedule decision work inside overlap bands, they shrink coordination delays without extending workdays.',
+        descriptionEs:
+          'Cuando los equipos programan trabajo de decisiones dentro de bandas de solapamiento, reducen demoras de coordinación sin alargar jornadas.',
+        render: ({ visible, lang }) => (
+          <svg className="svg-fill" viewBox="0 0 720 260" aria-label="Timezone overlap bands">
+            <rect width="720" height="260" fill="#0b1116" />
+            <text x="40" y="36" fill="#9caeb5" fontFamily="IBM Plex Mono" fontSize="11">
+              {lang === 'es' ? 'Bandas de colaboración US ET + LatAm' : 'US ET + LatAm collaboration bands'}
+            </text>
+            <line x1="60" y1="190" x2="660" y2="190" stroke="rgba(255,255,255,0.28)" />
+            {[0, 2, 4, 6, 8, 10].map((tick, i) => (
+              <text key={tick} x={70 + i * 100} y="210" fill="#f2e9d5" fontFamily="IBM Plex Mono" fontSize="10">
+                {tick + 8}:00
+              </text>
+            ))}
+            <rect
+              x="170"
+              y="88"
+              width="260"
+              height="34"
+              fill="rgba(15,163,154,0.75)"
+              style={{
+                opacity: visible ? 1 : 0,
+                transform: visible ? 'translateX(0)' : 'translateX(-45px)',
+                transition: 'opacity 0.4s ease, transform 0.4s ease',
+              }}
+            />
+            <rect
+              x="280"
+              y="134"
+              width="260"
+              height="34"
+              fill="rgba(255,138,75,0.75)"
+              style={{
+                opacity: visible ? 1 : 0,
+                transform: visible ? 'translateX(0)' : 'translateX(45px)',
+                transition: 'opacity 0.4s ease 120ms, transform 0.4s ease 120ms',
+              }}
+            />
+            <rect
+              x="280"
+              y="88"
+              width="150"
+              height="80"
+              fill="rgba(216,171,45,0.35)"
+              stroke="#d8ab2d"
+              strokeDasharray="6 4"
+            />
+          </svg>
+        ),
+      }}
       pullQuote="Timezone overlap is not a convenience feature. In remote teams, it is a throughput multiplier."
       pullQuoteEs="Timezone overlap is not a convenience feature. In remote teams, it is a throughput multiplier."
-      dataValue="4–8h"
-      dataLabel="Typical overlap window between core LatAm hubs and US Eastern teams."
-      dataLabelEs="Typical overlap window between core LatAm hubs and US Eastern teams."
-      moreLinks={[
-        { to: '/blog/andres-story', label: "From Bogotá agency work to a $90K remote role", labelEs: "From Bogotá agency work to a $90K remote role" },
-        { to: '/blog/remote-hiring-latam', label: "Remote hiring in LatAm is up 38% YoY", labelEs: "Remote hiring in LatAm is up 38% YoY" },
-        { to: '/blog/salary-negotiation', label: "The LatAm engineer's guide to negotiating in USD", labelEs: "The LatAm engineer's guide to negotiating in USD" },
+      dataCallout={{
+        target: 6,
+        suffix: 'h',
+        label: 'Median overlap window between core LatAm hubs and US Eastern teams.',
+        labelEs: 'Ventana mediana de solapamiento entre hubs clave de LatAm y equipos en US Eastern.',
+      }}
+      moreFrom={[
+        {
+          to: '/blog/andres-story',
+          title: 'From Bogotá agency work to a $90K remote role',
+          titleEs: 'De una agencia en Bogotá a un rol remoto de $90K',
+          theme: 'theme-people',
+        },
+        {
+          to: '/blog/remote-hiring-latam',
+          title: 'Remote hiring in LatAm is up 38% YoY',
+          titleEs: 'La contratación remota en LatAm subió 38% interanual',
+          theme: 'theme-market',
+        },
+        {
+          to: '/blog/salary-negotiation',
+          title: "The LatAm engineer's guide to negotiating in USD",
+          titleEs: 'Guía para ingenieros de LatAm para negociar en USD',
+          theme: 'theme-skill',
+        },
       ]}
     />
   );

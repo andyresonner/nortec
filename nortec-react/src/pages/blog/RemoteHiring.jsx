@@ -1,4 +1,4 @@
-import ArticleLayout from './ArticleLayout';
+import ArticleTemplate from './ArticleTemplate';
 
 const sections = [
   {
@@ -86,17 +86,23 @@ const sections = [
 ];
 
 export default function RemoteHiring() {
+  const growthSeries = [
+    { label: 'AI/ML', value: 283 },
+    { label: 'DevOps', value: 94 },
+    { label: 'Data Engineer', value: 67 },
+    { label: 'Product Analyst', value: 41 },
+    { label: 'Customer Ops', value: 24 },
+  ];
+
   return (
-    <ArticleLayout
+    <ArticleTemplate
       title="Remote hiring in LatAm is up 38% YoY — here's where the jobs are going"
       titleEs="La contratación remota en LatAm subió 38% interanual — aquí es donde se están moviendo los empleos"
       readTime="9 min read"
       readTimeEs="9 min de lectura"
-      author="Nortec Editorial · May 2026"
-      authorEs="Nortec Editorial · Mayo 2026"
-      lede="AI, data, and DevOps roles are growing fastest. Customer success is holding steady. Here is what the numbers really say about where LatAm talent is winning globally."
-      ledeEs="AI, data, and DevOps roles are growing fastest. Customer success is holding steady. Here is what the numbers really say about where LatAm talent is winning globally."
-      heroVisual={
+      standfirst="Remote demand keeps climbing, but growth is uneven. The winners are candidates who align with the fastest-moving functions and can prove shipped outcomes."
+      standfirstEs="La demanda remota sigue subiendo, pero el crecimiento no es parejo. Quienes ganan son candidatos que se alinean con las funciones de mayor crecimiento y muestran resultados concretos."
+      heroVisual={({ visible }) => (
         <svg className="svg-fill" viewBox="0 0 760 420" aria-label="Remote hiring growth visual">
           <rect x="0" y="0" width="760" height="420" fill="#081113" />
           {Array.from({ length: 8 }).map((_, i) => (
@@ -115,7 +121,18 @@ export default function RemoteHiring() {
             const y = 368 - h;
             return (
               <g key={`b-${v}`}>
-                <rect x={x} y={y} width="54" height={h} fill="#0fa39a" />
+                <rect
+                  x={x}
+                  y={y}
+                  width="54"
+                  height={h}
+                  fill="#0fa39a"
+                  style={{
+                    transformOrigin: `${x + 27}px 368px`,
+                    transform: visible ? 'scaleY(1)' : 'scaleY(0)',
+                    transition: `transform 0.55s ease ${i * 90}ms`,
+                  }}
+                />
                 <text x={x + 27} y={y - 10} fill="#f2e9d5" fontFamily="IBM Plex Mono" fontSize="11" textAnchor="middle">
                   {v}%
                 </text>
@@ -123,17 +140,81 @@ export default function RemoteHiring() {
             );
           })}
         </svg>
-      }
+      )}
       sections={sections}
+      inlineVisualInsertAfter={1}
+      inlineVisual={{
+        title: 'Where the jobs are moving',
+        titleEs: 'Hacia dónde se están moviendo los empleos',
+        description:
+          'Growth concentrates in technical functions tied to revenue systems, reliability, and AI-enabled delivery.',
+        descriptionEs:
+          'El crecimiento se concentra en funciones técnicas ligadas a sistemas de ingresos, confiabilidad y ejecución habilitada por IA.',
+        render: ({ visible, lang }) => (
+          <svg className="svg-fill" viewBox="0 0 720 280" aria-label="Role growth chart">
+            <rect width="720" height="280" fill="#0a1214" />
+            {growthSeries.map((item, index) => {
+              const y = 38 + index * 46;
+              const width = Math.min(460, item.value * 1.6);
+              const color = item.value > 100 ? '#77d8ac' : item.value >= 30 ? '#0fa39a' : '#70858c';
+              return (
+                <g key={item.label}>
+                  <text x="30" y={y + 16} fill="#f2e9d5" fontFamily="IBM Plex Mono" fontSize="12">
+                    {item.label}
+                  </text>
+                  <rect x="180" y={y} width="470" height="20" fill="rgba(255,255,255,0.08)" />
+                  <rect
+                    x="180"
+                    y={y}
+                    width={width}
+                    height="20"
+                    fill={color}
+                    style={{
+                      transformOrigin: '180px 0px',
+                      transform: visible ? 'scaleX(1)' : 'scaleX(0)',
+                      transition: `transform 0.55s ease ${index * 90}ms`,
+                    }}
+                  />
+                  <text x="662" y={y + 16} fill={color} fontFamily="IBM Plex Mono" fontSize="12" textAnchor="end">
+                    +{item.value}%
+                  </text>
+                </g>
+              );
+            })}
+            <text x="30" y="248" fill="#9caeb5" fontFamily="IBM Plex Mono" fontSize="11">
+              {lang === 'es' ? 'Variación interanual de vacantes remotas' : 'YoY change in remote openings'}
+            </text>
+          </svg>
+        ),
+      }}
       pullQuote="Remote growth rewards candidates who can translate technical decisions into business outcomes, in writing, without waiting for a meeting."
       pullQuoteEs="Remote growth rewards candidates who can translate technical decisions into business outcomes, in writing, without waiting for a meeting."
-      dataValue="+38%"
-      dataLabel="YoY increase in verified remote hiring demand across Nortec-tracked LatAm-open roles."
-      dataLabelEs="YoY increase in verified remote hiring demand across Nortec-tracked LatAm-open roles."
-      moreLinks={[
-        { to: '/blog/salary-negotiation', label: "The LatAm engineer's guide to negotiating in USD", labelEs: "The LatAm engineer's guide to negotiating in USD" },
-        { to: '/blog/ai-latam-jobs', label: "AI is not taking LatAm tech jobs — it's creating better ones", labelEs: "AI is not taking LatAm tech jobs — it's creating better ones" },
-        { to: '/blog/timezone-strategy', label: 'How to position your timezone as an asset, not an apology', labelEs: 'How to position your timezone as an asset, not an apology' },
+      dataCallout={{
+        prefix: '+',
+        target: 38,
+        suffix: '%',
+        label: 'YoY increase in verified remote hiring demand across Nortec-tracked LatAm-open roles.',
+        labelEs: 'Aumento interanual de la demanda de contratación remota verificada en roles abiertos en LatAm rastreados por Nortec.',
+      }}
+      moreFrom={[
+        {
+          to: '/blog/salary-negotiation',
+          title: "The LatAm engineer's guide to negotiating in USD",
+          titleEs: 'Guía para ingenieros de LatAm para negociar en USD',
+          theme: 'theme-skill',
+        },
+        {
+          to: '/blog/ai-latam-jobs',
+          title: "AI is not taking LatAm tech jobs — it's creating better ones",
+          titleEs: 'La IA no está quitando empleos tech en LatAm — está creando mejores',
+          theme: 'theme-ai',
+        },
+        {
+          to: '/blog/timezone-strategy',
+          title: 'How to position your timezone as an asset, not an apology',
+          titleEs: 'Cómo posicionar tu zona horaria como una ventaja, no como una disculpa',
+          theme: 'theme-timezone',
+        },
       ]}
     />
   );

@@ -1,4 +1,4 @@
-import ArticleLayout from './ArticleLayout';
+import ArticleTemplate from './ArticleTemplate';
 
 const sections = [
   {
@@ -91,15 +91,13 @@ const sections = [
 
 export default function SalaryNegotiation() {
   return (
-    <ArticleLayout
+    <ArticleTemplate
       title="The LatAm engineer's guide to negotiating in USD"
       titleEs="Guía para ingenieros de LatAm para negociar en USD"
       readTime="11 min read"
       readTimeEs="11 min de lectura"
-      author="Nortec Editorial · May 2026"
-      authorEs="Nortec Editorial · Mayo 2026"
-      lede="Most LatAm engineers undervalue themselves when applying to US companies. This framework helps you anchor, counter, and close at the number your scope deserves."
-      ledeEs="Most LatAm engineers undervalue themselves when applying to US companies. This framework helps you anchor, counter, and close at the number your scope deserves."
+      standfirst="Most LatAm engineers underprice themselves in global conversations; this framework turns negotiation from a last-minute reaction into a repeatable operating skill."
+      standfirstEs="Muchos ingenieros de LatAm se subvaloran en conversaciones globales; este marco convierte la negociación de una reacción de último minuto en una habilidad operativa repetible."
       heroVisual={
         <svg className="svg-fill" viewBox="0 0 760 420" aria-label="Salary negotiation visual">
           <rect width="760" height="420" fill="#12120c" />
@@ -119,15 +117,89 @@ export default function SalaryNegotiation() {
         </svg>
       }
       sections={sections}
+      inlineVisualInsertAfter={1}
+      inlineVisual={{
+        title: 'Negotiation gap: before and after',
+        titleEs: 'Brecha de negociación: antes y después',
+        description:
+          'Candidates who anchor on scope and outcomes consistently close more of the gap between initial and final compensation.',
+        descriptionEs:
+          'Quienes anclan su negociación en alcance y resultados cierran de forma consistente una mayor parte de la brecha entre oferta inicial y final.',
+        render: ({ visible, lang }) => (
+          <svg className="svg-fill" viewBox="0 0 720 250" aria-label="Negotiation bar comparison">
+            <rect width="720" height="250" fill="#12120c" />
+            <text x="60" y="55" fill="#ff8a4b" fontFamily="IBM Plex Mono" fontSize="12">
+              {lang === 'es' ? 'Oferta inicial' : 'Initial offer'}
+            </text>
+            <text x="60" y="145" fill="#0fa39a" fontFamily="IBM Plex Mono" fontSize="12">
+              {lang === 'es' ? 'Oferta final' : 'Final offer'}
+            </text>
+            <rect x="60" y="70" width="560" height="30" fill="rgba(255,255,255,0.08)" />
+            <rect x="60" y="160" width="560" height="30" fill="rgba(255,255,255,0.08)" />
+            <rect
+              x="60"
+              y="70"
+              width="360"
+              height="30"
+              fill="#ff8a4b"
+              style={{
+                transformOrigin: '60px 85px',
+                transform: visible ? 'scaleX(1)' : 'scaleX(0)',
+                transition: 'transform 0.55s ease',
+              }}
+            />
+            <rect
+              x="60"
+              y="160"
+              width="500"
+              height="30"
+              fill="#0fa39a"
+              style={{
+                transformOrigin: '60px 175px',
+                transform: visible ? 'scaleX(1)' : 'scaleX(0)',
+                transition: 'transform 0.55s ease 120ms',
+              }}
+            />
+            <line x1="420" y1="86" x2="560" y2="175" stroke="#f2e9d5" strokeWidth="3" />
+            <polygon points="553,161 585,183 547,189" fill="#f2e9d5" />
+            <text x="615" y="89" fill="#ff8a4b" fontFamily="IBM Plex Mono" fontSize="12" textAnchor="end">
+              $78K
+            </text>
+            <text x="615" y="179" fill="#0fa39a" fontFamily="IBM Plex Mono" fontSize="12" textAnchor="end">
+              $108K
+            </text>
+          </svg>
+        ),
+      }}
       pullQuote="Negotiation is not about being aggressive. It is about making your value legible in the language the business already uses."
       pullQuoteEs="Negotiation is not about being aggressive. It is about making your value legible in the language the business already uses."
-      dataValue="$87K"
-      dataLabel="Typical midpoint for senior backend roles in LatAm-open remote hiring pipelines, before negotiation improvements."
-      dataLabelEs="Typical midpoint for senior backend roles in LatAm-open remote hiring pipelines, before negotiation improvements."
-      moreLinks={[
-        { to: '/blog/remote-hiring-latam', label: "Remote hiring in LatAm is up 38% YoY", labelEs: "Remote hiring in LatAm is up 38% YoY" },
-        { to: '/blog/andres-story', label: "From Bogotá agency work to a $90K remote role", labelEs: "From Bogotá agency work to a $90K remote role" },
-        { to: '/blog/timezone-strategy', label: 'How to position your timezone as an asset, not an apology', labelEs: 'How to position your timezone as an asset, not an apology' },
+      dataCallout={{
+        prefix: '$',
+        target: 87,
+        suffix: 'K',
+        label: 'Typical midpoint for senior backend roles in LatAm-open remote hiring pipelines, before negotiation improvements.',
+        labelEs:
+          'Punto medio típico para roles backend senior en pipelines remotos abiertos a LatAm, antes de mejoras en negociación.',
+      }}
+      moreFrom={[
+        {
+          to: '/blog/remote-hiring-latam',
+          title: 'Remote hiring in LatAm is up 38% YoY',
+          titleEs: 'La contratación remota en LatAm subió 38% interanual',
+          theme: 'theme-market',
+        },
+        {
+          to: '/blog/andres-story',
+          title: "From Bogotá agency work to a $90K remote role",
+          titleEs: 'De una agencia en Bogotá a un rol remoto de $90K',
+          theme: 'theme-people',
+        },
+        {
+          to: '/blog/timezone-strategy',
+          title: 'How to position your timezone as an asset, not an apology',
+          titleEs: 'Cómo posicionar tu zona horaria como una ventaja, no como una disculpa',
+          theme: 'theme-timezone',
+        },
       ]}
     />
   );

@@ -1,4 +1,4 @@
-import ArticleLayout from './ArticleLayout';
+import ArticleTemplate from './ArticleTemplate';
 
 const sections = [
   {
@@ -91,15 +91,13 @@ const sections = [
 
 export default function ClaraSpotlight() {
   return (
-    <ArticleLayout
+    <ArticleTemplate
       title="Why Clara keeps hiring from LatAm — and what they're really looking for"
       titleEs="Por qué Clara sigue contratando desde LatAm — y qué están buscando realmente"
       readTime="9 min read"
       readTimeEs="9 min de lectura"
-      author="Nortec Editorial · May 2026"
-      authorEs="Nortec Editorial · Mayo 2026"
-      lede="Clara is one of the most consistent LatAm-hiring companies we track. We analyzed 12 months of role patterns to understand what they value and how candidates can match it."
-      ledeEs="Clara is one of the most consistent LatAm-hiring companies we track. We analyzed 12 months of role patterns to understand what they value and how candidates can match it."
+      standfirst="Clara has stayed unusually consistent through volatile hiring cycles, making it one of the strongest signal companies for candidates targeting durable fintech growth."
+      standfirstEs="Clara se ha mantenido inusualmente consistente en ciclos de contratación volátiles, lo que la convierte en una de las empresas señal más fuertes para quienes buscan crecimiento sostenible en fintech."
       heroVisual={
         <svg className="svg-fill" viewBox="0 0 760 420" aria-label="Clara radar visual">
           <rect width="760" height="420" fill="#081014" />
@@ -116,15 +114,71 @@ export default function ClaraSpotlight() {
         </svg>
       }
       sections={sections}
+      inlineVisualInsertAfter={1}
+      inlineVisual={{
+        title: 'Hiring frequency radar (12 months)',
+        titleEs: 'Radar de frecuencia de contratación (12 meses)',
+        description:
+          'Clara maintained regular posting cadence through the year, with spikes around platform and operations-heavy quarters.',
+        descriptionEs:
+          'Clara mantuvo una cadencia de publicaciones regular durante el año, con picos en trimestres de plataforma y operaciones.',
+        render: ({ visible, lang }) => (
+          <svg className="svg-fill" viewBox="0 0 720 300" aria-label="Clara 12-month radar chart">
+            <rect width="720" height="300" fill="#081014" />
+            {[48, 78, 108, 138].map((r) => (
+              <circle key={r} cx="360" cy="150" r={r} fill="none" stroke="rgba(15,163,154,0.22)" />
+            ))}
+            {Array.from({ length: 12 }).map((_, i) => {
+              const angle = (Math.PI * 2 * i) / 12 - Math.PI / 2;
+              const x = 360 + Math.cos(angle) * 138;
+              const y = 150 + Math.sin(angle) * 138;
+              return <line key={i} x1="360" y1="150" x2={x} y2={y} stroke="rgba(15,163,154,0.2)" />;
+            })}
+            <polygon
+              points="360,32 418,63 470,105 493,151 458,205 395,242 330,236 268,210 232,151 246,98 290,58 338,42"
+              fill="rgba(15,163,154,0.28)"
+              stroke="#0fa39a"
+              strokeWidth="3"
+              style={{
+                transformOrigin: '360px 150px',
+                transform: visible ? 'scale(1)' : 'scale(0.4)',
+                opacity: visible ? 1 : 0,
+                transition: 'transform 0.6s ease, opacity 0.6s ease',
+              }}
+            />
+            <text x="48" y="26" fill="#9caeb5" fontFamily="IBM Plex Mono" fontSize="11">
+              {lang === 'es' ? 'Intensidad relativa de contrataciones por mes' : 'Relative hiring intensity by month'}
+            </text>
+          </svg>
+        ),
+      }}
       pullQuote="Clara does not reward generic talent claims. It rewards evidence of ownership in systems where reliability and decision speed directly affect revenue."
       pullQuoteEs="Clara does not reward generic talent claims. It rewards evidence of ownership in systems where reliability and decision speed directly affect revenue."
-      dataValue="12 mo"
-      dataLabel="Window analyzed for role consistency, scope quality, and cross-functional demand patterns."
-      dataLabelEs="Window analyzed for role consistency, scope quality, and cross-functional demand patterns."
-      moreLinks={[
-        { to: '/blog/remote-hiring-latam', label: "Remote hiring in LatAm is up 38% YoY", labelEs: "Remote hiring in LatAm is up 38% YoY" },
-        { to: '/blog/ai-latam-jobs', label: "AI is not taking LatAm tech jobs — it's creating better ones", labelEs: "AI is not taking LatAm tech jobs — it's creating better ones" },
-        { to: '/blog/salary-negotiation', label: "The LatAm engineer's guide to negotiating in USD", labelEs: "The LatAm engineer's guide to negotiating in USD" },
+      dataCallout={{
+        target: 12,
+        suffix: ' mo',
+        label: 'Window analyzed for role consistency, scope quality, and cross-functional demand patterns.',
+        labelEs: 'Ventana analizada para consistencia de roles, calidad de alcance y patrones de demanda cross-functional.',
+      }}
+      moreFrom={[
+        {
+          to: '/blog/remote-hiring-latam',
+          title: 'Remote hiring in LatAm is up 38% YoY',
+          titleEs: 'La contratación remota en LatAm subió 38% interanual',
+          theme: 'theme-market',
+        },
+        {
+          to: '/blog/ai-latam-jobs',
+          title: "AI is not taking LatAm tech jobs — it's creating better ones",
+          titleEs: 'La IA no está quitando empleos tech en LatAm — está creando mejores',
+          theme: 'theme-ai',
+        },
+        {
+          to: '/blog/salary-negotiation',
+          title: "The LatAm engineer's guide to negotiating in USD",
+          titleEs: 'Guía para ingenieros de LatAm para negociar en USD',
+          theme: 'theme-skill',
+        },
       ]}
     />
   );

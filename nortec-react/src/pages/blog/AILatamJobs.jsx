@@ -1,4 +1,4 @@
-import ArticleLayout from './ArticleLayout';
+import ArticleTemplate from './ArticleTemplate';
 
 const sections = [
   {
@@ -91,15 +91,13 @@ const sections = [
 
 export default function AILatamJobs() {
   return (
-    <ArticleLayout
+    <ArticleTemplate
       title="AI is not taking LatAm tech jobs — it's creating better ones"
       titleEs="La IA no está quitando empleos tech en LatAm — está creando mejores"
       readTime="10 min read"
       readTimeEs="10 min de lectura"
-      author="Nortec Editorial · May 2026"
-      authorEs="Nortec Editorial · Mayo 2026"
-      lede="The roles created by the AI shift are often more accessible to LatAm talent than the roles being displaced. Here is the data and practical strategy behind that claim."
-      ledeEs="The roles created by the AI shift are often more accessible to LatAm talent than the roles being displaced. Here is the data and practical strategy behind that claim."
+      standfirst="The AI shift is recomposing work rather than deleting it; candidates who connect AI fluency to concrete business delivery are moving into better-paid lanes."
+      standfirstEs="El cambio de IA está recomponiendo el trabajo más que eliminándolo; quienes conectan fluidez en IA con entrega de negocio concreta están entrando en trayectorias mejor pagadas."
       heroVisual={
         <svg className="svg-fill" viewBox="0 0 760 420" aria-label="AI network visual">
           <rect width="760" height="420" fill="#0a0f16" />
@@ -123,15 +121,73 @@ export default function AILatamJobs() {
         </svg>
       }
       sections={sections}
+      inlineVisualInsertAfter={1}
+      inlineVisual={{
+        title: 'AI growth vs compensation scatter',
+        titleEs: 'Dispersión de crecimiento de IA vs compensación',
+        description:
+          'Higher growth clusters increasingly overlap with higher compensation bands, especially for practical AI + infrastructure roles.',
+        descriptionEs:
+          'Los clústeres de mayor crecimiento se superponen cada vez más con bandas salariales más altas, especialmente en roles de IA práctica + infraestructura.',
+        render: ({ visible, lang }) => (
+          <svg className="svg-fill" viewBox="0 0 720 270" aria-label="AI jobs scatter plot">
+            <rect width="720" height="270" fill="#0a0f16" />
+            <line x1="80" y1="220" x2="660" y2="220" stroke="rgba(255,255,255,0.3)" />
+            <line x1="80" y1="40" x2="80" y2="220" stroke="rgba(255,255,255,0.3)" />
+            {[{ x: 140, y: 186 }, { x: 220, y: 164 }, { x: 310, y: 138 }, { x: 390, y: 122 }, { x: 478, y: 96 }, { x: 560, y: 78 }].map(
+              (dot, i) => (
+                <circle
+                  key={i}
+                  cx={dot.x}
+                  cy={dot.y}
+                  r="7"
+                  fill={i > 3 ? '#77d8ac' : '#0fa39a'}
+                  style={{
+                    opacity: visible ? 1 : 0,
+                    transform: visible ? 'scale(1)' : 'scale(0.2)',
+                    transformOrigin: `${dot.x}px ${dot.y}px`,
+                    transition: `transform 0.4s ease ${i * 100}ms, opacity 0.4s ease ${i * 100}ms`,
+                  }}
+                />
+              )
+            )}
+            <text x="84" y="28" fill="#9caeb5" fontFamily="IBM Plex Mono" fontSize="11">
+              {lang === 'es' ? 'Crecimiento de roles' : 'Role growth'}
+            </text>
+            <text x="524" y="245" fill="#9caeb5" fontFamily="IBM Plex Mono" fontSize="11">
+              {lang === 'es' ? 'Banda salarial (USD)' : 'Salary band (USD)'}
+            </text>
+          </svg>
+        ),
+      }}
       pullQuote="The winners in this cycle are not the people who talk most about AI. They are the people who make AI useful in production workflows."
       pullQuoteEs="The winners in this cycle are not the people who talk most about AI. They are the people who make AI useful in production workflows."
-      dataValue="+283%"
-      dataLabel="YoY growth in AI/ML engineering demand in Nortec-tracked remote hiring segments."
-      dataLabelEs="YoY growth in AI/ML engineering demand in Nortec-tracked remote hiring segments."
-      moreLinks={[
-        { to: '/blog/remote-hiring-latam', label: "Remote hiring in LatAm is up 38% YoY", labelEs: "Remote hiring in LatAm is up 38% YoY" },
-        { to: '/blog/clara-spotlight', label: "Why Clara keeps hiring from LatAm", labelEs: "Why Clara keeps hiring from LatAm" },
-        { to: '/blog/salary-negotiation', label: "The LatAm engineer's guide to negotiating in USD", labelEs: "The LatAm engineer's guide to negotiating in USD" },
+      dataCallout={{
+        prefix: '+',
+        target: 283,
+        suffix: '%',
+        label: 'YoY growth in AI/ML engineering demand in Nortec-tracked remote hiring segments.',
+        labelEs: 'Crecimiento interanual en demanda de ingeniería AI/ML en segmentos remotos rastreados por Nortec.',
+      }}
+      moreFrom={[
+        {
+          to: '/blog/remote-hiring-latam',
+          title: 'Remote hiring in LatAm is up 38% YoY',
+          titleEs: 'La contratación remota en LatAm subió 38% interanual',
+          theme: 'theme-market',
+        },
+        {
+          to: '/blog/clara-spotlight',
+          title: 'Why Clara keeps hiring from LatAm',
+          titleEs: 'Por qué Clara sigue contratando desde LatAm',
+          theme: 'theme-company',
+        },
+        {
+          to: '/blog/salary-negotiation',
+          title: "The LatAm engineer's guide to negotiating in USD",
+          titleEs: 'Guía para ingenieros de LatAm para negociar en USD',
+          theme: 'theme-skill',
+        },
       ]}
     />
   );

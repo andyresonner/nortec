@@ -1,4 +1,4 @@
-import ArticleLayout from './ArticleLayout';
+import ArticleTemplate from './ArticleTemplate';
 
 const sections = [
   {
@@ -87,15 +87,13 @@ const sections = [
 
 export default function AndresStory() {
   return (
-    <ArticleLayout
+    <ArticleTemplate
       title="From Bogotá agency work to a $90K remote role — Andrés's story"
       titleEs="De una agencia en Bogotá a un rol remoto de $90K — la historia de Andrés"
       readTime="10 min read"
       readTimeEs="10 min de lectura"
-      author="Nortec Editorial · May 2026"
-      authorEs="Nortec Editorial · Mayo 2026"
-      lede="After three years at a local digital agency, Andrés spent six months applying to remote roles. This is what finally worked, what failed, and how he built a system that changed his outcomes."
-      ledeEs="After three years at a local digital agency, Andrés spent six months applying to remote roles. This is what finally worked, what failed, and how he built a system that changed his outcomes."
+      standfirst="After three years at a local digital agency, Andrés spent six months rebuilding his process and converted scattered applications into a focused, high-conversion pipeline."
+      standfirstEs="Después de tres años en una agencia local, Andrés pasó seis meses rediseñando su proceso y convirtió postulaciones dispersas en un pipeline enfocado y de alta conversión."
       heroVisual={
         <svg className="svg-fill" viewBox="0 0 760 420" aria-label="Andres story visual">
           <rect width="760" height="420" fill="#150f0f" />
@@ -112,15 +110,95 @@ export default function AndresStory() {
         </svg>
       }
       sections={sections}
+      inlineVisualInsertAfter={1}
+      inlineVisual={{
+        title: 'Search journey timeline',
+        titleEs: 'Línea de tiempo de su búsqueda',
+        description:
+          'The pivot came when activity shifted from volume to system design: tighter targeting, stronger proof, and explicit weekly reviews.',
+        descriptionEs:
+          'El punto de inflexión llegó cuando la actividad pasó de volumen a diseño de sistema: foco en objetivos, mejor evidencia y revisión semanal explícita.',
+        render: ({ visible, lang }) => (
+          <svg className="svg-fill" viewBox="0 0 720 260" aria-label="Job search timeline visual">
+            <rect width="720" height="260" fill="#101214" />
+            <line x1="80" y1="210" x2="650" y2="210" stroke="rgba(255,255,255,0.25)" />
+            <line x1="80" y1="45" x2="80" y2="210" stroke="rgba(255,255,255,0.25)" />
+            {[
+              { month: 'M1', value: 18 },
+              { month: 'M2', value: 27 },
+              { month: 'M3', value: 43 },
+              { month: 'M4', value: 59 },
+              { month: 'M5', value: 78 },
+              { month: 'M6', value: 92 },
+            ].map((point, i) => {
+              const x = 110 + i * 92;
+              const y = 210 - point.value * 1.5;
+              return (
+                <g key={point.month}>
+                  <circle
+                    cx={x}
+                    cy={y}
+                    r="6"
+                    fill="#0fa39a"
+                    style={{
+                      transformOrigin: `${x}px ${y}px`,
+                      transform: visible ? 'scale(1)' : 'scale(0)',
+                      transition: `transform 0.35s ease ${i * 120}ms`,
+                    }}
+                  />
+                  <text x={x} y="232" fill="#f2e9d5" fontFamily="IBM Plex Mono" fontSize="11" textAnchor="middle">
+                    {point.month}
+                  </text>
+                </g>
+              );
+            })}
+            <polyline
+              fill="none"
+              stroke="#ff8a4b"
+              strokeWidth="4"
+              strokeLinejoin="round"
+              strokeLinecap="round"
+              points="110,183 202,170 294,145 386,121 478,93 570,72"
+              style={{
+                strokeDasharray: 620,
+                strokeDashoffset: visible ? 0 : 620,
+                transition: 'stroke-dashoffset 0.8s ease',
+              }}
+            />
+            <text x="90" y="30" fill="#9caeb5" fontFamily="IBM Plex Mono" fontSize="11">
+              {lang === 'es' ? 'Progreso de proceso de búsqueda (índice)' : 'Search process progress (index)'}
+            </text>
+          </svg>
+        ),
+      }}
       pullQuote="The biggest shift was not skill level. It was narrative clarity: once his impact was obvious, interviews and offers followed."
       pullQuoteEs="The biggest shift was not skill level. It was narrative clarity: once his impact was obvious, interviews and offers followed."
-      dataValue="$90K+"
-      dataLabel="Final base offer after a process redesign focused on evidence, communication, and role targeting."
-      dataLabelEs="Final base offer after a process redesign focused on evidence, communication, and role targeting."
-      moreLinks={[
-        { to: '/blog/remote-hiring-latam', label: "Remote hiring in LatAm is up 38% YoY", labelEs: "Remote hiring in LatAm is up 38% YoY" },
-        { to: '/blog/salary-negotiation', label: "The LatAm engineer's guide to negotiating in USD", labelEs: "The LatAm engineer's guide to negotiating in USD" },
-        { to: '/blog/timezone-strategy', label: 'How to position your timezone as an asset, not an apology', labelEs: 'How to position your timezone as an asset, not an apology' },
+      dataCallout={{
+        prefix: '$',
+        target: 90,
+        suffix: 'K+',
+        label: 'Final base offer after a process redesign focused on evidence, communication, and role targeting.',
+        labelEs: 'Oferta base final tras rediseñar el proceso con foco en evidencia, comunicación y selección de roles.',
+      }}
+      moreFrom={[
+        {
+          to: '/blog/remote-hiring-latam',
+          title: 'Remote hiring in LatAm is up 38% YoY',
+          titleEs: 'La contratación remota en LatAm subió 38% interanual',
+          theme: 'theme-market',
+        },
+        {
+          to: '/blog/salary-negotiation',
+          title: "The LatAm engineer's guide to negotiating in USD",
+          titleEs: 'Guía para ingenieros de LatAm para negociar en USD',
+          theme: 'theme-skill',
+        },
+        {
+          to: '/blog/timezone-strategy',
+          title: 'How to position your timezone as an asset, not an apology',
+          titleEs: 'Cómo posicionar tu zona horaria como una ventaja, no como una disculpa',
+          theme: 'theme-timezone',
+        },
       ]}
     />
   );
