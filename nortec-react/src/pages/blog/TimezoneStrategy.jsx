@@ -106,20 +106,44 @@ export default function TimezoneStrategy() {
       readTimeEs="9 min de lectura"
       standfirst="Colombia, Mexico, and Argentina offer a practical overlap window with US teams; candidates who translate that overlap into throughput language gain clear interview leverage."
       standfirstEs="Colombia, México y Argentina ofrecen una ventana real de solapamiento con equipos de EE.UU.; quienes traducen ese solapamiento en lenguaje de productividad ganan ventaja clara en entrevistas."
-      heroVisual={
+      heroVisual={({ visible }) => (
         <svg className="svg-fill" viewBox="0 0 760 420" aria-label="Timezone overlap visual">
           <rect width="760" height="420" fill="#0b1116" />
-          <path d="M120 285 C210 230, 310 220, 380 252 C460 282, 540 282, 640 246" fill="none" stroke="rgba(15,163,154,0.32)" strokeWidth="16" />
-          <path d="M345 252 C390 256, 430 264, 475 260" fill="none" stroke="rgba(255,75,40,0.8)" strokeWidth="15" />
+          <path
+            d="M120 285 C210 230, 310 220, 380 252 C460 282, 540 282, 640 246"
+            fill="none"
+            stroke="rgba(15,163,154,0.32)"
+            strokeWidth="16"
+            className="svg-float"
+          />
+          <path
+            d="M345 252 C390 256, 430 264, 475 260"
+            fill="none"
+            stroke="rgba(255,75,40,0.8)"
+            strokeWidth="15"
+            style={{
+              opacity: visible ? 1 : 0,
+              strokeDasharray: 150,
+              strokeDashoffset: visible ? 0 : 150,
+              transition: 'opacity 0.3s ease, stroke-dashoffset 0.5s ease',
+            }}
+          />
           <circle cx="230" cy="160" r="60" fill="none" stroke="#0fa39a" />
           <line x1="230" y1="160" x2="256" y2="134" stroke="#0fa39a" strokeWidth="4" />
           <circle cx="515" cy="160" r="60" fill="none" stroke="#ff8a4b" />
           <line x1="515" y1="160" x2="542" y2="178" stroke="#ff8a4b" strokeWidth="4" />
+          <circle
+            cx={visible ? '476' : '346'}
+            cy={visible ? '259' : '252'}
+            r="7"
+            fill="#f2e9d5"
+            style={{ transition: 'cx 0.9s ease, cy 0.9s ease' }}
+          />
           <text x="58" y="70" fill="rgba(242,233,213,0.13)" fontFamily="Oswald" fontSize="82" letterSpacing="8">
             OVERLAP
           </text>
         </svg>
-      }
+      )}
       sections={sections}
       inlineVisualInsertAfter={1}
       inlineVisual={{

@@ -94,21 +94,44 @@ export default function AndresStory() {
       readTimeEs="10 min de lectura"
       standfirst="After three years at a local digital agency, Andrés spent six months rebuilding his process and converted scattered applications into a focused, high-conversion pipeline."
       standfirstEs="Después de tres años en una agencia local, Andrés pasó seis meses rediseñando su proceso y convirtió postulaciones dispersas en un pipeline enfocado y de alta conversión."
-      heroVisual={
+      heroVisual={({ visible }) => (
         <svg className="svg-fill" viewBox="0 0 760 420" aria-label="Andres story visual">
           <rect width="760" height="420" fill="#150f0f" />
-          <circle cx="370" cy="165" r="88" fill="rgba(255,138,75,0.42)" />
-          <polygon points="288,270 455,270 500,405 245,405" fill="rgba(216,171,45,0.3)" />
+          <circle
+            className="svg-pulse"
+            cx="370"
+            cy="165"
+            r="88"
+            fill="rgba(255,138,75,0.42)"
+            style={{ opacity: visible ? 1 : 0.2, transition: 'opacity 0.4s ease' }}
+          />
+          <polygon
+            points="288,270 455,270 500,405 245,405"
+            fill="rgba(216,171,45,0.3)"
+            style={{
+              transform: visible ? 'translateY(0)' : 'translateY(20px)',
+              opacity: visible ? 1 : 0,
+              transition: 'transform 0.5s ease, opacity 0.5s ease',
+            }}
+          />
           <line x1="330" y1="158" x2="360" y2="153" stroke="#ffd6ab" strokeWidth="7" />
           <line x1="382" y1="153" x2="412" y2="158" stroke="#ffd6ab" strokeWidth="7" />
           <circle cx="355" cy="194" r="9" fill="#ffd6ab" />
           <circle cx="389" cy="194" r="9" fill="#ffd6ab" />
           <line x1="352" y1="230" x2="395" y2="230" stroke="#ff8a4b" strokeWidth="7" />
-          <text x="54" y="62" fill="rgba(242,233,213,0.15)" fontFamily="Oswald" fontSize="88" letterSpacing="8">
+          <text
+            x="54"
+            y="62"
+            fill="rgba(242,233,213,0.15)"
+            fontFamily="Oswald"
+            fontSize="88"
+            letterSpacing="8"
+            style={{ opacity: visible ? 1 : 0.4, transition: 'opacity 0.5s ease 120ms' }}
+          >
             PEOPLE
           </text>
         </svg>
-      }
+      )}
       sections={sections}
       inlineVisualInsertAfter={1}
       inlineVisual={{

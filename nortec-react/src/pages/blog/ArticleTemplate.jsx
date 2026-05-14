@@ -46,6 +46,14 @@ function DataCounter({ prefix = '', suffix = '', target = 0, label, labelEs, lan
   );
 }
 
+function splitParagraph(text) {
+  if (!text) return [''];
+  const sentences = text.split(/(?<=[.!?])\s+/).filter(Boolean);
+  if (text.length < 250 || sentences.length < 3) return [text];
+  const midpoint = Math.ceil(sentences.length / 2);
+  return [sentences.slice(0, midpoint).join(' '), sentences.slice(midpoint).join(' ')];
+}
+
 export default function ArticleTemplate({
   title,
   titleEs,
@@ -64,7 +72,7 @@ export default function ArticleTemplate({
 }) {
   const [lang, setLang] = useState(getCurrentLanguage());
   const [progress, setProgress] = useState(0);
-  const [scrollY, setScrollY] = useState(0);
+  const [heroScroll, setHeroScroll] = useState(0);
   const [copyState, setCopyState] = useState('');
   const [showStickyShare, setShowStickyShare] = useState(false);
   const [email, setEmail] = useState('');
@@ -87,7 +95,11 @@ export default function ArticleTemplate({
       const doc = document.documentElement;
       const max = doc.scrollHeight - window.innerHeight;
       setProgress(max > 0 ? (top / max) * 100 : 0);
-      setScrollY(top);
+      const hero = heroRef.current;
+      if (hero) {
+        const relative = Math.max(0, Math.min(hero.offsetHeight, top - hero.offsetTop));
+        setHeroScroll(relative);
+      }
 
       const heroHeight = heroRef.current?.offsetHeight || 0;
       const footer = document.querySelector('footer');
@@ -140,13 +152,13 @@ export default function ArticleTemplate({
       <header className="article-template-hero" ref={heroRef}>
         <div
           className="article-template-hero-visual"
-          style={{ transform: `translateY(${Math.round(scrollY * 0.3)}px)` }}
+          style={{ transform: `translateY(${Math.round(heroScroll * 0.3)}px)` }}
         >
           {typeof heroVisual === 'function' ? heroVisual({ visible: heroVisible, lang }) : heroVisual}
         </div>
         <div
           className="article-template-hero-copy"
-          style={{ transform: `translateY(${Math.round(scrollY * 0.7)}px)` }}
+          style={{ transform: `translateY(${Math.round(heroScroll * 0.7)}px)` }}
         >
           <span className="article-template-read-pill" data-en={readTime} data-es={readTimeEs}>
             {lang === 'es' ? readTimeEs : readTime}
@@ -170,11 +182,21 @@ export default function ArticleTemplate({
                 </h2>
               </Reveal>
               {section.paragraphs.map((paragraph, pIdx) => (
-                <Reveal key={`${section.heading}-${pIdx}`} delay={100 * (pIdx + 1)}>
-                  <p data-en={paragraph.en} data-es={paragraph.es}>
-                    {lang === 'es' ? paragraph.es : paragraph.en}
-                  </p>
-                </Reveal>
+                <div key={`${section.heading}-${pIdx}`}>
+                  {Array.from({ length: Math.max(splitParagraph(paragraph.en).length, splitParagraph(paragraph.es).length) }).map(
+                    (_, chunkIdx) => {
+                      const enChunk = splitParagraph(paragraph.en)[chunkIdx] || splitParagraph(paragraph.en).slice(-1)[0];
+                      const esChunk = splitParagraph(paragraph.es)[chunkIdx] || splitParagraph(paragraph.es).slice(-1)[0];
+                      return (
+                        <Reveal key={`${section.heading}-${pIdx}-${chunkIdx}`} delay={100 * (pIdx + 1 + chunkIdx)}>
+                          <p data-en={enChunk} data-es={esChunk}>
+                            {lang === 'es' ? esChunk : enChunk}
+                          </p>
+                        </Reveal>
+                      );
+                    }
+                  )}
+                </div>
               ))}
             </section>
 

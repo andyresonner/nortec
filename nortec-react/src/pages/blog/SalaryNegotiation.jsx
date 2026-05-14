@@ -98,24 +98,62 @@ export default function SalaryNegotiation() {
       readTimeEs="11 min de lectura"
       standfirst="Most LatAm engineers underprice themselves in global conversations; this framework turns negotiation from a last-minute reaction into a repeatable operating skill."
       standfirstEs="Muchos ingenieros de LatAm se subvaloran en conversaciones globales; este marco convierte la negociación de una reacción de último minuto en una habilidad operativa repetible."
-      heroVisual={
+      heroVisual={({ visible, lang }) => (
         <svg className="svg-fill" viewBox="0 0 760 420" aria-label="Salary negotiation visual">
           <rect width="760" height="420" fill="#12120c" />
-          <rect x="130" y="170" width="280" height="36" fill="rgba(255,75,40,0.5)" />
-          <rect x="130" y="248" width="420" height="36" fill="rgba(15,163,154,0.65)" />
-          <line x1="425" y1="188" x2="570" y2="266" stroke="#f2e9d5" strokeWidth="3" />
-          <polygon points="563,252 594,275 557,281" fill="#f2e9d5" />
+          <rect
+            x="130"
+            y="170"
+            width="280"
+            height="36"
+            fill="rgba(255,75,40,0.5)"
+            style={{
+              transformOrigin: '130px 188px',
+              transform: visible ? 'scaleX(1)' : 'scaleX(0.05)',
+              transition: 'transform 0.45s ease',
+            }}
+          />
+          <rect
+            x="130"
+            y="248"
+            width="420"
+            height="36"
+            fill="rgba(15,163,154,0.65)"
+            style={{
+              transformOrigin: '130px 266px',
+              transform: visible ? 'scaleX(1)' : 'scaleX(0.05)',
+              transition: 'transform 0.45s ease 120ms',
+            }}
+          />
+          <line
+            x1="425"
+            y1="188"
+            x2="570"
+            y2="266"
+            stroke="#f2e9d5"
+            strokeWidth="3"
+            style={{
+              strokeDasharray: 180,
+              strokeDashoffset: visible ? 0 : 180,
+              transition: 'stroke-dashoffset 0.45s ease 200ms',
+            }}
+          />
+          <polygon
+            points="563,252 594,275 557,281"
+            fill="#f2e9d5"
+            style={{ opacity: visible ? 1 : 0, transition: 'opacity 0.35s ease 260ms' }}
+          />
           <text x="130" y="154" fill="#ff8a4b" fontFamily="IBM Plex Mono" fontSize="16">
-            Their offer
+            {lang === 'es' ? 'Oferta inicial' : 'Their offer'}
           </text>
           <text x="130" y="236" fill="#0fa39a" fontFamily="IBM Plex Mono" fontSize="16">
-            Your counter
+            {lang === 'es' ? 'Tu contraoferta' : 'Your counter'}
           </text>
           <text x="52" y="72" fill="rgba(242,233,213,0.14)" fontFamily="Oswald" fontSize="78" letterSpacing="8">
             NEGOTIATE
           </text>
         </svg>
-      }
+      )}
       sections={sections}
       inlineVisualInsertAfter={1}
       inlineVisual={{
@@ -162,6 +200,20 @@ export default function SalaryNegotiation() {
             />
             <line x1="420" y1="86" x2="560" y2="175" stroke="#f2e9d5" strokeWidth="3" />
             <polygon points="553,161 585,183 547,189" fill="#f2e9d5" />
+            <rect
+              x="420"
+              y="102"
+              width="140"
+              height="22"
+              fill="rgba(255,138,75,0.35)"
+              stroke="rgba(255,138,75,0.8)"
+              strokeDasharray="5 4"
+              style={{
+                transformOrigin: '420px 113px',
+                transform: visible ? 'scaleX(0)' : 'scaleX(1)',
+                transition: 'transform 0.75s ease 180ms',
+              }}
+            />
             <text x="615" y="89" fill="#ff8a4b" fontFamily="IBM Plex Mono" fontSize="12" textAnchor="end">
               $78K
             </text>

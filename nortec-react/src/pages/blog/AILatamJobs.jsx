@@ -98,7 +98,7 @@ export default function AILatamJobs() {
       readTimeEs="10 min de lectura"
       standfirst="The AI shift is recomposing work rather than deleting it; candidates who connect AI fluency to concrete business delivery are moving into better-paid lanes."
       standfirstEs="El cambio de IA está recomponiendo el trabajo más que eliminándolo; quienes conectan fluidez en IA con entrega de negocio concreta están entrando en trayectorias mejor pagadas."
-      heroVisual={
+      heroVisual={({ visible }) => (
         <svg className="svg-fill" viewBox="0 0 760 420" aria-label="AI network visual">
           <rect width="760" height="420" fill="#0a0f16" />
           {[
@@ -106,20 +106,37 @@ export default function AILatamJobs() {
             [350, 80], [350, 180], [350, 290],
             [580, 130], [580, 240], [580, 340],
           ].map(([x, y], i) => (
-            <circle key={`n-${i}`} cx={x} cy={y} r="9" fill="#0fa39a" />
+            <circle
+              key={`n-${i}`}
+              cx={x}
+              cy={y}
+              r="9"
+              fill="#0fa39a"
+              className="svg-pulse"
+              style={{ opacity: visible ? 1 : 0.2, transition: `opacity 0.3s ease ${i * 70}ms` }}
+            />
           ))}
           {[
             [140, 110, 350, 80], [140, 110, 350, 180], [140, 210, 350, 180], [140, 210, 350, 290],
             [140, 320, 350, 290], [350, 80, 580, 130], [350, 180, 580, 130], [350, 180, 580, 240],
             [350, 290, 580, 240], [350, 290, 580, 340],
           ].map(([x1, y1, x2, y2], i) => (
-            <line key={`l-${i}`} x1={x1} y1={y1} x2={x2} y2={y2} stroke="rgba(15,163,154,0.45)" strokeWidth="2" />
+            <line
+              key={`l-${i}`}
+              x1={x1}
+              y1={y1}
+              x2={x2}
+              y2={y2}
+              stroke="rgba(15,163,154,0.45)"
+              strokeWidth="2"
+              style={{ opacity: visible ? 1 : 0, transition: `opacity 0.25s ease ${i * 40}ms` }}
+            />
           ))}
           <text x="52" y="70" fill="rgba(242,233,213,0.13)" fontFamily="Oswald" fontSize="84" letterSpacing="8">
             AI SHIFT
           </text>
         </svg>
-      }
+      )}
       sections={sections}
       inlineVisualInsertAfter={1}
       inlineVisual={{

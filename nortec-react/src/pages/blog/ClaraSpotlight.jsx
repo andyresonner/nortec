@@ -98,21 +98,27 @@ export default function ClaraSpotlight() {
       readTimeEs="9 min de lectura"
       standfirst="Clara has stayed unusually consistent through volatile hiring cycles, making it one of the strongest signal companies for candidates targeting durable fintech growth."
       standfirstEs="Clara se ha mantenido inusualmente consistente en ciclos de contratación volátiles, lo que la convierte en una de las empresas señal más fuertes para quienes buscan crecimiento sostenible en fintech."
-      heroVisual={
+      heroVisual={({ visible }) => (
         <svg className="svg-fill" viewBox="0 0 760 420" aria-label="Clara radar visual">
           <rect width="760" height="420" fill="#081014" />
           <circle cx="380" cy="210" r="150" fill="none" stroke="rgba(15,163,154,0.2)" />
           <circle cx="380" cy="210" r="110" fill="none" stroke="rgba(15,163,154,0.2)" />
           <circle cx="380" cy="210" r="70" fill="none" stroke="rgba(15,163,154,0.2)" />
+          <path
+            d="M380 210 L380 60 A150 150 0 0 1 508 143 Z"
+            fill="rgba(15,163,154,0.18)"
+            className="svg-spin"
+            style={{ opacity: visible ? 1 : 0, transition: 'opacity 0.35s ease' }}
+          />
           <line x1="380" y1="210" x2="520" y2="210" stroke="rgba(15,163,154,0.75)" strokeWidth="3" />
-          <circle cx="435" cy="170" r="7" fill="#ff4b28" />
-          <circle cx="310" cy="265" r="6" fill="#ff4b28" />
-          <circle cx="280" cy="150" r="4" fill="#4bc9c0" />
+          <circle cx="435" cy="170" r="7" fill="#ff4b28" className="svg-pulse" />
+          <circle cx="310" cy="265" r="6" fill="#ff4b28" className="svg-pulse" />
+          <circle cx="280" cy="150" r="4" fill="#4bc9c0" className="svg-pulse" />
           <text x="58" y="68" fill="rgba(242,233,213,0.14)" fontFamily="Oswald" fontSize="82" letterSpacing="8">
             CLARA
           </text>
         </svg>
-      }
+      )}
       sections={sections}
       inlineVisualInsertAfter={1}
       inlineVisual={{
@@ -145,6 +151,12 @@ export default function ClaraSpotlight() {
                 opacity: visible ? 1 : 0,
                 transition: 'transform 0.6s ease, opacity 0.6s ease',
               }}
+            />
+            <path
+              d="M360 150 L360 12 A138 138 0 0 1 478 91 Z"
+              fill="rgba(75,201,192,0.2)"
+              className="svg-spin"
+              style={{ opacity: visible ? 1 : 0, transition: 'opacity 0.3s ease' }}
             />
             <text x="48" y="26" fill="#9caeb5" fontFamily="IBM Plex Mono" fontSize="11">
               {lang === 'es' ? 'Intensidad relativa de contrataciones por mes' : 'Relative hiring intensity by month'}
