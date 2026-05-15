@@ -698,6 +698,10 @@
   transform: translateY(0);
 }
 
+.terminal-block-start {
+  margin-top: 0.45rem;
+}
+
 .terminal-command-line {
   color: #e2f7f5;
   white-space: nowrap;
@@ -1034,10 +1038,8 @@
 }
 
 .sponsor-strip {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 1rem 1.6rem;
+  display: grid;
+  gap: 0.8rem;
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
   background: var(--bg2);
@@ -1052,11 +1054,55 @@
   text-transform: uppercase;
 }
 
-.sponsor-strip .logo {
-  font-family: var(--font-display);
-  letter-spacing: 0.1em;
-  font-size: 0.9rem;
+.sponsor-logos-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+
+.sponsor-logo {
+  width: 96px;
+  height: 32px;
+  flex: 0 0 auto;
   color: var(--atlas-gray);
+  opacity: 0.6;
+  cursor: pointer;
+  transition: opacity 0.2s ease, filter 0.2s ease, color 0.2s ease;
+}
+
+.sponsor-logo svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.sponsor-logo:hover {
+  opacity: 1;
+  color: rgba(15, 163, 154, 0.9);
+  filter: brightness(1.05);
+}
+
+.sponsor-logo.google .g-letter {
+  fill: currentColor;
+}
+
+.sponsor-logo.google:hover .g-blue {
+  fill: #4285f4;
+}
+
+.sponsor-logo.google:hover .g-red {
+  fill: #ea4335;
+}
+
+.sponsor-logo.google:hover .g-yellow {
+  fill: #fbbc05;
+}
+
+.sponsor-logo.google:hover .g-green {
+  fill: #34a853;
 }
 
 .cta-grid {

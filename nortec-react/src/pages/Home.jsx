@@ -54,6 +54,106 @@ function ScorePips({ score = 0 }) {
   );
 }
 
+function SponsorLogo({ id }) {
+  switch (id) {
+    case 'google':
+      return (
+        <svg viewBox="0 0 112 32" role="img" aria-label="Google">
+          <text x="2" y="22" className="g-letter g-blue" fontSize="21" fontFamily="Arial, sans-serif" fontWeight="700">
+            G
+          </text>
+          <text x="19" y="22" className="g-letter g-red" fontSize="21" fontFamily="Arial, sans-serif" fontWeight="700">
+            o
+          </text>
+          <text x="32" y="22" className="g-letter g-yellow" fontSize="21" fontFamily="Arial, sans-serif" fontWeight="700">
+            o
+          </text>
+          <text x="45" y="22" className="g-letter g-blue" fontSize="21" fontFamily="Arial, sans-serif" fontWeight="700">
+            g
+          </text>
+          <text x="59" y="22" className="g-letter g-green" fontSize="21" fontFamily="Arial, sans-serif" fontWeight="700">
+            l
+          </text>
+          <text x="67" y="22" className="g-letter g-red" fontSize="21" fontFamily="Arial, sans-serif" fontWeight="700">
+            e
+          </text>
+          <circle cx="88" cy="10" r="1.7" className="g-letter g-blue" />
+          <circle cx="94" cy="10" r="1.7" className="g-letter g-red" />
+          <circle cx="100" cy="10" r="1.7" className="g-letter g-yellow" />
+          <circle cx="106" cy="10" r="1.7" className="g-letter g-green" />
+        </svg>
+      );
+    case 'microsoft':
+      return (
+        <svg viewBox="0 0 120 32" role="img" aria-label="Microsoft">
+          <rect x="2" y="8" width="6" height="6" fill="currentColor" />
+          <rect x="10" y="8" width="6" height="6" fill="currentColor" />
+          <rect x="2" y="16" width="6" height="6" fill="currentColor" />
+          <rect x="10" y="16" width="6" height="6" fill="currentColor" />
+          <text x="23" y="22" fill="currentColor" fontSize="12" fontFamily="Arial, sans-serif" fontWeight="700" letterSpacing="0.08em">
+            MICROSOFT
+          </text>
+        </svg>
+      );
+    case 'meta':
+      return (
+        <svg viewBox="0 0 110 32" role="img" aria-label="Meta">
+          <path d="M4 20C8 8 14 8 18 20C22 32 28 32 32 20C36 8 42 8 46 20" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" />
+          <text x="54" y="22" fill="currentColor" fontSize="14" fontFamily="Arial, sans-serif" fontWeight="700" letterSpacing="0.04em">
+            META
+          </text>
+        </svg>
+      );
+    case 'deel':
+      return (
+        <svg viewBox="0 0 96 32" role="img" aria-label="Deel">
+          <text x="3" y="23" fill="currentColor" fontSize="20" fontFamily="Arial, sans-serif" fontWeight="700" letterSpacing="0.06em">
+            DEEL
+          </text>
+        </svg>
+      );
+    case 'remote':
+      return (
+        <svg viewBox="0 0 120 32" role="img" aria-label="Remote">
+          <circle cx="11" cy="16" r="7" fill="none" stroke="currentColor" strokeWidth="1.8" />
+          <path d="M4 16H18M11 9C9 12 9 20 11 23M11 9C13 12 13 20 11 23" stroke="currentColor" strokeWidth="1.2" fill="none" />
+          <text x="24" y="22" fill="currentColor" fontSize="13" fontFamily="Arial, sans-serif" fontWeight="700" letterSpacing="0.08em">
+            REMOTE
+          </text>
+        </svg>
+      );
+    case 'linear':
+      return (
+        <svg viewBox="0 0 110 32" role="img" aria-label="Linear">
+          <path d="M8 22C8 12 16 8 24 8C32 8 38 12 38 18" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+          <text x="48" y="22" fill="currentColor" fontSize="13" fontFamily="Arial, sans-serif" fontWeight="700" letterSpacing="0.08em">
+            LINEAR
+          </text>
+        </svg>
+      );
+    case 'toptal':
+      return (
+        <svg viewBox="0 0 110 32" role="img" aria-label="Toptal">
+          <text x="4" y="22" fill="currentColor" fontSize="14" fontFamily="Arial, sans-serif" fontWeight="700" letterSpacing="0.08em">
+            TOPTAL
+          </text>
+        </svg>
+      );
+    case 'platzi':
+      return (
+        <svg viewBox="0 0 110 32" role="img" aria-label="Platzi">
+          <path d="M4 8H16V12H8V20H16V24H4Z" fill="currentColor" />
+          <path d="M10 14H19V18H10Z" fill="currentColor" />
+          <text x="26" y="22" fill="currentColor" fontSize="13" fontFamily="Arial, sans-serif" fontWeight="700" letterSpacing="0.08em">
+            PLATZI
+          </text>
+        </svg>
+      );
+    default:
+      return null;
+  }
+}
+
 function parseSalaryRange(rawText) {
   if (!rawText) return { low: null, high: null };
   const compact = rawText.replace(/,/g, '');
@@ -214,29 +314,21 @@ export default function Home() {
   const [terminalResetKey, setTerminalResetKey] = useState(0);
   const [ctaTyped, setCtaTyped] = useState(0);
   const terminalBootLines = useMemo(
-    () =>
-      isEs
-        ? [
-            '> NORTEC SIGNAL v1.0 — INICIALIZANDO...',
-            '[✓] Escaneando 50+ empresas verificadas en LatAm',
-            '[✓] Cargando inteligencia salarial — 8 funciones',
-            '[✓] Cruzando 15 roles remotos activos',
-            '[✓] Filtros de elegibilidad LatAm: ACTIVOS',
-            '[✓] Salida bilingüe: EN + ES',
-            '> ESTADO: NORTHBOUND ■',
-            '> Listo. Escribe un rol, skill, salario o país.',
-          ]
-        : [
-            '> NORTEC SIGNAL v1.0 — INITIALIZING...',
-            '[✓] Scanning 50+ verified LatAm employers',
-            '[✓] Loading salary intelligence — 8 functions',
-            '[✓] Cross-referencing 15 active remote roles',
-            '[✓] LatAm eligibility filters: ACTIVE',
-            '[✓] Bilingual output: EN + ES',
-            '> STATUS: NORTHBOUND ■',
-            '> Ready. Type a role, skill, salary, or country.',
-          ],
-    [isEs]
+    () => [
+      '> NORTEC — NORTHBOUND TALENT.',
+      '> The global job market has a LatAm problem.',
+      '> Most remote roles never reach you.',
+      "> Most salary data doesn't apply to you.",
+      "> Most job boards don't know where you live.",
+      '[✓] We fixed that.',
+      '[✓] 15 verified remote roles — open to LatAm',
+      '[✓] Salary estimates on every listing',
+      '[✓] Bilingual. Built here. For here.',
+      '> Trabaja global. Vive en LatAm.',
+      '> STATUS: NORTHBOUND ■',
+      '> Search a role, skill, salary, or city →',
+    ],
+    []
   );
   const ctaTerminalLines = useMemo(
     () =>
@@ -265,7 +357,8 @@ export default function Home() {
   useEffect(() => {
     if (!salaryTerminalVisible) return undefined;
     const lineCount = terminalBootLines.length;
-    const earlyLines = Math.max(0, lineCount - 2);
+    const introEnd = 5;
+    const checkEnd = 9;
     const timers = [];
 
     setSalaryTyped(0);
@@ -277,22 +370,31 @@ export default function Home() {
     setTerminalResultLabel('');
     setTerminalResults([]);
 
-    for (let idx = 0; idx < earlyLines; idx += 1) {
+    for (let idx = 0; idx < introEnd; idx += 1) {
       const timeoutId = setTimeout(() => {
         setSalaryTyped(idx + 1);
-      }, (idx + 1) * 400);
+      }, (idx + 1) * 350);
       timers.push(timeoutId);
     }
 
-    const pauseBase = earlyLines * 400 + 600;
-    for (let idx = earlyLines; idx < lineCount; idx += 1) {
+    const checkBase = introEnd * 350 + 500;
+    for (let idx = introEnd; idx < checkEnd; idx += 1) {
       const timeoutId = setTimeout(() => {
         setSalaryTyped(idx + 1);
-      }, pauseBase + (idx - earlyLines + 1) * 400);
+      }, checkBase + (idx - introEnd + 1) * 350);
       timers.push(timeoutId);
     }
 
-    const readyTimeout = setTimeout(() => setTerminalReady(true), pauseBase + 2 * 400 + 180);
+    const finalBase = checkBase + (checkEnd - introEnd) * 350 + 700;
+    for (let idx = checkEnd; idx < lineCount; idx += 1) {
+      const timeoutId = setTimeout(() => {
+        setSalaryTyped(idx + 1);
+      }, finalBase + (idx - checkEnd + 1) * 350);
+      timers.push(timeoutId);
+    }
+
+    const finalDuration = finalBase + (lineCount - checkEnd) * 350;
+    const readyTimeout = setTimeout(() => setTerminalReady(true), finalDuration + 100);
     timers.push(readyTimeout);
 
     return () => {
@@ -695,7 +797,10 @@ export default function Home() {
                 <div className="live-badge">LIVE</div>
                 <div className="terminal-lines">
                   {terminalBootLines.map((line, idx) => (
-                    <div key={line} className={`terminal-line ${idx < salaryTyped ? 'on' : ''}`}>
+                    <div
+                      key={line}
+                      className={`terminal-line ${idx < salaryTyped ? 'on' : ''} ${idx === 5 || idx === 9 ? 'terminal-block-start' : ''}`}
+                    >
                       {line}
                     </div>
                   ))}
@@ -912,12 +1017,16 @@ export default function Home() {
         </RevealSection>
 
         <RevealSection className="sponsor-strip">
-          <span className="label">{isEs ? 'Con la confianza de:' : 'Trusted by:'}</span>
-          {['Deel', 'Remote.com', 'Platzi', 'Toptal', 'Linear', 'Supabase'].map((logo) => (
-            <span key={logo} className="logo">
-              {logo}
-            </span>
-          ))}
+          <span className="label">
+            {isEs ? 'Empresas donde trabajan nuestros lectores — y desde donde contratan.' : 'Companies our readers work at — and hire from.'}
+          </span>
+          <div className="sponsor-logos-row">
+            {['google', 'microsoft', 'meta', 'deel', 'remote', 'linear', 'toptal', 'platzi'].map((logo) => (
+              <div key={logo} className={`sponsor-logo ${logo}`}>
+                <SponsorLogo id={logo} />
+              </div>
+            ))}
+          </div>
         </RevealSection>
 
         <RevealSection className="home-section">
