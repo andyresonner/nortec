@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { JOBS, SALARY_DATA } from '../data/jobs';
 import { getCurrentLanguage } from '../utils/i18n';
 import { submitEmail } from '../utils/subscribe';
@@ -181,6 +181,7 @@ function resolveTerminalQuery(rawQuery, isEs) {
 }
 
 export default function Home() {
+  const navigate = useNavigate();
   const lang = useLanguage();
   const isEs = lang === 'es';
   const topJobs = useMemo(() => [...JOBS].sort((a, b) => b.score - a.score).slice(0, 8), []);
@@ -189,8 +190,10 @@ export default function Home() {
   const [expandedJobId, setExpandedJobId] = useState(null);
   const [cardsUseTap, setCardsUseTap] = useState(false);
   const [heroEmail, setHeroEmail] = useState('');
+  const [whyEmail, setWhyEmail] = useState('');
   const [ctaEmail, setCtaEmail] = useState('');
   const [heroStatus, setHeroStatus] = useState('');
+  const [whyStatus, setWhyStatus] = useState('');
   const [ctaStatus, setCtaStatus] = useState('');
 
   const salaryRef = useRef(null);
@@ -210,14 +213,31 @@ export default function Home() {
   const [terminalResults, setTerminalResults] = useState([]);
   const [terminalResetKey, setTerminalResetKey] = useState(0);
   const [ctaTyped, setCtaTyped] = useState(0);
-  const salaryTerminalLines = useMemo(
+  const terminalBootLines = useMemo(
     () =>
       isEs
-        ? ['> nortec --northbound', '[✓] Mentalidad global', '[✓] Impacto local', '[✓] Conexión humana', '[✓] Futuro sin límites', 'estado: northbound']
-        : ['> nortec --northbound', '[✓] Global mindset', '[✓] Local impact', '[✓] Human connection', '[✓] Limitless future', 'status: northbound'],
+        ? [
+            '> NORTEC SIGNAL v1.0 — INICIALIZANDO...',
+            '[✓] Escaneando 50+ empresas verificadas en LatAm',
+            '[✓] Cargando inteligencia salarial — 8 funciones',
+            '[✓] Cruzando 15 roles remotos activos',
+            '[✓] Filtros de elegibilidad LatAm: ACTIVOS',
+            '[✓] Salida bilingüe: EN + ES',
+            '> ESTADO: NORTHBOUND ■',
+            '> Listo. Escribe un rol, skill, salario o país.',
+          ]
+        : [
+            '> NORTEC SIGNAL v1.0 — INITIALIZING...',
+            '[✓] Scanning 50+ verified LatAm employers',
+            '[✓] Loading salary intelligence — 8 functions',
+            '[✓] Cross-referencing 15 active remote roles',
+            '[✓] LatAm eligibility filters: ACTIVE',
+            '[✓] Bilingual output: EN + ES',
+            '> STATUS: NORTHBOUND ■',
+            '> Ready. Type a role, skill, salary, or country.',
+          ],
     [isEs]
   );
-  const terminalPromptPlaceholder = isEs ? 'buscar roles, skills, salarios...' : 'search roles, skills, salaries...';
   const ctaTerminalLines = useMemo(
     () =>
       isEs
@@ -244,7 +264,10 @@ export default function Home() {
 
   useEffect(() => {
     if (!salaryTerminalVisible) return undefined;
-    const lineCount = salaryTerminalLines.length;
+    const lineCount = terminalBootLines.length;
+    const earlyLines = Math.max(0, lineCount - 2);
+    const timers = [];
+
     setSalaryTyped(0);
     setTerminalReady(false);
     setTerminalProcessing(false);
@@ -254,22 +277,28 @@ export default function Home() {
     setTerminalResultLabel('');
     setTerminalResults([]);
 
-    let i = 0;
-    const id = setInterval(() => {
-      i += 1;
-      setSalaryTyped(Math.min(i, lineCount));
-      if (i >= lineCount) clearInterval(id);
-    }, 300);
+    for (let idx = 0; idx < earlyLines; idx += 1) {
+      const timeoutId = setTimeout(() => {
+        setSalaryTyped(idx + 1);
+      }, (idx + 1) * 400);
+      timers.push(timeoutId);
+    }
 
-    const readyTimeout = setTimeout(() => {
-      setTerminalReady(true);
-    }, lineCount * 300 + 1200);
+    const pauseBase = earlyLines * 400 + 600;
+    for (let idx = earlyLines; idx < lineCount; idx += 1) {
+      const timeoutId = setTimeout(() => {
+        setSalaryTyped(idx + 1);
+      }, pauseBase + (idx - earlyLines + 1) * 400);
+      timers.push(timeoutId);
+    }
+
+    const readyTimeout = setTimeout(() => setTerminalReady(true), pauseBase + 2 * 400 + 180);
+    timers.push(readyTimeout);
 
     return () => {
-      clearInterval(id);
-      clearTimeout(readyTimeout);
+      timers.forEach((id) => clearTimeout(id));
     };
-  }, [salaryTerminalVisible, salaryTerminalLines, terminalResetKey]);
+  }, [salaryTerminalVisible, terminalBootLines, terminalResetKey]);
 
   useEffect(() => {
     if (!terminalProcessing) return undefined;
@@ -308,11 +337,11 @@ export default function Home() {
 
   const maxRoleSalary = Math.max(...SALARY_DATA.map((row) => row.mid));
   const countrySalaryData = [
-    { countryEn: 'Brazil', countryEs: 'Brasil', value: 78 },
-    { countryEn: 'Argentina', countryEs: 'Argentina', value: 65 },
-    { countryEn: 'Colombia', countryEs: 'Colombia', value: 61 },
-    { countryEn: 'Mexico', countryEs: 'México', value: 70 },
-    { countryEn: 'Chile', countryEs: 'Chile', value: 68 },
+    { countryEn: 'Brazil', countryEs: 'Brasil', value: 78, search: 'brazil' },
+    { countryEn: 'Argentina', countryEs: 'Argentina', value: 65, search: 'argentina' },
+    { countryEn: 'Colombia', countryEs: 'Colombia', value: 61, search: 'colombia' },
+    { countryEn: 'Mexico', countryEs: 'México', value: 70, search: 'mexico' },
+    { countryEn: 'Chile', countryEs: 'Chile', value: 68, search: 'chile' },
   ];
   const maxCountrySalary = Math.max(...countrySalaryData.map((row) => row.value));
 
@@ -400,6 +429,44 @@ export default function Home() {
       .map((part) => part.trim())
       .filter(Boolean)
       .slice(0, 2);
+  }
+
+  function getRoleMatchCount(role) {
+    const roleLower = role.toLowerCase();
+    if (roleLower.includes('customer success')) {
+      return Math.max(1, JOBS.filter((job) => job.function.toLowerCase() === 'customer success').length);
+    }
+    if (roleLower.includes('ai')) {
+      return Math.max(1, JOBS.filter((job) => job.aiRelevance || job.function === 'Engineering').length);
+    }
+    if (roleLower.includes('engineer')) {
+      return Math.max(1, JOBS.filter((job) => job.function === 'Engineering').length);
+    }
+    if (roleLower.includes('product manager')) {
+      const count = JOBS.filter((job) => job.title.toLowerCase().includes('product') || job.function.toLowerCase().includes('product')).length;
+      return Math.max(3, count);
+    }
+    if (roleLower.includes('designer')) {
+      const count = JOBS.filter((job) => job.title.toLowerCase().includes('design') || job.tags.some((tag) => tag.toLowerCase().includes('design'))).length;
+      return Math.max(2, count);
+    }
+    return 3;
+  }
+
+  function handleRoleBarClick(role) {
+    if (role === 'AI Engineer') {
+      navigate('/jobs?filter=Engineering');
+      return;
+    }
+    if (role === 'Customer Success') {
+      navigate('/jobs?filter=Customer%20Success');
+      return;
+    }
+    navigate('/tracker?tab=trends');
+  }
+
+  function handleCountryBarClick(countrySearch) {
+    navigate(`/tracker?tab=jobs&search=${encodeURIComponent(countrySearch)}`);
   }
 
   return (
@@ -560,7 +627,12 @@ export default function Home() {
               <h3>{isEs ? 'Compensación promedio por rol (USD K/año)' : 'Average comp by role (USD K/yr)'}</h3>
               <div className="salary-bars">
                 {SALARY_DATA.map((row) => (
-                  <div className="salary-bar-row" key={row.role}>
+                  <button
+                    type="button"
+                    className="salary-bar-row salary-bar-row-clickable"
+                    key={row.role}
+                    onClick={() => handleRoleBarClick(row.role)}
+                  >
                     <label>{row.role}</label>
                     <div className="bar-track">
                       <div
@@ -569,7 +641,11 @@ export default function Home() {
                       />
                     </div>
                     <div className="value">${row.mid}K</div>
-                  </div>
+                    <span className="salary-row-arrow">→</span>
+                    <span className="salary-row-tooltip">
+                      {isEs ? `Ver ${getRoleMatchCount(row.role)} roles →` : `View ${getRoleMatchCount(row.role)} roles →`}
+                    </span>
+                  </button>
                 ))}
               </div>
             </article>
@@ -578,7 +654,12 @@ export default function Home() {
               <h3>{isEs ? 'Compensación por país (todos los roles)' : 'Compensation by country (all roles)'}</h3>
               <div className="salary-bars">
                 {countrySalaryData.map((row) => (
-                  <div className="salary-bar-row" key={row.countryEn}>
+                  <button
+                    type="button"
+                    className="salary-bar-row salary-bar-row-clickable"
+                    key={row.countryEn}
+                    onClick={() => handleCountryBarClick(row.search)}
+                  >
                     <label>{isEs ? row.countryEs : row.countryEn}</label>
                     <div className="bar-track">
                       <div
@@ -587,7 +668,11 @@ export default function Home() {
                       />
                     </div>
                     <div className="value">${row.value}K</div>
-                  </div>
+                    <span className="salary-row-arrow">→</span>
+                    <span className="salary-row-tooltip">
+                      {isEs ? `Ver roles abiertos para ${row.countryEs} →` : `View roles open to ${row.countryEn} →`}
+                    </span>
+                  </button>
                 ))}
               </div>
             </article>
@@ -609,7 +694,7 @@ export default function Home() {
               >
                 <div className="live-badge">LIVE</div>
                 <div className="terminal-lines">
-                  {salaryTerminalLines.map((line, idx) => (
+                  {terminalBootLines.map((line, idx) => (
                     <div key={line} className={`terminal-line ${idx < salaryTyped ? 'on' : ''}`}>
                       {line}
                     </div>
@@ -617,8 +702,9 @@ export default function Home() {
 
                   {(terminalReady || terminalProcessing) && (
                     <div className="terminal-line on terminal-command-line">
-                      &gt; {terminalProcessing ? terminalSubmitted : terminalQuery || terminalPromptPlaceholder}
-                      <span className="terminal-caret" />
+                      &gt; {terminalProcessing ? terminalSubmitted : terminalQuery}
+                      {!terminalProcessing && !terminalQuery && <span className="terminal-idle-underscore">_</span>}
+                      {!terminalProcessing && terminalQuery && <span className="terminal-caret" />}
                     </div>
                   )}
 
@@ -642,10 +728,6 @@ export default function Home() {
                         <span className="terminal-result-score">[{job.score}]</span> {job.company} · {job.title} · {getSalaryDisplay(job)}
                       </Link>
                     ))}
-
-                  {terminalReady && !terminalProcessing && (
-                    <div className="terminal-line on terminal-command-hint">{isEs ? '[enter] ejecutar · [clear] reiniciar' : '[enter] run · [clear] reset'}</div>
-                  )}
                 </div>
 
                 <input
@@ -678,25 +760,73 @@ export default function Home() {
         <RevealSection className="home-section">
           <div className="why-grid-native">
             <div className="radar-panel">
-              <svg width="260" height="260" viewBox="0 0 260 260" aria-label="Nortec radar visualization">
-                <circle cx="130" cy="130" r="34" fill="none" stroke="rgba(15,163,154,0.45)" />
-                <circle cx="130" cy="130" r="62" fill="none" stroke="rgba(15,163,154,0.32)" />
-                <circle cx="130" cy="130" r="92" fill="none" stroke="rgba(15,163,154,0.22)" />
-                <circle cx="130" cy="130" r="116" fill="none" stroke="rgba(15,163,154,0.18)" />
-                <line x1="130" y1="130" x2="242" y2="130" stroke="rgba(15,163,154,0.9)" strokeWidth="2.5">
-                  <animateTransform
-                    attributeName="transform"
-                    type="rotate"
-                    from="0 130 130"
-                    to="360 130 130"
-                    dur="4.2s"
-                    repeatCount="indefinite"
-                  />
-                </line>
-                <circle cx="168" cy="92" r="4" fill="#ff4b28" />
-                <circle cx="104" cy="174" r="4" fill="#ff4b28" />
-                <circle cx="186" cy="152" r="3.4" fill="#0fa39a" />
-              </svg>
+              <div className="radar-wrap">
+                <svg width="290" height="290" viewBox="0 0 290 290" aria-label="Enhanced Nortec radar visualization">
+                  <defs>
+                    <radialGradient id="radar-bg-gradient" cx="50%" cy="50%" r="60%">
+                      <stop offset="0%" stopColor="rgba(15,163,154,0.18)" />
+                      <stop offset="100%" stopColor="rgba(15,163,154,0.02)" />
+                    </radialGradient>
+                    <linearGradient id="radar-sweep-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="rgba(15,163,154,0.5)" />
+                      <stop offset="100%" stopColor="rgba(15,163,154,0)" />
+                    </linearGradient>
+                  </defs>
+
+                  <circle cx="145" cy="145" r="118" fill="url(#radar-bg-gradient)" className="radar-outer-glow" />
+                  <circle cx="145" cy="145" r="106" fill="none" stroke="rgba(15,163,154,0.4)" />
+                  <circle cx="145" cy="145" r="78" fill="none" stroke="rgba(15,163,154,0.27)" />
+                  <circle cx="145" cy="145" r="50" fill="none" stroke="rgba(15,163,154,0.18)" />
+                  <line x1="145" y1="26" x2="145" y2="264" stroke="rgba(15,163,154,0.18)" />
+                  <line x1="26" y1="145" x2="264" y2="145" stroke="rgba(15,163,154,0.18)" />
+
+                  <path d="M145 145 L145 34 A111 111 0 0 1 223 66 Z" fill="url(#radar-sweep-gradient)" opacity="0.75">
+                    <animateTransform attributeName="transform" type="rotate" from="0 145 145" to="360 145 145" dur="5.2s" repeatCount="indefinite" />
+                  </path>
+                  <line x1="145" y1="145" x2="145" y2="30" stroke="rgba(15,163,154,0.85)" strokeWidth="1.8">
+                    <animateTransform attributeName="transform" type="rotate" from="0 145 145" to="360 145 145" dur="5.2s" repeatCount="indefinite" />
+                  </line>
+
+                  <circle className="radar-dot pulse-red" cx="108" cy="82" r="4.2" />
+                  <circle className="radar-dot pulse-red" cx="186" cy="160" r="4.5" />
+                  <circle className="radar-dot pulse-teal" cx="172" cy="102" r="3.6" />
+                  <circle className="radar-dot pulse-teal" cx="96" cy="174" r="3.9" />
+                  <circle className="radar-dot pulse-red" cx="128" cy="202" r="3.7" />
+                  <circle className="radar-dot pulse-teal" cx="200" cy="132" r="2.9" />
+                  <circle className="radar-dot pulse-teal" cx="76" cy="132" r="2.8" />
+                  <circle className="radar-dot pulse-red" cx="156" cy="66" r="2.8" />
+
+                  <text x="114" y="76" className="radar-dot-label">
+                    MEX
+                  </text>
+                  <text x="189" y="156" className="radar-dot-label">
+                    BRA
+                  </text>
+                  <text x="132" y="216" className="radar-dot-label">
+                    ARG
+                  </text>
+                  <text x="90" y="185" className="radar-dot-label">
+                    COL
+                  </text>
+
+                  <text x="20" y="34" className="radar-coord">
+                    90°W
+                  </text>
+                  <text x="233" y="34" className="radar-coord">
+                    30°W
+                  </text>
+                  <text x="122" y="20" className="radar-coord">
+                    23.5°N
+                  </text>
+                  <text x="130" y="149" className="radar-coord">
+                    0° EQ
+                  </text>
+                  <text x="122" y="279" className="radar-coord">
+                    23.5°S
+                  </text>
+                </svg>
+                <div className="radar-footer-label">LATAM ROOTS / GLOBAL REACH</div>
+              </div>
             </div>
             <div className="why-copy">
               <h3>
@@ -732,6 +862,21 @@ export default function Home() {
                   <div className="n">$87K</div>
                   <div className="l">{isEs ? 'señal salarial' : 'salary signal'}</div>
                 </div>
+              </div>
+
+              <div className="why-newsletter">
+                <div className="why-newsletter-label">{isEs ? 'Recibe el resumen semanal — gratis' : 'Get the weekly brief — free'}</div>
+                <form className="email-form why-email-form" onSubmit={(event) => handleSubscribe(event, whyEmail, setWhyEmail, setWhyStatus, 'home-why')}>
+                  <input
+                    type="email"
+                    value={whyEmail}
+                    onChange={(event) => setWhyEmail(event.target.value)}
+                    placeholder={isEs ? 'tu@email.com' : 'your@email.com'}
+                    required
+                  />
+                  <button type="submit">{whyStatus || (isEs ? 'Suscribirme →' : 'Subscribe →')}</button>
+                </form>
+                <div className="why-newsletter-meta">{isEs ? 'Gratis · Bilingüe · Sin spam' : 'Free · Bilingual · No spam'}</div>
               </div>
             </div>
           </div>
