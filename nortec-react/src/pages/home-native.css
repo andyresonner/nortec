@@ -657,6 +657,8 @@
   background: #060f0e;
   padding: 0.8rem;
   position: relative;
+  overflow: hidden;
+  cursor: text;
 }
 
 .terminal-box-interactive {
@@ -707,6 +709,20 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  border-left: 1px solid var(--teal);
+  padding: 0.32rem 0.45rem;
+  background: rgba(15, 163, 154, 0.08);
+  animation: prompt-line-pulse 2s ease-in-out infinite;
+}
+
+@keyframes prompt-line-pulse {
+  0%,
+  100% {
+    background: rgba(15, 163, 154, 0.08);
+  }
+  50% {
+    background: rgba(15, 163, 154, 0.15);
+  }
 }
 
 .terminal-idle-underscore {
@@ -728,6 +744,27 @@
 
 .terminal-processing-line {
   color: #bce7e3;
+}
+
+.terminal-input-hint {
+  color: rgba(15, 163, 154, 0.95);
+  font-size: 8px;
+  letter-spacing: 0.07em;
+  margin-left: 10px;
+  margin-top: 2px;
+  text-transform: uppercase;
+  animation: terminal-hint-fade 0.8s ease forwards;
+}
+
+@keyframes terminal-hint-fade {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .terminal-result-link {
@@ -758,6 +795,30 @@
   height: 1px;
   opacity: 0;
   pointer-events: none;
+}
+
+.terminal-tap-ripple {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(15, 163, 154, 0.45);
+  background: rgba(15, 163, 154, 0.2);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  animation: terminal-ripple 0.46s ease-out forwards;
+  z-index: 3;
+}
+
+@keyframes terminal-ripple {
+  from {
+    opacity: 0.65;
+    transform: translate(-50%, -50%) scale(0.4);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(6.4);
+  }
 }
 
 .feature-strip {

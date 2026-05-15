@@ -22,6 +22,8 @@ const COUNTRY_LOOKUP = [
   { nameEn: 'Brazil', nameEs: 'Brasil', tokens: ['brazil', 'brasil', 'sao paulo', 'são paulo', 'br'] },
 ];
 
+const TERMINAL_HINT_DISMISSED_KEY = 'nortec-terminal-hint-dismissed';
+
 function useLanguage() {
   const [lang, setLang] = useState(getCurrentLanguage());
 
@@ -303,6 +305,7 @@ export default function Home() {
   const ctaTerminalRef = useRef(null);
   const ctaTerminalVisible = useIntersectionObserver(ctaTerminalRef, { threshold: 0.4 });
   const terminalInputRef = useRef(null);
+  const terminalRippleTimeoutRef = useRef(null);
   const [salaryTyped, setSalaryTyped] = useState(0);
   const [terminalReady, setTerminalReady] = useState(false);
   const [terminalProcessing, setTerminalProcessing] = useState(false);
@@ -312,6 +315,9 @@ export default function Home() {
   const [terminalResultLabel, setTerminalResultLabel] = useState('');
   const [terminalResults, setTerminalResults] = useState([]);
   const [terminalResetKey, setTerminalResetKey] = useState(0);
+  const [terminalHintDismissed, setTerminalHintDismissed] = useState(false);
+  const [terminalHintVisible, setTerminalHintVisible] = useState(false);
+  const [terminalRipple, setTerminalRipple] = useState(null);
   const [ctaTyped, setCtaTyped] = useState(0);
   const terminalBootLines = useMemo(
     () =>
@@ -372,6 +378,19 @@ export default function Home() {
   );
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+    setTerminalHintDismissed(localStorage.getItem(TERMINAL_HINT_DISMISSED_KEY) === '1');
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (terminalRippleTimeoutRef.current) {
+        clearTimeout(terminalRippleTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
     if (typeof window === 'undefined') return undefined;
     const handleTerminalLanguageReplay = () => {
       setTerminalResetKey((prev) => prev + 1);
@@ -395,6 +414,8 @@ export default function Home() {
     setTerminalSubmitted('');
     setTerminalResultLabel('');
     setTerminalResults([]);
+    setTerminalHintVisible(false);
+    setTerminalRipple(null);
 
     for (let idx = 0; idx < introEnd; idx += 1) {
       const timeoutId = setTimeout(() => {
@@ -463,6 +484,20 @@ export default function Home() {
     return () => media.removeListener(updateCardsMode);
   }, []);
 
+  useEffect(() => {
+    if (!salaryTerminalVisible || !terminalReady || terminalProcessing || terminalQuery.trim() || terminalHintDismissed) {
+      setTerminalHintVisible(false);
+      return undefined;
+    }
+
+    const delay = cardsUseTap ? 0 : 3000;
+    const id = setTimeout(() => {
+      setTerminalHintVisible(true);
+    }, delay);
+
+    return () => clearTimeout(id);
+  }, [cardsUseTap, salaryTerminalVisible, terminalHintDismissed, terminalProcessing, terminalQuery, terminalReady]);
+
   const maxRoleSalary = Math.max(...SALARY_DATA.map((row) => row.mid));
   const countrySalaryData = [
     { countryEn: 'Brazil', countryEs: 'Brasil', value: 78, search: 'brazil' },
@@ -517,6 +552,35 @@ export default function Home() {
     }
   }
 
+  function dismissTerminalHint() {
+    setTerminalHintVisible(false);
+    if (terminalHintDismissed) return;
+    setTerminalHintDismissed(true);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(TERMINAL_HINT_DISMISSED_KEY, '1');
+    }
+  }
+
+  function focusTerminalInput(event) {
+    dismissTerminalHint();
+
+    if (cardsUseTap && event?.currentTarget && typeof event.clientX === 'number' && typeof event.clientY === 'number') {
+      const rect = event.currentTarget.getBoundingClientRect();
+      setTerminalRipple({
+        key: Date.now(),
+        x: event.clientX - rect.left,
+        y: event.clientY - rect.top,
+      });
+
+      if (terminalRippleTimeoutRef.current) {
+        clearTimeout(terminalRippleTimeoutRef.current);
+      }
+      terminalRippleTimeoutRef.current = setTimeout(() => setTerminalRipple(null), 460);
+    }
+
+    terminalInputRef.current?.focus();
+  }
+
   function resetInteractiveTerminal() {
     setTerminalResetKey((prev) => prev + 1);
     setTimeout(() => terminalInputRef.current?.focus(), 40);
@@ -546,6 +610,7 @@ export default function Home() {
   }
 
   function handleTerminalKeyDown(event) {
+    dismissTerminalHint();
     if (event.key !== 'Enter') return;
     event.preventDefault();
     runTerminalCommand(terminalQuery);
@@ -810,13 +875,13 @@ export default function Home() {
               <div
                 ref={salaryTerminalRef}
                 className="terminal-box terminal-box-interactive"
-                onClick={() => terminalInputRef.current?.focus()}
+                onClick={focusTerminalInput}
                 role="button"
                 tabIndex={0}
                 onKeyDown={(event) => {
                   if (event.key === 'Enter' || event.key === ' ') {
                     event.preventDefault();
-                    terminalInputRef.current?.focus();
+                    focusTerminalInput(event);
                   }
                 }}
               >
@@ -835,6 +900,12 @@ export default function Home() {
                     <div className="terminal-line on terminal-command-line">
                       &gt; {terminalProcessing ? terminalSubmitted : terminalQuery || terminalSearchPrompt}
                       {!terminalProcessing && terminalQuery && <span className="terminal-caret" />}
+                    </div>
+                  )}
+
+                  {terminalHintVisible && !terminalProcessing && (
+                    <div className="terminal-line on terminal-input-hint">
+                      {isEs ? '↑ toca aquí para buscar' : '↑ click here to search'}
                     </div>
                   )}
 
@@ -865,12 +936,23 @@ export default function Home() {
                   className="terminal-hidden-input"
                   type="text"
                   value={terminalQuery}
-                  onChange={(event) => setTerminalQuery(event.target.value)}
+                  onChange={(event) => {
+                    if (!terminalHintDismissed) dismissTerminalHint();
+                    setTerminalQuery(event.target.value);
+                  }}
                   onKeyDown={handleTerminalKeyDown}
                   aria-label={isEs ? 'Buscar en terminal' : 'Search in terminal'}
                   autoComplete="off"
                   spellCheck={false}
                 />
+                {terminalRipple && cardsUseTap && (
+                  <span
+                    key={terminalRipple.key}
+                    className="terminal-tap-ripple"
+                    style={{ left: terminalRipple.x, top: terminalRipple.y }}
+                    aria-hidden="true"
+                  />
+                )}
               </div>
             </article>
           </div>
