@@ -269,13 +269,13 @@ function resolveTerminalQuery(rawQuery, isEs) {
   );
   if (skillMatches.length) {
     return {
-      label: isEs ? `Coincidencias por skill "${rawQuery}":` : `Skill matches for "${rawQuery}":`,
+      label: isEs ? `Coincidencias por habilidad "${rawQuery}":` : `Skill matches for "${rawQuery}":`,
       jobs: skillMatches,
     };
   }
 
   return {
-    label: isEs ? 'Sin match exacto. Mostrando roles top:' : 'No exact match. Showing top roles:',
+    label: isEs ? 'Sin coincidencia exacta. Mostrando roles top:' : 'No exact match. Showing top roles:',
     jobs: defaultTop,
   };
 }
@@ -314,22 +314,39 @@ export default function Home() {
   const [terminalResetKey, setTerminalResetKey] = useState(0);
   const [ctaTyped, setCtaTyped] = useState(0);
   const terminalBootLines = useMemo(
-    () => [
-      '> NORTEC — NORTHBOUND TALENT.',
-      '> The global job market has a LatAm problem.',
-      '> Most remote roles never reach you.',
-      "> Most salary data doesn't apply to you.",
-      "> Most job boards don't know where you live.",
-      '[✓] We fixed that.',
-      '[✓] 15 verified remote roles — open to LatAm',
-      '[✓] Salary estimates on every listing',
-      '[✓] Bilingual. Built here. For here.',
-      '> Trabaja global. Vive en LatAm.',
-      '> STATUS: NORTHBOUND ■',
-      '> Search a role, skill, salary, or city →',
-    ],
-    []
+    () =>
+      isEs
+        ? [
+            '> NORTEC — TALENTO RUMBO AL NORTE.',
+            '> El mercado laboral global tiene un problema con LatAm.',
+            '> La mayoría de los roles remotos nunca te llegan.',
+            '> La mayoría de los datos salariales no aplican para ti.',
+            '> La mayoría de los job boards no saben dónde vives.',
+            '[✓] Lo arreglamos.',
+            '[✓] 15 roles remotos verificados — abiertos a LatAm',
+            '[✓] Estimaciones salariales en cada listado',
+            '[✓] Bilingüe. Hecho aquí. Para aquí.',
+            '> Work global. Live local.',
+            '> ESTADO: RUMBO AL NORTE ■',
+            '> Busca un rol, habilidad, salario o ciudad →',
+          ]
+        : [
+            '> NORTEC — NORTHBOUND TALENT.',
+            '> The global job market has a LatAm problem.',
+            '> Most remote roles never reach you.',
+            "> Most salary data doesn't apply to you.",
+            "> Most job boards don't know where you live.",
+            '[✓] We fixed that.',
+            '[✓] 15 verified remote roles — open to LatAm',
+            '[✓] Salary estimates on every listing',
+            '[✓] Bilingual. Built here. For here.',
+            '> Trabaja global. Vive en LatAm.',
+            '> STATUS: NORTHBOUND ■',
+            '> Search a role, skill, salary, or city →',
+          ],
+    [isEs]
   );
+  const terminalSearchPrompt = isEs ? 'busca roles, habilidades, salarios...' : 'search roles, skills, salaries...';
   const ctaTerminalLines = useMemo(
     () =>
       isEs
@@ -353,6 +370,15 @@ export default function Home() {
           ],
     [isEs]
   );
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return undefined;
+    const handleTerminalLanguageReplay = () => {
+      setTerminalResetKey((prev) => prev + 1);
+    };
+    window.addEventListener('nortec:langchange', handleTerminalLanguageReplay);
+    return () => window.removeEventListener('nortec:langchange', handleTerminalLanguageReplay);
+  }, []);
 
   useEffect(() => {
     if (!salaryTerminalVisible) return undefined;
@@ -400,7 +426,7 @@ export default function Home() {
     return () => {
       timers.forEach((id) => clearTimeout(id));
     };
-  }, [salaryTerminalVisible, terminalBootLines, terminalResetKey]);
+  }, [salaryTerminalVisible, terminalResetKey, terminalBootLines]);
 
   useEffect(() => {
     if (!terminalProcessing) return undefined;
@@ -807,8 +833,7 @@ export default function Home() {
 
                   {(terminalReady || terminalProcessing) && (
                     <div className="terminal-line on terminal-command-line">
-                      &gt; {terminalProcessing ? terminalSubmitted : terminalQuery}
-                      {!terminalProcessing && !terminalQuery && <span className="terminal-idle-underscore">_</span>}
+                      &gt; {terminalProcessing ? terminalSubmitted : terminalQuery || terminalSearchPrompt}
                       {!terminalProcessing && terminalQuery && <span className="terminal-caret" />}
                     </div>
                   )}
