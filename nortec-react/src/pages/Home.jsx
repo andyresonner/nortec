@@ -6,6 +6,22 @@ import { submitEmail } from '../utils/subscribe';
 import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
 import './home-native.css';
 
+const SIGNAL_NODES = [
+  { code: 'MX', x: 34, y: 24, strength: 4 },
+  { code: 'CO', x: 42, y: 40, strength: 3 },
+  { code: 'BR', x: 60, y: 50, strength: 5 },
+  { code: 'CL', x: 36, y: 65, strength: 3 },
+  { code: 'AR', x: 47, y: 80, strength: 4 },
+];
+
+const COUNTRY_LOOKUP = [
+  { nameEn: 'Mexico', nameEs: 'México', tokens: ['mexico', 'méxico', 'cdmx', 'mx'] },
+  { nameEn: 'Colombia', nameEs: 'Colombia', tokens: ['colombia', 'bogota', 'bogotá', 'co'] },
+  { nameEn: 'Argentina', nameEs: 'Argentina', tokens: ['argentina', 'buenos aires', 'ar'] },
+  { nameEn: 'Chile', nameEs: 'Chile', tokens: ['chile', 'santiago', 'cl'] },
+  { nameEn: 'Brazil', nameEs: 'Brasil', tokens: ['brazil', 'brasil', 'sao paulo', 'são paulo', 'br'] },
+];
+
 function useLanguage() {
   const [lang, setLang] = useState(getCurrentLanguage());
 
@@ -38,12 +54,140 @@ function ScorePips({ score = 0 }) {
   );
 }
 
+function parseSalaryRange(rawText) {
+  if (!rawText) return { low: null, high: null };
+  const compact = rawText.replace(/,/g, '');
+  const kMatches = [...compact.matchAll(/(\d+(?:\.\d+)?)\s*K/gi)].map((m) => Number(m[1]) * 1000);
+  if (kMatches.length >= 2) return { low: kMatches[0], high: kMatches[1] };
+  if (kMatches.length === 1) return { low: kMatches[0], high: kMatches[0] };
+  const numericMatches = [...compact.matchAll(/\b(\d{5,6})\b/g)].map((m) => Number(m[1]));
+  if (numericMatches.length >= 2) return { low: numericMatches[0], high: numericMatches[1] };
+  if (numericMatches.length === 1) return { low: numericMatches[0], high: numericMatches[0] };
+  return { low: null, high: null };
+}
+
+function getSalaryRangeForJob(job) {
+  if (typeof job.salaryNum === 'number') return { low: job.salaryNum, high: job.salaryNum };
+  return parseSalaryRange(job.salaryEstimate || job.salary || '');
+}
+
+function getSalaryDisplay(job) {
+  return job.salarySource === 'listed' ? job.salary : job.salaryEstimate || job.salary || 'N/A';
+}
+
+function extractSalaryFloor(query) {
+  const lower = query.toLowerCase();
+  const kMatch = lower.match(/(\d+(?:\.\d+)?)\s*k/);
+  if (kMatch) return Math.round(Number(kMatch[1]) * 1000);
+  const nMatch = lower.match(/\b(\d{2,6})\b/);
+  if (!nMatch) return null;
+  const raw = Number(nMatch[1]);
+  if (Number.isNaN(raw)) return null;
+  return raw < 1000 ? raw * 1000 : raw;
+}
+
+function getSortedTopJobs(pool, limit = 5) {
+  return [...pool]
+    .sort((a, b) => {
+      const salaryA = getSalaryRangeForJob(a).high || 0;
+      const salaryB = getSalaryRangeForJob(b).high || 0;
+      if (b.score !== a.score) return b.score - a.score;
+      return salaryB - salaryA;
+    })
+    .slice(0, limit);
+}
+
+function matchesRoleQuery(job, normalizedQuery) {
+  const title = job.title.toLowerCase();
+  const fn = job.function.toLowerCase();
+  if (title.includes(normalizedQuery) || fn.includes(normalizedQuery)) return true;
+  if ((normalizedQuery.includes('engineer') || normalizedQuery.includes('developer') || normalizedQuery.includes('devops')) && fn.includes('engineering')) {
+    return true;
+  }
+  if (normalizedQuery.includes('designer') && (fn.includes('design') || title.includes('design'))) return true;
+  if (normalizedQuery.includes('manager') && title.includes('manager')) return true;
+  if ((normalizedQuery.includes('customer') || normalizedQuery.includes('success')) && fn.includes('customer success')) return true;
+  if (normalizedQuery.includes('qa') && (fn.includes('qa') || title.includes('qa'))) return true;
+  if (normalizedQuery.includes('data') && (fn.includes('data') || title.includes('data'))) return true;
+  return false;
+}
+
+function resolveTerminalQuery(rawQuery, isEs) {
+  const normalized = rawQuery.trim().toLowerCase();
+  const defaultTop = getSortedTopJobs(JOBS, 3);
+
+  if (!normalized) {
+    return {
+      label: isEs ? 'Mostrando roles top por puntaje:' : 'Showing top roles by score:',
+      jobs: defaultTop,
+    };
+  }
+
+  const salaryFloor = extractSalaryFloor(normalized);
+  if (salaryFloor !== null) {
+    const matched = getSortedTopJobs(
+      JOBS.filter((job) => {
+        const range = getSalaryRangeForJob(job);
+        return (range.high || 0) >= salaryFloor;
+      }),
+      6
+    );
+    return {
+      label: isEs ? `Mostrando roles que pagan $${Math.round(salaryFloor / 1000)}K+:` : `Showing roles paying $${Math.round(salaryFloor / 1000)}K+:`,
+      jobs: matched.length ? matched : defaultTop,
+    };
+  }
+
+  const countryMatch = COUNTRY_LOOKUP.find((country) => country.tokens.some((token) => normalized.includes(token)));
+  if (countryMatch) {
+    const strictMatches = JOBS.filter((job) => countryMatch.tokens.some((token) => job.location.toLowerCase().includes(token)));
+    const latamEligiblePool = JOBS.filter((job) => job.latamEligible);
+    const matched = getSortedTopJobs(strictMatches.length ? strictMatches : latamEligiblePool, 6);
+    return {
+      label: isEs ? `Roles abiertos para ${countryMatch.nameEs}:` : `Roles open to ${countryMatch.nameEn}:`,
+      jobs: matched,
+    };
+  }
+
+  const roleMatches = getSortedTopJobs(JOBS.filter((job) => matchesRoleQuery(job, normalized)), 6);
+  if (roleMatches.length) {
+    return {
+      label: isEs ? `Roles encontrados para "${rawQuery}":` : `Roles found for "${rawQuery}":`,
+      jobs: roleMatches,
+    };
+  }
+
+  const tokenList = normalized.split(/\s+/).filter(Boolean);
+  const skillMatches = getSortedTopJobs(
+    JOBS.filter((job) =>
+      job.tags.some((tag) => {
+        const tagLower = tag.toLowerCase();
+        return tokenList.some((token) => token.length > 1 && (tagLower.includes(token) || token.includes(tagLower)));
+      })
+    ),
+    6
+  );
+  if (skillMatches.length) {
+    return {
+      label: isEs ? `Coincidencias por skill "${rawQuery}":` : `Skill matches for "${rawQuery}":`,
+      jobs: skillMatches,
+    };
+  }
+
+  return {
+    label: isEs ? 'Sin match exacto. Mostrando roles top:' : 'No exact match. Showing top roles:',
+    jobs: defaultTop,
+  };
+}
+
 export default function Home() {
   const lang = useLanguage();
   const isEs = lang === 'es';
   const topJobs = useMemo(() => [...JOBS].sort((a, b) => b.score - a.score).slice(0, 8), []);
 
   const [openSalaryById, setOpenSalaryById] = useState({});
+  const [expandedJobId, setExpandedJobId] = useState(null);
+  const [cardsUseTap, setCardsUseTap] = useState(false);
   const [heroEmail, setHeroEmail] = useState('');
   const [ctaEmail, setCtaEmail] = useState('');
   const [heroStatus, setHeroStatus] = useState('');
@@ -55,20 +199,87 @@ export default function Home() {
   const salaryTerminalVisible = useIntersectionObserver(salaryTerminalRef, { threshold: 0.4 });
   const ctaTerminalRef = useRef(null);
   const ctaTerminalVisible = useIntersectionObserver(ctaTerminalRef, { threshold: 0.4 });
+  const terminalInputRef = useRef(null);
   const [salaryTyped, setSalaryTyped] = useState(0);
+  const [terminalReady, setTerminalReady] = useState(false);
+  const [terminalProcessing, setTerminalProcessing] = useState(false);
+  const [processingDots, setProcessingDots] = useState(0);
+  const [terminalQuery, setTerminalQuery] = useState('');
+  const [terminalSubmitted, setTerminalSubmitted] = useState('');
+  const [terminalResultLabel, setTerminalResultLabel] = useState('');
+  const [terminalResults, setTerminalResults] = useState([]);
+  const [terminalResetKey, setTerminalResetKey] = useState(0);
   const [ctaTyped, setCtaTyped] = useState(0);
+  const salaryTerminalLines = useMemo(
+    () =>
+      isEs
+        ? ['> nortec --northbound', '[✓] Mentalidad global', '[✓] Impacto local', '[✓] Conexión humana', '[✓] Futuro sin límites', 'estado: northbound']
+        : ['> nortec --northbound', '[✓] Global mindset', '[✓] Local impact', '[✓] Human connection', '[✓] Limitless future', 'status: northbound'],
+    [isEs]
+  );
+  const terminalPromptPlaceholder = isEs ? 'buscar roles, skills, salarios...' : 'search roles, skills, salaries...';
+  const ctaTerminalLines = useMemo(
+    () =>
+      isEs
+        ? [
+            'NORTeC // edición #001',
+            '▲ Luxury Presence · Staff AI Engineer',
+            '▲ Clara · Forward-Deployed AI Engineer',
+            '◆ Praxent · Senior SWE React/Node',
+            '◆ CoPilot AI · Customer Success Manager',
+            'Señal salarial: AI Engineer avg $118K',
+            'estado: northbound',
+          ]
+        : [
+            'NORTeC // issue #001',
+            '▲ Luxury Presence · Staff AI Engineer',
+            '▲ Clara · Forward-Deployed AI Engineer',
+            '◆ Praxent · Senior SWE React/Node',
+            '◆ CoPilot AI · Customer Success Manager',
+            'Salary signal: AI Engineer avg $118K',
+            'status: northbound',
+          ],
+    [isEs]
+  );
 
   useEffect(() => {
-    if (!salaryTerminalVisible) return;
-    const lineCount = 6;
+    if (!salaryTerminalVisible) return undefined;
+    const lineCount = salaryTerminalLines.length;
+    setSalaryTyped(0);
+    setTerminalReady(false);
+    setTerminalProcessing(false);
+    setProcessingDots(0);
+    setTerminalQuery('');
+    setTerminalSubmitted('');
+    setTerminalResultLabel('');
+    setTerminalResults([]);
+
     let i = 0;
     const id = setInterval(() => {
       i += 1;
       setSalaryTyped(Math.min(i, lineCount));
       if (i >= lineCount) clearInterval(id);
-    }, 180);
+    }, 300);
+
+    const readyTimeout = setTimeout(() => {
+      setTerminalReady(true);
+    }, lineCount * 300 + 1200);
+
+    return () => {
+      clearInterval(id);
+      clearTimeout(readyTimeout);
+    };
+  }, [salaryTerminalVisible, salaryTerminalLines, terminalResetKey]);
+
+  useEffect(() => {
+    if (!terminalProcessing) return undefined;
+    let dots = 0;
+    const id = setInterval(() => {
+      dots = (dots + 1) % 4;
+      setProcessingDots(dots);
+    }, 240);
     return () => clearInterval(id);
-  }, [salaryTerminalVisible, isEs]);
+  }, [terminalProcessing]);
 
   useEffect(() => {
     if (!ctaTerminalVisible) return;
@@ -82,6 +293,19 @@ export default function Home() {
     return () => clearInterval(id);
   }, [ctaTerminalVisible, isEs]);
 
+  useEffect(() => {
+    if (typeof window === 'undefined') return undefined;
+    const media = window.matchMedia('(max-width: 768px), (pointer: coarse)');
+    const updateCardsMode = () => setCardsUseTap(media.matches);
+    updateCardsMode();
+    if (typeof media.addEventListener === 'function') {
+      media.addEventListener('change', updateCardsMode);
+      return () => media.removeEventListener('change', updateCardsMode);
+    }
+    media.addListener(updateCardsMode);
+    return () => media.removeListener(updateCardsMode);
+  }, []);
+
   const maxRoleSalary = Math.max(...SALARY_DATA.map((row) => row.mid));
   const countrySalaryData = [
     { countryEn: 'Brazil', countryEs: 'Brasil', value: 78 },
@@ -92,54 +316,34 @@ export default function Home() {
   ];
   const maxCountrySalary = Math.max(...countrySalaryData.map((row) => row.value));
 
-  const salaryTerminalLines = isEs
-    ? ['> nortec --northbound', '[✓] Mentalidad global', '[✓] Impacto local', '[✓] Conexión humana', '[✓] Futuro sin límites', 'estado: northbound']
-    : ['> nortec --northbound', '[✓] Global mindset', '[✓] Local impact', '[✓] Human connection', '[✓] Limitless future', 'status: northbound'];
-
-  const ctaTerminalLines = isEs
-    ? [
-        'NORTeC // edición #001',
-        '▲ Luxury Presence · Staff AI Engineer',
-        '▲ Clara · Forward-Deployed AI Engineer',
-        '◆ Praxent · Senior SWE React/Node',
-        '◆ CoPilot AI · Customer Success Manager',
-        'Señal salarial: AI Engineer avg $118K',
-        'estado: northbound',
-      ]
-    : [
-        'NORTeC // issue #001',
-        '▲ Luxury Presence · Staff AI Engineer',
-        '▲ Clara · Forward-Deployed AI Engineer',
-        '◆ Praxent · Senior SWE React/Node',
-        '◆ CoPilot AI · Customer Success Manager',
-        'Salary signal: AI Engineer avg $118K',
-        'status: northbound',
-      ];
-
   const featureItems = [
     {
       titleEn: 'Real Remote Jobs',
       titleEs: 'Empleos Remotos Reales',
       bodyEn: 'Hand-picked roles from companies actively hiring LatAm talent.',
       bodyEs: 'Roles curados de empresas que contratan talento LatAm activamente.',
+      to: '/jobs',
     },
     {
       titleEn: 'Salary Signals',
       titleEs: 'Señales Salariales',
       bodyEn: 'Compensation benchmarks to negotiate from data, not guesswork.',
       bodyEs: 'Benchmarks de compensación para negociar con datos reales.',
+      to: '/tracker?tab=trends',
     },
     {
       titleEn: 'Application Playbooks',
       titleEs: 'Playbooks de Aplicación',
       bodyEn: 'Practical guidance for CVs, interviews, and high-conversion outreach.',
       bodyEs: 'Guías prácticas para CV, entrevistas y outreach de alta conversión.',
+      to: '/blog/salary-negotiation',
     },
     {
       titleEn: 'Company Radar',
       titleEs: 'Radar de Empresas',
       bodyEn: 'A clear view of remote-friendly teams that consistently hire in LatAm.',
       bodyEs: 'Visibilidad de equipos remote-friendly que contratan en LatAm.',
+      to: '/tracker?tab=companies',
     },
   ];
 
@@ -154,6 +358,48 @@ export default function Home() {
     } else {
       setStatus(isEs ? 'Intentar otra vez' : 'Try again');
     }
+  }
+
+  function resetInteractiveTerminal() {
+    setTerminalResetKey((prev) => prev + 1);
+    setTimeout(() => terminalInputRef.current?.focus(), 40);
+  }
+
+  function runTerminalCommand(commandText) {
+    const trimmed = commandText.trim();
+    if (!trimmed) return;
+    const normalized = trimmed.toLowerCase();
+    if (normalized === 'clear' || normalized === '[clear]') {
+      resetInteractiveTerminal();
+      return;
+    }
+    setTerminalSubmitted(trimmed);
+    setTerminalProcessing(true);
+    setTerminalResultLabel('');
+    setTerminalResults([]);
+    setTerminalQuery('');
+
+    const result = resolveTerminalQuery(trimmed, isEs);
+    setTimeout(() => {
+      setTerminalProcessing(false);
+      setTerminalResultLabel(result.label);
+      setTerminalResults(result.jobs);
+      setTerminalReady(true);
+    }, 840);
+  }
+
+  function handleTerminalKeyDown(event) {
+    if (event.key !== 'Enter') return;
+    event.preventDefault();
+    runTerminalCommand(terminalQuery);
+  }
+
+  function getLocationTags(job) {
+    return job.location
+      .split('·')
+      .map((part) => part.trim())
+      .filter(Boolean)
+      .slice(0, 2);
   }
 
   return (
@@ -188,46 +434,50 @@ export default function Home() {
 
           <div className="hero-map-panel">
             <div className="hero-map-grid" />
-            <svg className="hero-map-svg" viewBox="0 0 600 520" aria-label="LatAm remote opportunities map">
-              <path className="latam-shape" d="M180,88 L223,60 L274,52 L317,72 L339,106 L329,140 L300,165 L304,195 L338,232 L360,274 L356,316 L337,360 L317,372 L290,342 L270,302 L245,271 L218,238 L186,196 L168,146 Z" />
-              <path className="trajectory-path trajectory-red" d="M 220 100 Q 280 40 405 10" />
-              <path className="trajectory-path trajectory-red" d="M 242 195 Q 293 86 408 16" />
-              <path className="trajectory-path trajectory-teal" d="M 310 254 Q 350 120 458 20" />
-              <path className="trajectory-path trajectory-teal" d="M 284 332 Q 336 184 444 40" />
-              <path className="trajectory-path trajectory-red" d="M 245 293 Q 300 158 430 26" />
+            <div className="signal-active-indicator">
+              <span className="signal-active-dot" />
+              {isEs ? 'SEÑAL ACTIVA' : 'SIGNAL ACTIVE'}
+            </div>
+            <div className="signal-compass">N →</div>
+            <div className="signal-global-label">GLOBAL</div>
+            <svg className="hero-map-svg hero-signal-lines" viewBox="0 0 100 100" aria-label="Live regional signal trajectories">
+              {SIGNAL_NODES.map((node) => (
+                <path
+                  key={`${node.code}-line`}
+                  className="signal-trajectory"
+                  d={`M ${node.x} ${node.y} Q ${(node.x + 67) / 2} ${Math.max(10, (node.y + 10) / 2 - 8)} 67 11`}
+                />
+              ))}
             </svg>
 
-            <div className="hero-ping" style={{ top: '20%', left: '37%' }}>
-              <div className="hero-ping-dot" />
-              <div className="hero-ping-label">MEX</div>
-            </div>
-            <div className="hero-ping" style={{ top: '36%', left: '40%' }}>
-              <div className="hero-ping-dot" />
-              <div className="hero-ping-label">COL</div>
-            </div>
-            <div className="hero-ping" style={{ top: '49%', left: '50%' }}>
-              <div className="hero-ping-dot teal" />
-              <div className="hero-ping-label">BRA</div>
-            </div>
-            <div className="hero-ping" style={{ top: '65%', left: '45%' }}>
-              <div className="hero-ping-dot teal" />
-              <div className="hero-ping-label">ARG</div>
-            </div>
-            <div className="hero-ping" style={{ top: '57%', left: '41%' }}>
-              <div className="hero-ping-dot" />
-              <div className="hero-ping-label">CHL</div>
-            </div>
+            {SIGNAL_NODES.map((node) => (
+              <div key={node.code} className="signal-node" style={{ top: `${node.y}%`, left: `${node.x}%` }}>
+                <span className="signal-node-ring" />
+                <span className="signal-node-core">{node.code}</span>
+                <div className="signal-node-bars">
+                  {Array.from({ length: 5 }).map((_, idx) => (
+                    <span key={`${node.code}-${idx}`} className={idx < node.strength ? 'on' : ''} />
+                  ))}
+                </div>
+              </div>
+            ))}
 
             <div className="hero-stat-float s1">
-              <div className="value">$87K</div>
+              <div className="value">
+                $87K<span className="readout-cursor" />
+              </div>
               <div className="label">{isEs ? 'salario promedio' : 'avg salary'}</div>
             </div>
             <div className="hero-stat-float s2">
-              <div className="value">5</div>
+              <div className="value">
+                5<span className="readout-cursor" />
+              </div>
               <div className="label">{isEs ? 'roles esta semana' : 'roles this week'}</div>
             </div>
             <div className="hero-stat-float s3">
-              <div className="value">400K+</div>
+              <div className="value">
+                400K+<span className="readout-cursor" />
+              </div>
               <div className="label">{isEs ? 'workers remotos LatAm' : 'remote workers LatAm'}</div>
             </div>
           </div>
@@ -242,30 +492,59 @@ export default function Home() {
           </div>
           <div className="jobs-grid-native">
             {topJobs.map((job) => (
-              <article key={job.id} className="job-card-native">
+              <article
+                key={job.id}
+                className={`job-card-native ${expandedJobId === job.id ? 'is-open' : ''}`}
+                onClick={() => {
+                  if (!cardsUseTap) return;
+                  setExpandedJobId((prev) => (prev === job.id ? null : job.id));
+                }}
+              >
                 <div className="company">{job.company}</div>
                 <div className="title">{job.title}</div>
-                <div className="meta">{job.location}</div>
-                <div className="tag-list">
-                  {job.tags.slice(0, 4).map((tag) => (
-                    <span className="tag-chip" key={`${job.id}-${tag}`}>
+                <div className="job-location-tags">
+                  {getLocationTags(job).map((tag) => (
+                    <span className="job-location-chip" key={`${job.id}-${tag}`}>
                       {tag}
                     </span>
                   ))}
                 </div>
-                <div className="job-why">{isEs ? job.whyEs || job.why : job.why}</div>
-                <div className="job-actions-native">
-                  {openSalaryById[job.id] ? (
-                    <div className="salary-line">{job.salarySource === 'listed' ? job.salary : job.salaryEstimate || job.salary}</div>
-                  ) : (
-                    <button className="reveal-btn" type="button" onClick={() => setOpenSalaryById((prev) => ({ ...prev, [job.id]: true }))}>
-                      {isEs ? 'Revelar salario →' : 'Reveal salary →'}
-                    </button>
-                  )}
-                  <ScorePips score={job.score} />
-                  <Link to={`/job?id=${job.id}`} className="job-link">
-                    {isEs ? `Ver empleo → ${job.source}` : `View job → ${job.source}`}
-                  </Link>
+                <div className="meta">
+                  {job.type} · {job.function}
+                </div>
+                <div className="job-expand-hint">
+                  {cardsUseTap ? (isEs ? 'toca para explorar' : 'tap to explore') : isEs ? 'hover para explorar' : 'hover to explore'}
+                  <span className="job-expand-chevron">⌄</span>
+                </div>
+
+                <div className="job-details-collapsible">
+                  <div className="job-why">{isEs ? job.whyEs || job.why : job.why}</div>
+                  <div className="job-actions-native">
+                    {openSalaryById[job.id] ? (
+                      <div className="salary-line">{getSalaryDisplay(job)}</div>
+                    ) : (
+                      <button
+                        className="reveal-btn"
+                        type="button"
+                        onClick={(event) => {
+                          event.stopPropagation();
+                          setOpenSalaryById((prev) => ({ ...prev, [job.id]: true }));
+                        }}
+                      >
+                        {isEs ? 'Revelar salario →' : 'Reveal salary →'}
+                      </button>
+                    )}
+                    <ScorePips score={job.score} />
+                    <Link
+                      to={`/job?id=${job.id}`}
+                      className="job-link"
+                      onClick={(event) => {
+                        event.stopPropagation();
+                      }}
+                    >
+                      {isEs ? 'Ver empleo →' : 'View Job →'}
+                    </Link>
+                  </div>
                 </div>
               </article>
             ))}
@@ -315,7 +594,19 @@ export default function Home() {
 
             <article className="salary-panel">
               <h3>{isEs ? 'Señal de mercado en vivo' : 'Live market signal terminal'}</h3>
-              <div ref={salaryTerminalRef} className="terminal-box">
+              <div
+                ref={salaryTerminalRef}
+                className="terminal-box terminal-box-interactive"
+                onClick={() => terminalInputRef.current?.focus()}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    terminalInputRef.current?.focus();
+                  }
+                }}
+              >
                 <div className="live-badge">LIVE</div>
                 <div className="terminal-lines">
                   {salaryTerminalLines.map((line, idx) => (
@@ -323,7 +614,51 @@ export default function Home() {
                       {line}
                     </div>
                   ))}
+
+                  {(terminalReady || terminalProcessing) && (
+                    <div className="terminal-line on terminal-command-line">
+                      &gt; {terminalProcessing ? terminalSubmitted : terminalQuery || terminalPromptPlaceholder}
+                      <span className="terminal-caret" />
+                    </div>
+                  )}
+
+                  {terminalProcessing && (
+                    <div className="terminal-line on terminal-processing-line">
+                      {isEs ? 'procesando' : 'processing'}
+                      {'.'.repeat(processingDots || 1)}
+                    </div>
+                  )}
+
+                  {!terminalProcessing && terminalResultLabel && <div className="terminal-line on">{terminalResultLabel}</div>}
+
+                  {!terminalProcessing &&
+                    terminalResults.map((job) => (
+                      <Link
+                        to={`/job?id=${job.id}`}
+                        key={`terminal-${job.id}`}
+                        className="terminal-line on terminal-result-link"
+                        onClick={(event) => event.stopPropagation()}
+                      >
+                        <span className="terminal-result-score">[{job.score}]</span> {job.company} · {job.title} · {getSalaryDisplay(job)}
+                      </Link>
+                    ))}
+
+                  {terminalReady && !terminalProcessing && (
+                    <div className="terminal-line on terminal-command-hint">{isEs ? '[enter] ejecutar · [clear] reiniciar' : '[enter] run · [clear] reset'}</div>
+                  )}
                 </div>
+
+                <input
+                  ref={terminalInputRef}
+                  className="terminal-hidden-input"
+                  type="text"
+                  value={terminalQuery}
+                  onChange={(event) => setTerminalQuery(event.target.value)}
+                  onKeyDown={handleTerminalKeyDown}
+                  aria-label={isEs ? 'Buscar en terminal' : 'Search in terminal'}
+                  autoComplete="off"
+                  spellCheck={false}
+                />
               </div>
             </article>
           </div>
@@ -332,10 +667,10 @@ export default function Home() {
         <RevealSection className="home-section">
           <div className="feature-strip">
             {featureItems.map((item) => (
-              <article key={item.titleEn} className="feature-item">
+              <Link key={item.titleEn} to={item.to} className="feature-item feature-item-link">
                 <h4>{isEs ? item.titleEs : item.titleEn}</h4>
                 <p>{isEs ? item.bodyEs : item.bodyEn}</p>
-              </article>
+              </Link>
             ))}
           </div>
         </RevealSection>
