@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { getCurrentLanguage } from '../utils/i18n';
 import { submitEmail } from '../utils/subscribe';
 import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
+import PageMeta from '../components/PageMeta';
 import './blog.css';
 
 function useLanguage() {
@@ -154,6 +155,12 @@ export default function Blog() {
   }
 
   return (
+    <>
+      <PageMeta
+        title="Insights & Stories — Nortec"
+        description="Market intelligence, people stories, and career strategy for LatAm tech talent."
+        path="/blog"
+      />
     <div className="blog-page">
       <main className="blog-main">
         <section className="blog-hero" ref={heroRef}>
@@ -537,6 +544,7 @@ export default function Blog() {
         </section>
       </main>
     </div>
+    </>
   );
 }
 

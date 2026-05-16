@@ -4,6 +4,7 @@ import { JOBS, SALARY_DATA } from '../data/jobs';
 import { getCurrentLanguage } from '../utils/i18n';
 import { submitEmail } from '../utils/subscribe';
 import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
+import PageMeta from '../components/PageMeta';
 import './home-native.css';
 
 const SIGNAL_NODES = [
@@ -663,6 +664,12 @@ export default function Home() {
   }
 
   return (
+    <>
+      <PageMeta
+        title="Nortec — Work Global. Live Local."
+        description="Remote AI + tech jobs, salary signals, and career playbooks for Latin America. Free bilingual weekly brief."
+        path="/"
+      />
     <div className="home-native">
       <div className="home-shell">
         <section className="home-hero">
@@ -1166,6 +1173,7 @@ export default function Home() {
         </RevealSection>
       </div>
     </div>
+    </>
   );
 }
 

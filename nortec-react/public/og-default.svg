@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#0A1A1C"/>
+
+  <!-- Teal grid lines -->
+  <g stroke="#0FA39A" stroke-width="0.5" opacity="0.18">
+    <!-- Vertical lines every 60px -->
+    <line x1="60" y1="0" x2="60" y2="630"/>
+    <line x1="120" y1="0" x2="120" y2="630"/>
+    <line x1="180" y1="0" x2="180" y2="630"/>
+    <line x1="240" y1="0" x2="240" y2="630"/>
+    <line x1="300" y1="0" x2="300" y2="630"/>
+    <line x1="360" y1="0" x2="360" y2="630"/>
+    <line x1="420" y1="0" x2="420" y2="630"/>
+    <line x1="480" y1="0" x2="480" y2="630"/>
+    <line x1="540" y1="0" x2="540" y2="630"/>
+    <line x1="600" y1="0" x2="600" y2="630"/>
+    <line x1="660" y1="0" x2="660" y2="630"/>
+    <line x1="720" y1="0" x2="720" y2="630"/>
+    <line x1="780" y1="0" x2="780" y2="630"/>
+    <line x1="840" y1="0" x2="840" y2="630"/>
+    <line x1="900" y1="0" x2="900" y2="630"/>
+    <line x1="960" y1="0" x2="960" y2="630"/>
+    <line x1="1020" y1="0" x2="1020" y2="630"/>
+    <line x1="1080" y1="0" x2="1080" y2="630"/>
+    <line x1="1140" y1="0" x2="1140" y2="630"/>
+    <!-- Horizontal lines every 60px -->
+    <line x1="0" y1="60" x2="1200" y2="60"/>
+    <line x1="0" y1="120" x2="1200" y2="120"/>
+    <line x1="0" y1="180" x2="1200" y2="180"/>
+    <line x1="0" y1="240" x2="1200" y2="240"/>
+    <line x1="0" y1="300" x2="1200" y2="300"/>
+    <line x1="0" y1="360" x2="1200" y2="360"/>
+    <line x1="0" y1="420" x2="1200" y2="420"/>
+    <line x1="0" y1="480" x2="1200" y2="480"/>
+    <line x1="0" y1="540" x2="1200" y2="540"/>
+  </g>
+
+  <!-- N→ compass mark top right -->
+  <g transform="translate(1120, 52)" fill="none" stroke="#0FA39A" stroke-width="1.5" opacity="0.7">
+    <circle cx="0" cy="0" r="22" stroke-width="1"/>
+    <text x="0" y="-6" font-family="monospace" font-size="10" fill="#0FA39A" text-anchor="middle" stroke="none">N</text>
+    <line x1="0" y1="-2" x2="0" y2="-14" stroke="#0FA39A" stroke-width="1.5"/>
+    <polygon points="0,-16 -3,-10 3,-10" fill="#0FA39A" stroke="none"/>
+    <text x="10" y="4" font-family="monospace" font-size="10" fill="#0FA39A" text-anchor="start" stroke="none">→</text>
+  </g>
+
+  <!-- NORTE in cream -->
+  <text
+    x="600"
+    y="290"
+    font-family="'Oswald', 'Arial Narrow', Arial, sans-serif"
+    font-weight="700"
+    font-size="180"
+    fill="#F2E9D5"
+    text-anchor="end"
+    letter-spacing="4"
+  >NORTE</text>
+
+  <!-- C in teal -->
+  <text
+    x="608"
+    y="290"
+    font-family="'Oswald', 'Arial Narrow', Arial, sans-serif"
+    font-weight="700"
+    font-size="180"
+    fill="#0FA39A"
+    text-anchor="start"
+    letter-spacing="4"
+  >C</text>
+
+  <!-- Tagline -->
+  <text
+    x="600"
+    y="360"
+    font-family="'Oswald', 'Arial Narrow', Arial, sans-serif"
+    font-weight="400"
+    font-size="36"
+    fill="#F2E9D5"
+    text-anchor="middle"
+    opacity="0.85"
+    letter-spacing="3"
+  >Work global. Live local.</text>
+
+  <!-- URL bottom right -->
+  <text
+    x="1160"
+    y="600"
+    font-family="'Courier New', Courier, monospace"
+    font-size="18"
+    fill="#0FA39A"
+    text-anchor="end"
+    opacity="0.7"
+  >nortec.vercel.app</text>
+</svg>

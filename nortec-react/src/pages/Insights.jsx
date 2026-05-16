@@ -1,7 +1,15 @@
 import LegacyFrame from '../components/LegacyFrame';
+import PageMeta from '../components/PageMeta';
 
-// Migrated from pages/insights.html as-is.
 export default function Insights() {
-  return <LegacyFrame src="/pages/insights.html" />;
+  return (
+    <>
+      <PageMeta
+        title="Insights — Nortec"
+        description="Market intelligence and career strategy for LatAm tech talent."
+        path="/insights"
+      />
+      <LegacyFrame src="/pages/insights.html" />
+    </>
+  );
 }
-

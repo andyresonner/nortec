@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { getCurrentLanguage } from '../../utils/i18n';
 import { submitEmail } from '../../utils/subscribe';
 import { useIntersectionObserver } from '../../hooks/useIntersectionObserver';
+import PageMeta from '../../components/PageMeta';
 import './article-template.css';
 
 function Reveal({ children, delay = 0, left = false, className = '' }) {
@@ -207,6 +208,12 @@ export default function ArticleTemplate({
   };
 
   return (
+    <>
+      <PageMeta
+        title={`${title} — Nortec`}
+        description={standfirst}
+        ogType="article"
+      />
     <div className="article-template-page">
       <div className="reading-progress">
         <div className="reading-progress-fill" style={{ width: `${Math.max(0, Math.min(100, progress))}%` }} />
@@ -421,6 +428,7 @@ export default function ArticleTemplate({
         </div>
       </section>
     </div>
+    </>
   );
 }
 

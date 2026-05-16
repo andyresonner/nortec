@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://nortec.vercel.app/</loc><priority>1.0</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://nortec.vercel.app/jobs</loc><priority>0.9</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://nortec.vercel.app/tracker</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://nortec.vercel.app/blog</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://nortec.vercel.app/insights</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://nortec.vercel.app/archive</loc><priority>0.6</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://nortec.vercel.app/issue/001</loc><priority>0.7</priority><changefreq>never</changefreq></url>
+  <url><loc>https://nortec.vercel.app/blog/remote-hiring-latam</loc><priority>0.7</priority><changefreq>never</changefreq></url>
+  <url><loc>https://nortec.vercel.app/blog/andres-story</loc><priority>0.7</priority><changefreq>never</changefreq></url>
+  <url><loc>https://nortec.vercel.app/blog/salary-negotiation</loc><priority>0.7</priority><changefreq>never</changefreq></url>
+  <url><loc>https://nortec.vercel.app/blog/clara-spotlight</loc><priority>0.7</priority><changefreq>never</changefreq></url>
+  <url><loc>https://nortec.vercel.app/blog/ai-latam-jobs</loc><priority>0.7</priority><changefreq>never</changefreq></url>
+  <url><loc>https://nortec.vercel.app/blog/timezone-strategy</loc><priority>0.7</priority><changefreq>never</changefreq></url>
+</urlset>
